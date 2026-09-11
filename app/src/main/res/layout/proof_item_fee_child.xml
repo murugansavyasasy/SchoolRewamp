@@ -60,7 +60,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fee_amount"
+                    android:text="@string/actual_amount"
                     android:textAllCaps="true"
                     android:textAlignment="viewStart"
                     android:textColor="@color/light_gray_44"
@@ -85,7 +85,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/discount"
+                    android:text="@string/pending"
                     android:textAllCaps="true"
                     android:textAlignment="viewStart"
                     android:textColor="@color/light_gray_44"

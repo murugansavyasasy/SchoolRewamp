@@ -87,8 +87,8 @@ object FeeItemMapper {
                     groupId = null,
                     label = "${term.term_name} - ${fee.fee_name}",
                     amount = fee.amount_to_be_paid ?: "",
-                    feeAmount = fee.fee_amount,
-                    discountAmount = fee.discount_availed,
+                    feeAmount = fee.fee_amount,//actual amount
+                    discountAmount = fee.amount_to_be_paid,//pending
                     paidAmount = fee.actual_paid
                 )
             }
@@ -124,8 +124,8 @@ object FeeItemMapper {
                         groupId = feeId,
                         label = "– ${month.month_name}",
                         amount = month.amount_to_be_paid ?: "",
-                        feeAmount = month.amount_per_month,
-                        discountAmount = month.discount_amount,
+                        feeAmount = month.amount_per_month,//actual amount
+                        discountAmount = month.pending,//pending
                         paidAmount = month.paid
                     )
                 }
@@ -211,9 +211,9 @@ object FeeItemMapper {
                     parentSectionId = "TRANSPORT",
                     groupId = route.route_id,
                     label = "– ${month.month_name}",
-                    amount = month.total_amount ?: "",
-                    feeAmount = month.fee_amount,
-                    discountAmount = month.discount_amount,
+                    amount = month.pending_amount ?: "",
+                    feeAmount = month.fee_amount,//actual amount
+                    discountAmount = month.pending_amount,//pending
                     paidAmount = month.paid_amount
                 )
             }
@@ -269,8 +269,8 @@ object FeeItemMapper {
                 groupId = null,
                 label = q.fee_name ?: "",
                 amount = q.amount_to_be_paid ?: "",
-                feeAmount = q.amount_to_be_paid,
-                discountAmount = null,
+                feeAmount = q.uom_price,//actual amount
+                discountAmount = q.amount_to_be_paid ?: "",//pending
                 paidAmount = null
             )
         }

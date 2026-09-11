@@ -100,7 +100,7 @@
         android:paddingBottom="@dimen/six">
 
         <ImageView
-            android:layout_width="10dp"
+            android:layout_width="15dp"
             android:layout_height="19dp"
             android:src="@drawable/ic_graduation_cap"
             app:tint="@color/PrimaryColor" />
@@ -122,6 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"
         android:visibility="gone"
+        android:textAlignment="viewStart"
         android:textColor="@color/black"
         android:textSize="@dimen/thirteen_sp"
         tools:text="" />
@@ -150,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/six"
-                android:text="PARENT ATTACHMENTS"
+                android:text="@string/parent_attachments"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="@dimen/eleven_sp" />
         </LinearLayout>
@@ -160,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/six"
-            android:text="No attachments"
+            android:text="@string/no_attachments"
             android:textColor="@color/grey"
             android:textSize="@dimen/twele_sp"
             android:textStyle="italic"
@@ -210,6 +211,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/thirteen_sp"
         android:maxLines="2"
+        android:textAlignment="viewStart"
         android:visibility="gone"
         android:ellipsize="end"
         tools:text="" />
@@ -239,7 +241,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/six"
-                android:text="ACTION ATTACHMENTS"
+                android:text="@string/action_attachments"
                 android:textColor="#1E8E5A"
                 android:textSize="@dimen/eleven_sp" />
         </LinearLayout>
@@ -249,7 +251,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/six"
-            android:text="No attachments"
+            android:text="@string/no_attachments"
             android:textColor="@color/grey"
             android:textSize="@dimen/twele_sp"
             android:textStyle="italic"
@@ -295,6 +297,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/twele"
+        android:textAlignment="viewStart"
         android:textColor="@color/grey"
         android:textSize="@dimen/eleven_sp"
         tools:text="" />
@@ -320,7 +323,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/ten"
             android:paddingBottom="@dimen/ten"
-            android:text="Acknowledge"
+            android:text="@string/acknowledge"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -336,7 +339,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/ten"
             android:paddingBottom="@dimen/ten"
-            android:text="Action Taken"
+            android:text="@string/action_taken"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
 

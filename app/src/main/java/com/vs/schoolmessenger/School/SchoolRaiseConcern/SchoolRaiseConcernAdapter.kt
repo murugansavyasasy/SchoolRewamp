@@ -58,7 +58,7 @@ class SchoolRaiseConcernAdapter(
         holder.binding.apply {
             lblStudentName.text = item.student_name
             lblClassInfo.text =
-                "Class ${item.class_name}-${item.section_name} \u00b7 ID: ${item.student_id.take(3)}..."
+                "${context.getString(R.string.Class_)} ${item.class_name}-${item.section_name} \u00b7 ${context.getString(R.string.ID)}: ${item.student_id.take(3)}..."
             lblInitials.text = getInitials(item.student_name)
             lblConcernType.text = item.type_name
             if (item.description.isNullOrEmpty()) {
@@ -74,7 +74,7 @@ class SchoolRaiseConcernAdapter(
                 lblActionDescription.isVisible = true
                 lblActionDescription.text = item.action_taken
             }
-            lblDate.text = "Raised on ${formatDate(item.raised_on)}"
+            lblDate.text = "${context.getString(R.string.Raised_on)} ${formatDate(item.raised_on)}"
 
             lblStatus.text = item.status.uppercase()
             val (bgColor, textColor) = statusColors(item.status)
@@ -85,7 +85,7 @@ class SchoolRaiseConcernAdapter(
             rytActionButtons.visibility = View.VISIBLE
 
             if (item.is_acknowledged) {
-                btnAcknowledge.text = "Acknowledge"
+                btnAcknowledge.text = context.getString(R.string.acknowledge)
                 btnAcknowledge.setBackgroundResource(R.drawable.bg_button_blue)
                 btnAcknowledge.setTextColor(
                     ContextCompat.getColor(btnAcknowledge.context, R.color.white)
@@ -94,7 +94,7 @@ class SchoolRaiseConcernAdapter(
 
 //                btnActionTaken.visibility = View.GONE
             } else {
-                btnAcknowledge.text = "View Acknowledge"
+                btnAcknowledge.text = context.getString(R.string.view_acknowledge)
                 btnAcknowledge.setBackgroundResource(R.drawable.bg_button_acknowledge_outline)
                 btnAcknowledge.setTextColor(
                     ContextCompat.getColor(btnAcknowledge.context, R.color.PrimaryColor)
@@ -103,25 +103,26 @@ class SchoolRaiseConcernAdapter(
 
 //                btnActionTaken.visibility = View.VISIBLE
 
-                if (item.is_action) {
-                    btnActionTaken.text = "Action Taken"
-                    btnActionTaken.setBackgroundResource(R.drawable.bg_button_green)
-                    btnActionTaken.setTextColor(
-                        ContextCompat.getColor(btnActionTaken.context, R.color.white)
-                    )
-                    btnActionTaken.setOnClickListener { onActionTakenClick(item) }
+            }
+
+            if (item.is_action) {
+                btnActionTaken.text = context.getString(R.string.action_taken)
+                btnActionTaken.setBackgroundResource(R.drawable.bg_button_green)
+                btnActionTaken.setTextColor(
+                    ContextCompat.getColor(btnActionTaken.context, R.color.white)
+                )
+                btnActionTaken.setOnClickListener { onActionTakenClick(item) }
 
 //                    btnAcknowledge.visibility = View.GONE
-                } else {
-                    btnActionTaken.text = "View Action Taken"
-                    btnActionTaken.setBackgroundResource(R.drawable.bg_button_green_action_taken)
-                    btnActionTaken.setTextColor(
-                        ContextCompat.getColor(btnActionTaken.context, R.color.light_shade_yellow)
-                    )
-                    btnActionTaken.setOnClickListener { showActionTakenDetailsPopup(item) }
+            } else {
+                btnActionTaken.text = context.getString(R.string.view_action_taken)
+                btnActionTaken.setBackgroundResource(R.drawable.bg_button_green_action_taken)
+                btnActionTaken.setTextColor(
+                    ContextCompat.getColor(btnActionTaken.context, R.color.light_shade_yellow)
+                )
+                btnActionTaken.setOnClickListener { showActionTakenDetailsPopup(item) }
 
 //                    btnAcknowledge.visibility = View.VISIBLE
-                }
             }
 
             lytParentAttachmentsHeader.setOnClickListener {
@@ -191,12 +192,12 @@ class SchoolRaiseConcernAdapter(
 
     private fun showAcknowledgeDetailsPopup(item: ParentConcern) {
         val rows = listOf(
-            "ACKNOWLEDGED BY" to item.acknowledged_by.ifBlank { "-" },
-            "ACKNOWLEDGED ON" to formatDate(item.acknowledged_on).ifBlank { "-" },
-            "REMARKS" to item.acknowledgement.ifBlank { "-" }
+            context.getString(R.string.acknowledged_by) to item.acknowledged_by.ifBlank { "-" },
+            context.getString(R.string.acknowledged_on) to formatDate(item.acknowledged_on).ifBlank { "-" },
+            context.getString(R.string.remarks_) to item.acknowledgement.ifBlank { "-" }
         )
         showDetailsDialog(
-            title = "Acknowledgement Details",
+            title = context.getString(R.string.acknowledgement_details),
             iconRes = R.drawable.attachment_icon_2,
             rows = rows
         )
@@ -204,12 +205,12 @@ class SchoolRaiseConcernAdapter(
 
     private fun showActionTakenDetailsPopup(item: ParentConcern) {
         val rows = listOf(
-            "ACTION TAKEN BY" to item.action_taken_by.ifBlank { "-" },
-            "ACTION TAKEN ON" to formatDate(item.action_taken_on).ifBlank { "-" },
-            "DETAILS" to item.action_taken.ifBlank { "-" }
+            context.getString(R.string.action_taken_by) to item.action_taken_by.ifBlank { "-" },
+            context.getString(R.string.action_taken_on) to formatDate(item.action_taken_on).ifBlank { "-" },
+            context.getString(R.string.details_) to item.action_taken.ifBlank { "-" }
         )
         showDetailsDialog(
-            title = "Action Taken Details",
+            title = context.getString(R.string.action_taken_details),
             iconRes = R.drawable.file_noticeboard,
             rows = rows
         )

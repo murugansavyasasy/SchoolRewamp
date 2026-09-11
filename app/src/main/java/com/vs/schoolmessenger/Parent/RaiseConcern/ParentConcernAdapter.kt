@@ -52,7 +52,7 @@ class ParentConcernAdapter(
         holder.binding.apply {
             lblStudentName.text = item.student_name
             lblClassInfo.text =
-                "Class ${item.class_name}-${item.section_name} \u00b7 ID: ${item.student_id.take(3)}..."
+                "${context.getString(R.string.Class_)} ${item.class_name}-${item.section_name} \u00b7 ${context.getString(R.string.ID)}: ${item.student_id.take(3)}..."
             lblInitials.text = getInitials(item.student_name)
             lblConcernType.text = item.type_name
 
@@ -70,7 +70,7 @@ class ParentConcernAdapter(
                 lblActionDescription.text = item.action_taken
             }
 
-            lblDate.text = "Raised on ${formatDate(item.raised_on)}"
+            lblDate.text = "${context.getString(R.string.Raised_on)} ${formatDate(item.raised_on)}"
 
             lblStatus.text = item.status.uppercase()
             val (bgColor, textColor) = statusColors(item.status)
@@ -90,7 +90,7 @@ class ParentConcernAdapter(
 
             if (showAcknowledgeBtn) {
                 btnAcknowledge.visibility = View.VISIBLE
-                btnAcknowledge.text = "View Acknowledgement"
+                btnAcknowledge.text = context.getString(R.string.view_acknowledgement)
                 btnAcknowledge.setBackgroundResource(R.drawable.bg_button_acknowledge_outline)
                 btnAcknowledge.setTextColor(
                     ContextCompat.getColor(btnAcknowledge.context, R.color.PrimaryColor)
@@ -102,7 +102,7 @@ class ParentConcernAdapter(
 
             if (showActionBtn) {
                 btnActionTaken.visibility = View.VISIBLE
-                btnActionTaken.text = "View Action Taken"
+                btnActionTaken.text = context.getString(R.string.view_action_taken)
                 btnActionTaken.setBackgroundResource(R.drawable.bg_button_green_action_taken)
                 btnActionTaken.setTextColor(
                     ContextCompat.getColor(btnActionTaken.context, R.color.light_shade_yellow)
@@ -141,12 +141,12 @@ class ParentConcernAdapter(
 
     private fun showAcknowledgeDetailsPopup(item: ParentConcern) {
         val rows = listOf(
-            "ACKNOWLEDGED BY" to item.acknowledged_by.ifBlank { "-" },
-            "ACKNOWLEDGED ON" to formatDate(item.acknowledged_on).ifBlank { "-" },
-            "REMARKS" to item.acknowledgement.ifBlank { "-" }
+            context.getString(R.string.acknowledged_by) to item.acknowledged_by.ifBlank { "-" },
+            context.getString(R.string.acknowledged_on) to formatDate(item.acknowledged_on).ifBlank { "-" },
+            context.getString(R.string.remarks_) to item.acknowledgement.ifBlank { "-" }
         )
         showDetailsDialog(
-            title = "Acknowledgement Details",
+            title = context.getString(R.string.acknowledgement_details),
             iconRes = R.drawable.attachment_icon_2,
             rows = rows
         )
@@ -154,12 +154,12 @@ class ParentConcernAdapter(
 
     private fun showActionTakenDetailsPopup(item: ParentConcern) {
         val rows = listOf(
-            "ACTION TAKEN BY" to item.action_taken_by.ifBlank { "-" },
-            "ACTION TAKEN ON" to formatDate(item.action_taken_on).ifBlank { "-" },
-            "DETAILS" to item.action_taken.ifBlank { "-" }
+            context.getString(R.string.action_taken_by) to item.action_taken_by.ifBlank { "-" },
+            context.getString(R.string.action_taken_on) to formatDate(item.action_taken_on).ifBlank { "-" },
+            context.getString(R.string.details_) to item.action_taken.ifBlank { "-" }
         )
         showDetailsDialog(
-            title = "Action Taken Details",
+            title = context.getString(R.string.action_taken_details),
             iconRes = R.drawable.file_noticeboard,
             rows = rows
         )

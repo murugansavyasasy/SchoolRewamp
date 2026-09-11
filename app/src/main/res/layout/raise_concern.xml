@@ -44,7 +44,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Raise Concern"
+                android:text="@string/raise_concern"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp" />
@@ -136,7 +136,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Concern Type"
+                    android:text="@string/concern_type"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -151,6 +151,7 @@
             app:cardCornerRadius="@dimen/five">
 
                     <Spinner
+                        android:textAlignment="viewStart"
                         android:id="@+id/spinnerConcernType"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -166,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/fifteen"
-                    android:text="Raise To"
+                    android:text="@string/raise_to"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -183,7 +184,8 @@
                         android:id="@+id/rbManagement"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Management"
+                        android:text="@string/management"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsMedium" />
@@ -192,7 +194,8 @@
                         android:id="@+id/rbPrincipal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Principal"
+                        android:text="@string/principal"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsMedium" />
@@ -201,7 +204,8 @@
                         android:id="@+id/rbClassTeacher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Class Teacher"
+                        android:text="@string/class_teacher"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsMedium" />
@@ -214,7 +218,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/fifteen"
-                    android:text="Description"
+                    android:text="@string/Description"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -222,10 +226,11 @@
                     android:id="@+id/edtDescription"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
+                    android:textAlignment="viewStart"
                     android:layout_marginTop="@dimen/five"
                     android:background="@drawable/field_background"
                     android:gravity="top|start"
-                    android:hint="Describe your concern"
+                    android:hint="@string/describe_your_concern"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:inputType="textMultiLine"
                     android:padding="@dimen/ten"
@@ -240,6 +245,7 @@
 
                     <TextView
                         android:id="@+id/lblAddPhoto"
+                        android:textAlignment="viewStart"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -254,6 +260,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/eight"
+                        android:textAlignment="viewStart"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_toEndOf="@+id/lblAddPhoto"
                         android:text="@string/Optional"

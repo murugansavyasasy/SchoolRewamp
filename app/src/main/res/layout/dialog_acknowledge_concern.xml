@@ -12,7 +12,7 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Acknowledge Concern"
+        android:text="@string/acknowledge_concern"
         android:textColor="@color/black"
         android:textSize="@dimen/sixteen_sp" />
 
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/four"
-        android:text="Add a short note before acknowledging this concern"
+        android:text="@string/add_a_short_note_before_acknowledging_this_concern"
         android:textColor="@color/grey"
         android:textSize="@dimen/twele_sp" />
 
@@ -29,10 +29,11 @@
         android:id="@+id/edtDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="viewStart"
         android:layout_marginTop="@dimen/sixteen"
         android:background="@drawable/bg_edittext_rounded"
         android:gravity="top|start"
-        android:hint="Enter acknowledgement description"
+        android:hint="@string/enter_acknowledgement_description"
         android:inputType="textMultiLine|textCapSentences"
         android:minLines="4"
         android:maxLines="6"
@@ -69,7 +70,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/ten"
             android:paddingBottom="@dimen/ten"
-            android:text="Cancel"
+            android:text="@string/Cancel"
             android:textColor="@color/grey_color"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -84,7 +85,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/ten"
             android:paddingBottom="@dimen/ten"
-            android:text="Submit"
+            android:text="@string/lblSubmit"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
 

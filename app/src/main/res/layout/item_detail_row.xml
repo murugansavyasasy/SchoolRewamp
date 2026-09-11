@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/PrimaryColor"
         android:textSize="@dimen/eleven_sp"
+        android:textAlignment="viewStart"
         tools:text="ACKNOWLEDGED BY"
         xmlns:tools="http://schemas.android.com/tools" />
 
@@ -22,6 +23,7 @@
         android:layout_marginTop="@dimen/four"
         android:textColor="@color/black"
         android:textSize="@dimen/thirteen_sp"
+        android:textAlignment="viewStart"
         tools:text="Trisha"
         xmlns:tools="http://schemas.android.com/tools" />
 
