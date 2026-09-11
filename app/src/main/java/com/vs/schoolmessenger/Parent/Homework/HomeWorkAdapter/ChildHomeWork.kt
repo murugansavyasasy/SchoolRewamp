@@ -600,9 +600,14 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.toolbarLayout.rlaStudentName.layoutParams =
                 params // Apply the updated layout params
             Log.d("data!!.created_date", data!!.created_date.toString())
-            binding.toolbarLayout.lblPostedOn.text =
-                "${getString(R.string.posted_on)} : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
+            val createdDate = data?.created_date
 
+            binding.toolbarLayout.lblPostedOn.text =
+                if (!createdDate.isNullOrBlank()) {
+                    "${getString(R.string.posted_on)} : ${Constant.formatDatepostedby(createdDate)}"
+                } else {
+                    "${getString(R.string.posted_on)} : -"
+                }
             binding.lblClickComplete.visibility = View.GONE
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
             binding.toolbarLayout.lblStudentSection.visibility = View.GONE
