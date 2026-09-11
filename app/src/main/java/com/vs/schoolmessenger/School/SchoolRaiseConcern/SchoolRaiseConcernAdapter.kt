@@ -270,7 +270,7 @@ class SchoolRaiseConcernAdapter(
             thumbnail = "",
             isUnread = true,
             isCompleted = true,
-            isMenuType = Constant.M_PARENT_CLASS_EVENTS,
+            isMenuType = Constant.M_EXAMREVIEW,
             fileList = convertedList,
         )
 
@@ -300,7 +300,7 @@ class SchoolRaiseConcernAdapter(
             thumbnail = "",
             isUnread = true,
             isCompleted = true,
-            isMenuType = Constant.M_PARENT_CLASS_EVENTS,
+            isMenuType = Constant.M_EXAMREVIEW,
             fileList = convertedList,
         )
 

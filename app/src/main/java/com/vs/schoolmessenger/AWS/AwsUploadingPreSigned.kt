@@ -120,7 +120,7 @@ class AwsUploadingPreSigned {
 
                 M_EXAMREVIEW -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    isFolderName = "events"
+                    isFolderName = "raiseconcern"
                     bucketPath = "$isFolderName/$instituteID/$currentDate"
                 }
 

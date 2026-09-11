@@ -63,7 +63,7 @@
                         android:layout_gravity="top|end"
                         android:background="@drawable/circle_white_bg"
                         android:padding="@dimen/four"
-                        android:contentDescription="Edit Profile"
+                        android:contentDescription="@string/edit_profile"
                         android:src="@drawable/ic_edit_pencil"
                         android:visibility="gone" />
                 </FrameLayout>

@@ -1383,6 +1383,7 @@
     <string name="fee_breakdown">Fee Breakdown</string>
     <string name="fee_amount">Fee Amount</string>
     <string name="discount">Discount</string>
+    <string name="edit_profile">Edit Profile</string>
     <string name="quantity_fees">Quantity Fees</string>
     <string name="transport">Transport</string>
     <string name="carryover">Carryover</string>
