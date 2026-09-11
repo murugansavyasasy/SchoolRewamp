@@ -118,7 +118,7 @@ class RaiseConcernActivity :
         isAccessToken = isChildDetails!!.access_token
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
-        Constant.SELECTED_MENU_ID = Constant.M_ATTACHMENTS
+        Constant.SELECTED_MENU_ID = Constant.M_EXAMREVIEW
 
 
         binding.toolbarLayout.apply {

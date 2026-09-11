@@ -582,7 +582,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     )
                 )
             }
-        } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS || data!!.isMenuType == Constant.M_ATTACHMENTS || data!!.isMenuType == M_ASSIGNMENT) {
+        } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS|| data!!.isMenuType == Constant.M_EXAMREVIEW || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS || data!!.isMenuType == Constant.M_ATTACHMENTS || data!!.isMenuType == M_ASSIGNMENT) {
 
 
             if (data!!.created_date.isNullOrBlank()) {
