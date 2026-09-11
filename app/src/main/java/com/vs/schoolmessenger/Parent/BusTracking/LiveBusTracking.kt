@@ -270,6 +270,12 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         }
     }
 
+    private fun parseCoordinate(raw: String?): Double? {
+        if (raw.isNullOrBlank() || raw.trim() == "--") return null
+        val numericPart = Regex("[-+]?[0-9]*\\.?[0-9]+").find(raw)?.value ?: return null
+        val value = numericPart.toDoubleOrNull() ?: return null
+        return if (raw.contains("S", ignoreCase = true) || raw.contains("W", ignoreCase = true)) -value else value
+    }
     private fun buildStopsFromBusData() {
         val points = busData?.stopping_points
         if (points.isNullOrEmpty()) {
@@ -298,8 +304,8 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                 id = s.stop_id,
                 name = s.stop_name,
                 time = s.stop_time,
-                lat = s.latitude.toDoubleOrNull() ?: 0.0,
-                lng = s.longitude.toDoubleOrNull() ?: 0.0,
+                lat = parseCoordinate(s.latitude) ?: 0.0,
+                lng = parseCoordinate(s.longitude) ?: 0.0,
                 isFirst = idx == 0,
                 isLast = idx == matchedPoint.stops.lastIndex
             )
