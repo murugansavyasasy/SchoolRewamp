@@ -1353,4 +1353,5 @@
     <string name="Admin_No">رقم الإدارة</string>
     <string name="missing_class_section_details">تفاصيل الصف/القسم مفقودة</string>
     <string name="no_test_set_selected">لم يتم اختيار مجموعة اختبار</string>
+    <string name="no_changes_from_last_year">لا توجد تغييرات عن العام الماضي</string>
 </resources>

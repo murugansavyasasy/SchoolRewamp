@@ -106,6 +106,7 @@ class StaffLeaveRequestHistoryAdapter(
         private val deleteButton: LinearLayout = itemView.findViewById(R.id.deletebutton)
         private val editButton: LinearLayout = itemView.findViewById(R.id.editbutton)
         private val rlaHeader: FrameLayout = itemView.findViewById(R.id.rlaHeader)
+        private val lblRole: TextView = itemView.findViewById(R.id.lblRole)
 
         @SuppressLint("SetTextI18n")
         fun bind(
@@ -116,7 +117,7 @@ class StaffLeaveRequestHistoryAdapter(
         ) {
             textName.text = data.staff_name
             lblLogo.text = Constant.getInitials(data.staff_name?:"")
-
+            lblRole.text=data.role.toString()
             lblStartDate.text = Constant.convertDateTimeFormatDateMonth(data.from_date ?: "")
 
             lblEndDate.text = Constant.convertDateTimeFormatDateMonth(data.to_date ?: "")

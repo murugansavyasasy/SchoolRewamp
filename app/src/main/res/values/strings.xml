@@ -1353,4 +1353,5 @@
     <string name="Admin_No">Admin No</string>
     <string name="missing_class_section_details">Missing class/section details</string>
     <string name="no_test_set_selected">No test set selected</string>
+    <string name="no_changes_from_last_year">No changes from last year</string>
 </resources>

@@ -364,6 +364,7 @@
     <!-- Line chart -->
     <color name="exam_line_navy">#1E3A5F</color>
     <color name="exam_max_line_red">#F87171</color>
+    <color name="mid_black_gray">#67778d</color>
 
 
 </resources>

@@ -9,5 +9,6 @@ data class BusStop(
     var isCompleted: Boolean = false,
     var isCurrent: Boolean = false,
     var isFirst : Any,
-    var isLast : Any
+    var isLast : Any,
+    val isMyStop: Boolean = false
 )
