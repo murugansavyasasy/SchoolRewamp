@@ -39,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sample.jpeg"
+            android:textAlignment="viewStart"
             android:textColor="#111111"
             android:textSize="14sp"
             android:textStyle="bold"

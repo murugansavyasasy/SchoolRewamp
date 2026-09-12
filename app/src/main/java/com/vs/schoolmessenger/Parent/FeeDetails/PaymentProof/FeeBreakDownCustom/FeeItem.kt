@@ -33,8 +33,8 @@ sealed class FeeItem {
         val groupId: String?,
         val label: String,
         val amount: String,
-        val feeAmount: String? = null,
-        val discountAmount: String? = null,
+        val actualAmount: String? = null,
+        val pending: String? = null,
         val paidAmount: String? = null
     ) : FeeItem()
 }
