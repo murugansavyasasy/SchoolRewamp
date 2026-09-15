@@ -2,9 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="@android:color/transparent"
     android:fillViewport="true">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -107,6 +106,7 @@
                     android:textSize="@dimen/thirteen_sp" />
 
                 <ImageView
+                    android:id="@+id/ivCalendarIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_calendar" />
@@ -310,8 +310,15 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
+    <View
+        android:id="@+id/rowDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="#EDEDED" />
 
 </RelativeLayout>

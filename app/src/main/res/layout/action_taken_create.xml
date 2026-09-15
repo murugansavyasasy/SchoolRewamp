@@ -50,10 +50,11 @@
                 <TextView
                     android:id="@+id/lblDescription"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/fifteen"
-                    android:text="Remarks"
+                    android:text="@string/remarks"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -64,7 +65,8 @@
                     android:layout_marginTop="@dimen/five"
                     android:background="@drawable/field_background"
                     android:gravity="top|start"
-                    android:hint="Describe your Remarks"
+                    android:textAlignment="viewStart"
+                    android:hint="@string/describe_your_remarks"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:inputType="textMultiLine"
                     android:padding="@dimen/ten"
@@ -78,6 +80,7 @@
                     android:layout_marginTop="@dimen/five">
 
                     <TextView
+                        android:textAlignment="viewStart"
                         android:id="@+id/lblAddPhoto"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
@@ -90,6 +93,7 @@
                     </TextView>
 
                     <TextView
+                        android:textAlignment="viewStart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/eight"

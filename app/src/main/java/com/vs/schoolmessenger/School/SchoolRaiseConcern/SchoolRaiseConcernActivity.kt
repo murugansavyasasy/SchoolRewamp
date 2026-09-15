@@ -193,7 +193,7 @@ class SchoolRaiseConcernActivity : BaseActivity<SchoolRaiseConcernBinding>(), Vi
         val requestBody = JsonObject().apply {
             addProperty("concern_id", concern.id)
             addProperty("action", "acknowledge")
-            addProperty("acknowledgement", description)
+            addProperty("description", description)
             addProperty("student_id", concern.student_id)
         }
         appViewModel!!.isActionTakenConcern(isAccessToken!!, requestBody, this)

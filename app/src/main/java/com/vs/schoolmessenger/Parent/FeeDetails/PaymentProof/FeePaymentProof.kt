@@ -142,11 +142,6 @@ class FeePaymentProof :
                 val studentPayment =
                     response.data[0]
 
-                binding.tvStudentName.text =
-                    "${studentPayment.student_details?.student_name} - " +
-                            "${getString(R.string.Class_)} " +
-                            "${studentPayment.student_details?.class_name} " +
-                            studentPayment.student_details?.section_name
 
                 val paymentList =
                     studentPayment.payment_details ?: emptyList()

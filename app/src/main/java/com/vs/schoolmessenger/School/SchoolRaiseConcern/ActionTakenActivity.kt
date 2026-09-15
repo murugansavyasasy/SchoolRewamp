@@ -128,7 +128,8 @@ class ActionTakenActivity : BaseActivity<ActionTakenCreateBinding>(), View.OnCli
                 if (uris.isEmpty()) return@registerForActivityResult
 
                 if (uris.size > Constant.isFilesAllow) {
-                    Toast.makeText(this, "Maximum 10 images allowed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.maximum_10_images_allowed), Toast.LENGTH_SHORT).show()
                 }
 
                 val limitedUris = uris.take(Constant.isFilesAllow)
@@ -142,7 +143,8 @@ class ActionTakenActivity : BaseActivity<ActionTakenCreateBinding>(), View.OnCli
                 if (uris.isEmpty()) return@registerForActivityResult
 
                 if (uris.size > Constant.isVideoAllow) {
-                    Toast.makeText(this, "Only 2 videos allowed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.only_2_videos_allowed), Toast.LENGTH_SHORT).show()
                     return@registerForActivityResult
                 }
 
@@ -182,12 +184,14 @@ class ActionTakenActivity : BaseActivity<ActionTakenCreateBinding>(), View.OnCli
         val description = binding.edtDescription.text.toString().trim()
 
         if (description.isEmpty()) {
-            Toast.makeText(this, "Please describe the action taken", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.please_describe_the_action_taken), Toast.LENGTH_SHORT).show()
             return
         }
 
         if (concernId.isNullOrEmpty() || studentId.isNullOrEmpty()) {
-            Toast.makeText(this, "Missing concern details, please go back and try again", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.missing_concern_details_please_go_back_and_try_again), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -226,7 +230,7 @@ class ActionTakenActivity : BaseActivity<ActionTakenCreateBinding>(), View.OnCli
         if (uris.size > Constant.isFileLimit) {
             Toast.makeText(
                 this,
-                "You can select only ${Constant.isFileLimit} files",
+                "${getString(R.string.You_can_select_only)} ${Constant.isFileLimit} ${getString(R.string.files)}",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -274,7 +278,7 @@ class ActionTakenActivity : BaseActivity<ActionTakenCreateBinding>(), View.OnCli
                 if (type == FileType.VIDEO) {
                     val videoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
                     if (videoCount >= 2) {
-                        Toast.makeText(this, "Only 2 videos are allowed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
                         return@forEach
                     }
                 }
@@ -713,6 +717,7 @@ class ActionTakenActivity : BaseActivity<ActionTakenCreateBinding>(), View.OnCli
             openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
+        rlaVideoPick.visibility= View.GONE
 
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = selectedFiles.count { it.type == FileType.VIDEO }
@@ -777,7 +782,8 @@ class ActionTakenActivity : BaseActivity<ActionTakenCreateBinding>(), View.OnCli
         try {
             startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
         } catch (e: Exception) {
-            Toast.makeText(this, "Camera not available on this device", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.camera_not_available_on_this_device), Toast.LENGTH_SHORT).show()
             Log.e("CameraError", "Camera launch failed", e)
         }
     }

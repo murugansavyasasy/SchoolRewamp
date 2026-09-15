@@ -137,8 +137,8 @@ class RaiseConcernActivity :
             }
         }
 
-        binding.tabOneName.text = "Raise concern"
-        binding.tabTwoName.text = "Raised concern list"
+        binding.tabOneName.text = getString(R.string.raise_concern)
+        binding.tabTwoName.text = getString(R.string.raised_concern_list)
 
         setupTabClicks()
         setupConcernListRecycler()
@@ -224,7 +224,7 @@ class RaiseConcernActivity :
                 if (uris.isEmpty()) return@registerForActivityResult
 
                 if (uris.size > Constant.isFilesAllow) {
-                    Toast.makeText(this, "Maximum 10 images allowed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.maximum_10_images_allowed), Toast.LENGTH_SHORT).show()
                 }
 
                 val limitedUris = uris.take(Constant.isFilesAllow)
@@ -238,7 +238,7 @@ class RaiseConcernActivity :
                 if (uris.isEmpty()) return@registerForActivityResult
 
                 if (uris.size > Constant.isVideoAllow) {
-                    Toast.makeText(this, "Only 2 videos allowed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.only_2_videos_allowed), Toast.LENGTH_SHORT).show()
                     return@registerForActivityResult
                 }
 
@@ -287,7 +287,7 @@ class RaiseConcernActivity :
         if (uris.size > Constant.isFileLimit) {
             Toast.makeText(
                 this,
-                "You can select only ${Constant.isFileLimit} files",
+                "${getString(R.string.You_can_select_only)} ${Constant.isFileLimit} ${getString(R.string.files)}",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -335,7 +335,7 @@ class RaiseConcernActivity :
                 if (type == FileType.VIDEO) {
                     val videoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
                     if (videoCount >= 2) {
-                        Toast.makeText(this, "Only 2 videos are allowed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
                         return@forEach
                     }
                 }
@@ -420,6 +420,7 @@ class RaiseConcernActivity :
         binding.tabTwoName.setTextColor(resources.getColor(R.color.black))
         binding.line1.setBackgroundColor(resources.getColor(R.color.PrimaryColor))
         binding.line2.setBackgroundColor(resources.getColor(android.R.color.transparent))
+        setupRadioGroup()
     }
 
     private fun showConcernListTab() {
@@ -448,6 +449,8 @@ class RaiseConcernActivity :
         }
 
         radioButtons.forEach { it.setOnClickListener(onRadioClick) }
+        binding.rbManagement.isChecked = true
+        selectedRaisedTo = "management"
     }
 
     private fun callConcernTypeApi() {
@@ -483,13 +486,16 @@ class RaiseConcernActivity :
 
             when {
                 selectedConcernTypeId.isEmpty() ->
-                    Toast.makeText(this, "Please select a concern type", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.please_select_a_concern_type), Toast.LENGTH_SHORT).show()
 
                 selectedRaisedTo.isEmpty() ->
-                    Toast.makeText(this, "Please select whom to raise the concern to", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.please_select_whom_to_raise_the_concern_to), Toast.LENGTH_SHORT).show()
 
                 description.isEmpty() ->
-                    Toast.makeText(this, "Please enter a description", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.please_enter_a_description), Toast.LENGTH_SHORT).show()
 
                 else -> {
                     confirmSubmitConcern(description)
@@ -500,16 +506,16 @@ class RaiseConcernActivity :
 
     private fun confirmSubmitConcern(description: String) {
         AlertDialog.Builder(this)
-            .setTitle("Submit concern")
-            .setMessage("Are you sure you want to submit?")
+            .setTitle(getString(R.string.raise_concern))
+            .setMessage(getString(R.string.are_you_sure_you_want_to_raise_this_concern))
             .setCancelable(true)
-            .setPositiveButton("Submit") { dialog, _ ->
+            .setPositiveButton(getString(R.string.submit)) { dialog, _ ->
                 dialog.dismiss()
                 pendingDescription = description
                 Constant.showLoading(this)
                 isUploadFilesInServer(Constant.file_)
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -834,14 +840,14 @@ class RaiseConcernActivity :
 
     private fun confirmDeleteConcern(concern: ParentConcern) {
         AlertDialog.Builder(this)
-            .setTitle("Delete concern")
-            .setMessage("Are you sure you want to delete this concern? This action cannot be undone.")
+            .setTitle(getString(R.string.delete_concern))
+            .setMessage(getString(R.string.are_you_sure_you_want_to_delete_this_concern_this_action_cannot_be_undone))
             .setCancelable(true)
-            .setPositiveButton("Delete") { dialog, _ ->
+            .setPositiveButton(getString(R.string.delete)) { dialog, _ ->
                 dialog.dismiss()
                 deleteConcern(concern.id)
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -939,6 +945,7 @@ class RaiseConcernActivity :
             openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
+        rlaVideoPick.visibility= View.GONE
 
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = selectedFiles.count { it.type == FileType.VIDEO }
@@ -1003,7 +1010,7 @@ class RaiseConcernActivity :
         try {
             startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
         } catch (e: Exception) {
-            Toast.makeText(this, "Camera not available on this device", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.camera_not_available_on_this_device), Toast.LENGTH_SHORT).show()
             Log.e("CameraError", "Camera launch failed", e)
         }
     }

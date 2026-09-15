@@ -14,7 +14,7 @@ data class StaffLeaveData (
     val no_of_days: String?,
     val reason: String?,
     var status: String?,
-    var priority_level: String?=null,
+    var created_by_own: Boolean?=null,
     val updated_on: String?,
     val from_session: String?,
     val to_session: String?,

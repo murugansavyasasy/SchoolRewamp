@@ -74,6 +74,48 @@ class SchoolProfileRewampFragmentAdapter(
 
     override fun getItemCount(): Int = itemList.size
 
+    /**
+     * Is [position]'s field the first *visible* field within its section
+     * (i.e. the nearest preceding item, skipping hidden photoPath fields, is a Header)?
+     */
+    private fun isFirstInSection(position: Int): Boolean {
+        var i = position - 1
+        while (i >= 0) {
+            when (val item = itemList[i]) {
+                is ProfileItem.Header -> return true
+                is ProfileItem.Field -> {
+                    if (item.field.node.equals("photoPath", ignoreCase = true)) {
+                        i--
+                        continue
+                    }
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    /**
+     * Is [position]'s field the last *visible* field within its section
+     * (i.e. the nearest following item, skipping hidden photoPath fields, is a Header or end of list)?
+     */
+    private fun isLastInSection(position: Int): Boolean {
+        var i = position + 1
+        while (i < itemList.size) {
+            when (val item = itemList[i]) {
+                is ProfileItem.Header -> return true
+                is ProfileItem.Field -> {
+                    if (item.field.node.equals("photoPath", ignoreCase = true)) {
+                        i++
+                        continue
+                    }
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
     class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val header: TextView = itemView.findViewById(R.id.header)
 
@@ -113,8 +155,41 @@ class SchoolProfileRewampFragmentAdapter(
         private val addlabel: TextView = itemView.findViewById(R.id.addlabel)
         private val selectedFilesContainer: FrameLayout =
             itemView.findViewById(R.id.selectedFilesContainer)
+        private val rowDivider: View = itemView.findViewById(R.id.rowDivider)
 
         var isRcyImagesAttached = false
+
+        private fun dp(value: Int): Int =
+            (value * itemView.resources.displayMetrics.density).toInt()
+
+        /**
+         * Gives the row a rounded "card" look — the group of fields belonging to one
+         * section header is rendered as a single white rounded card (top / middle /
+         * bottom / single piece), with a thin divider between rows inside the same card.
+         */
+        private fun applyCardGrouping(position: Int) {
+            val first = isFirstInSection(position)
+            val last = isLastInSection(position)
+
+            itemView.setBackgroundResource(
+                when {
+                    first && last -> R.drawable.bg_card_single
+                    first -> R.drawable.bg_card_top
+                    last -> R.drawable.bg_card_bottom
+                    else -> R.drawable.bg_card_middle
+                }
+            )
+
+            rowDivider.visibility = if (last) View.GONE else View.VISIBLE
+
+            (itemView.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
+                lp.marginStart = dp(16)
+                lp.marginEnd = dp(16)
+                lp.topMargin = if (first) dp(8) else 0
+                lp.bottomMargin = if (last) dp(16) else 0
+                itemView.layoutParams = lp
+            }
+        }
 
         fun bind(field: ProfileField, position: Int) {
 
@@ -126,7 +201,24 @@ class SchoolProfileRewampFragmentAdapter(
             imagelayout.visibility = View.GONE
             selectedFilesContainer.visibility = View.GONE
 
-            if (field.node.equals("photoPath", ignoreCase = true)) return
+            if (field.node.equals("photoPath", ignoreCase = true)) {
+                itemView.visibility = View.GONE
+                (itemView.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
+                    lp.height = 0
+                    lp.width = 0
+                    itemView.layoutParams = lp
+                }
+                return
+            }
+
+            itemView.visibility = View.VISIBLE
+            (itemView.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
+                lp.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                lp.width = ViewGroup.LayoutParams.MATCH_PARENT
+                itemView.layoutParams = lp
+            }
+
+            applyCardGrouping(position)
 
             when (field.type) {
                 Constant.text_, Constant.mobile, Constant.number -> {

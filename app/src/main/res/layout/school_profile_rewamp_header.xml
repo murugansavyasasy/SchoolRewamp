@@ -2,17 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:fillViewport="true">
-
+    android:background="@android:color/transparent">
 
     <TextView
         android:id="@+id/header"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray"
-        android:padding="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
         android:text="General"
         android:textAlignment="viewStart"
         android:textColor="@color/PrimaryColor"

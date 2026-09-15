@@ -28,7 +28,6 @@ class PreviewStaffLeaveRequest : BaseActivity<PreviewStaffLeaveRequestBinding>()
     private var isStaffDetails: StaffDetails? = null
     private var isRoleName = ""
     private var isStaffName = ""
-    private var isPripority = ""
     lateinit var request: LeaveApproveRequest
 
 
@@ -44,13 +43,15 @@ class PreviewStaffLeaveRequest : BaseActivity<PreviewStaffLeaveRequestBinding>()
 
 
         isRoleName = Constant.isStaffLeaveHistoryData?.role ?: ""
-        isStaffName = Constant.isStaffLeaveHistoryData?.staff_name ?: ""
-        isPripority = Constant.isStaffLeaveHistoryData?.priority_level?.lowercase() ?: ""
 
-        if (isPripority=="p2"){
+        if (Constant.isStaffLeaveHistoryData?.created_by_own==true){
             binding.constStatus.visibility= View.GONE
+            isStaffName = "${Constant.isStaffLeaveHistoryData?.staff_name ?: ""} (${getString(R.string.you)}) "
+
         }
         else{
+            isStaffName = Constant.isStaffLeaveHistoryData?.staff_name ?: ""
+
             binding.constStatus.visibility= View.VISIBLE
         }
 
@@ -79,7 +80,7 @@ class PreviewStaffLeaveRequest : BaseActivity<PreviewStaffLeaveRequestBinding>()
                 R.string.days
             )
 
-        binding.toolbarLayout.lblStaffInitial.text = Constant.getInitials(isStaffName)
+        binding.toolbarLayout.lblStaffInitial.text = Constant.getInitials(Constant.isStaffLeaveHistoryData?.staff_name ?: "")
         binding.toolbarLayout.lblName.text = isStaffName
         binding.toolbarLayout.lblSubject.text = isRoleName
 

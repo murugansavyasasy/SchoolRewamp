@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -111,9 +114,39 @@ class StaffApproveLeaveRequestAdapter(
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: StaffLeaveData, position: Int) {
-            textName.text = data.staff_name
             lblLogo.text = Constant.getInitials(data.staff_name?:"")
             lblRole.text = data.role
+
+            if (data.created_by_own?:false) {
+                val staffName = data.staff_name.orEmpty()
+                val youText = "(${context.getString(R.string.you)})"
+
+                val fullText = "$staffName $youText"
+
+                val spannable = SpannableString(fullText)
+
+                spannable.setSpan(
+                    ForegroundColorSpan(Color.BLACK),
+                    0,
+                    staffName.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                spannable.setSpan(
+                    ForegroundColorSpan(
+                        ContextCompat.getColor(context, R.color.light_gray_)
+                    ),
+                    staffName.length + 1,
+                    fullText.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                textName.text = spannable
+
+            }
+            else{
+                textName.text = data.staff_name
+            }
+
 
             lblStartDate.text = Constant.convertDateTimeFormatDateMonth(data.from_date ?: "")
 
@@ -152,7 +185,7 @@ class StaffApproveLeaveRequestAdapter(
 
 
             } else if (data.status == Constant.waiting_for_approval) {
-                if (data.priority_level?.lowercase()=="p2"){
+                if (data.created_by_own?:false){
                     cstStatus.visibility= View.GONE
                 }else{
                     applyTintedBackground(
@@ -197,7 +230,7 @@ class StaffApproveLeaveRequestAdapter(
                     to_date=data.to_date,
                     no_of_days=data.no_of_days,
                     status=data.status,
-                    priority_level=data.priority_level,
+                    created_by_own=data.created_by_own,
                     reason = data.reason,
                     updated_on=data.updated_on,
                     from_session=data.from_session,
