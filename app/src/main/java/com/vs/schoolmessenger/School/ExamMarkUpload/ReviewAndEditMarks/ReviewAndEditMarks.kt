@@ -127,8 +127,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         Log.d("isFinalMapDetails", isFinalMapDetails.toString())
         Log.d("isFinalCoScholasticDetails", isFinalCoScholasticDetails.toString())
 
-        // Rebuild the mapping on EVERY entry into this screen so a re-mapping
-        // done on MapActivity is always picked up.
+
         coScholasticColumnMap.clear()
         isFinalCoScholasticDetails.orEmpty().forEach { cs ->
             val mappedColumn = cs.selectedValue?.trim()
@@ -326,6 +325,16 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     }
 
 
+    private fun resolveClassId(): String =
+        isFinalMapDetails?.firstOrNull()?.class_id
+            ?: Constant.isMarkUploadClassSectionDetails?.standardId
+            ?: ""
+
+    private fun resolveSectionId(): String =
+        isFinalMapDetails?.firstOrNull()?.section_id
+            ?: Constant.isMarkUploadClassSectionDetails?.sectionId
+            ?: ""
+
     private fun mergeMarksWithExtractedTable(
         apiResponse: MarkResponse, tableData: ParcelTableData?
     ): MarkResponse {
@@ -356,9 +365,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     it[Constant.Student_ID]?.toString()?.trim() == student.student_id
                 } ?: return@map student
 
-                // Look the keys up IN THE ORDER GIVEN — the first key is the
-                // strongest match (the column the user actually mapped), the
-                // later ones are only fallbacks.
+
                 fun extractedFor(vararg keys: String?): String? {
                     for (key in keys) {
                         val wanted = normalize(key)
@@ -404,21 +411,17 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     subject.copy(activities = updatedActivities)
                 }
 
-                // ---- CO-SCHOLASTIC ----
-                // These are GRADES (A+, B, Good ...), so any non-blank text is accepted.
+
                 val updatedCoScholastic = student.co_scholastic.orEmpty().map { cs ->
 
-                    // 1st = column the user mapped on MapActivity (authoritative),
-                    // 2nd/3rd = fallbacks for when no mapping was made.
+
                     val mappedColumn = coScholasticColumnMap[cs.id]
                     val extracted = extractedFor(mappedColumn, cs.name, cs.id)
 
                     val finalValue = when {
                         isSystemMessage(extracted) -> extracted!!
                         !extracted.isNullOrBlank() -> extracted
-                        // A mapping exists but that column is blank for this
-                        // student: honour the new mapping and clear the stale
-                        // value instead of falling back to the old one.
+
                         mappedColumn != null -> ""
                         else -> cs.mark
                     }
@@ -433,7 +436,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     cs.copy(mark = finalValue)
                 }
 
-                // ---- REMARKS ----
+
                 val updatedRemarks = student.remarks.orEmpty().map { r ->
                     val extracted = extractedFor(
                         r.reference_type,
@@ -462,9 +465,10 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
     private fun fetchCommonRemarks() {
         appViewModel!!.getcommonremarks(
-            isAccessToken!!, isFinalMapDetails!![0].class_id, this
+            isAccessToken!!, resolveClassId(), this
         )
     }
+
 
     private fun buildHeaderColumns(response: MarkResponse): List<MarkColumn> {
         val columns = mutableListOf<MarkColumn>()
@@ -543,8 +547,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             )
         }
 
-        // Safety net: identical columns coming back twice from the API would
-        // otherwise render as duplicate headers AND duplicate cells.
+
         return columns.distinctBy {
             listOf(
                 it.subjectId,
@@ -605,7 +608,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 }
             }
 
-            // Co-Scholastic values (grades — never parsed as numbers)
             apiStudent.co_scholastic.orEmpty().forEach { cs ->
                 val index = columns.indexOfFirst { it.isCoScholastic && it.activityId == cs.id }
                 if (index != -1) {
@@ -615,7 +617,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 }
             }
 
-            // Remark values (free text, not numeric)
+
             apiStudent.remarks.orEmpty().forEach { r ->
                 val index = columns.indexOfFirst { it.isRemark && it.activityId == r.reference_type }
                 if (index != -1) {
@@ -685,9 +687,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }.toMutableList()
     }
 
-    // ---------------------------------------------------------------------
-    // FIX 1b : header no longer repeats the same label on both rows
-    // ---------------------------------------------------------------------
+
     private fun setupHeader(columns: List<MarkColumn>) {
         val container = findViewById<LinearLayout>(R.id.headerSubjectContainer)
         val headerScroll = findViewById<HorizontalScrollView>(R.id.headerScroll)
@@ -793,7 +793,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             activityGroups.forEach { (activityId, activityCols) ->
                 val rubricCols = activityCols.filter { it.isRubric }
 
-                // label already shown on the activity row for this group
+
                 val parentLabel = activityCols.firstOrNull()?.parentActivityName?.trim()
                     ?: activityCols.firstOrNull()?.activityName?.trim()
                     ?: ""
@@ -856,8 +856,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     activityCols.forEach { col ->
 
                         val subLabel = col.selected_name?.trim().orEmpty()
-                        // THIS is the "theory / theory" and "Remark / Remark" fix:
-                        // blank the sub-label when it repeats the activity label above.
+
                         val showSub = subLabel.isNotEmpty() && !subLabel.equals(parentLabel, true)
 
                         val layout = LinearLayout(this).apply {
@@ -939,15 +938,15 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
 
         val json = JsonObject().apply {
-            addProperty(Constant.class_id, isFinalMapDetails!![0].class_id)
-            addProperty(Constant.section_id, isFinalMapDetails!![0].section_id)
+            addProperty(Constant.class_id, resolveClassId())
+            addProperty(Constant.section_id, resolveSectionId())
             addProperty(Constant.exam_id, Constant.isMarkUploadExamListDataDetails!!.id)
             addProperty(APIKeyNames.academic_year_id, Constant.isUploadMarksSelectedAcademicID)
         }
 
         val selectedActivitiesArray = JsonArray()
 
-        for (subject in isFinalMapDetails!!) {
+        for (subject in isFinalMapDetails.orEmpty()) {
 
             val subjectObj = JsonObject().apply {
                 addProperty(Constant.subject_id, subject.subject_id)
@@ -1052,8 +1051,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
         json.add(Constant.selected_activities, selectedActivitiesArray)
 
-        // co_scholastic_ids — send the mapped column as selected_name, exactly
-        // like rubrics do, so the backend/response can be matched back reliably.
+
         val coScholasticIdsArray = JsonArray()
         isFinalCoScholasticDetails.orEmpty().forEach { cs ->
 
@@ -1463,7 +1461,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             student.markTexts.forEachIndexed { index, rawText ->
 
                 val column = columns.getOrNull(index) ?: return@forEachIndexed
-                // FIX: co-scholastic holds grades, so it must be skipped like remarks
+
                 if (column.isRemark || column.isCoScholastic) return@forEachIndexed
 
                 val trimmed = rawText.trim()
@@ -1660,7 +1658,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
         return JsonObject().apply {
             addProperty(Constant.exam_id, Constant.isMarkUploadExamListDataDetails!!.id)
-            addProperty(Constant.section_id, isFinalMapDetails!![0].section_id)
+            addProperty(Constant.section_id, resolveSectionId())
             add(APIKeyNames.upload_details, uploadDetailsArray)
         }
     }
