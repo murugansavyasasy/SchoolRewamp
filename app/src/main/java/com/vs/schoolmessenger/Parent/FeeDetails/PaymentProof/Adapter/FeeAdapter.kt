@@ -103,8 +103,8 @@ class FeeAdapter(
                 feeAmountLabel = binding.feeAmountValue,
                 discountLabel = binding.discountValue,
                 paidLabel = binding.paidValue,
-                feeAmount = item.feeAmount,
-                discount = item.discountAmount,
+                feeAmount = item.actualAmount,
+                discount = item.pending,
                 paid = item.paidAmount
             )
         }

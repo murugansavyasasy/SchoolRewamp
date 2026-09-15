@@ -11,6 +11,7 @@ import com.vs.schoolmessenger.Parent.FeeDetails.PaymentProofModel.PaymentProofFe
 import com.vs.schoolmessenger.Parent.FeeDetails.PaymentProofModel.PaymentProofFeeDetailsModel.TransportModel.TransportFee
 import com.vs.schoolmessenger.R
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.Locale
@@ -87,8 +88,8 @@ object FeeItemMapper {
                     groupId = null,
                     label = "${term.term_name} - ${fee.fee_name}",
                     amount = fee.amount_to_be_paid ?: "",
-                    feeAmount = fee.fee_amount,//actual amount
-                    discountAmount = fee.amount_to_be_paid,//pending
+                    actualAmount = fee.fee_amount,//actual amount
+                    pending = fee.amount_to_be_paid,//pending
                     paidAmount = fee.actual_paid
                 )
             }
@@ -124,8 +125,8 @@ object FeeItemMapper {
                         groupId = feeId,
                         label = "– ${month.month_name}",
                         amount = month.amount_to_be_paid ?: "",
-                        feeAmount = month.amount_per_month,//actual amount
-                        discountAmount = month.pending,//pending
+                        actualAmount = month.amount_per_month,//actual amount
+                        pending = month.pending,//pending
                         paidAmount = month.paid
                     )
                 }
@@ -170,8 +171,8 @@ object FeeItemMapper {
                         groupId = feeId,
                         label = "– ${detail.fee_group_type_name}",
                         amount = detail.pending_amount ?: "",
-                        feeAmount = detail.fee_amount,
-                        discountAmount = detail.discount_amount,
+                        actualAmount = detail.fee_amount,
+                        pending = detail.discount_amount,
                         paidAmount = detail.paid_amount
                     )
                 }
@@ -212,8 +213,8 @@ object FeeItemMapper {
                     groupId = route.route_id,
                     label = "– ${month.month_name}",
                     amount = month.pending_amount ?: "",
-                    feeAmount = month.fee_amount,//actual amount
-                    discountAmount = month.pending_amount,//pending
+                    actualAmount = month.fee_amount,//actual amount
+                    pending = month.pending_amount,//pending
                     paidAmount = month.paid_amount
                 )
             }
@@ -246,8 +247,8 @@ object FeeItemMapper {
                     groupId = groupId,
                     label = "– ${month.month_name}",
                     amount = month.pending_amount ?: "",
-                    feeAmount = month.actual_amount,
-                    discountAmount = month.discount_amount,
+                    actualAmount = month.actual_amount,
+                    pending = month.discount_amount,
                     paidAmount = month.paid_amount
                 )
             }
@@ -269,8 +270,8 @@ object FeeItemMapper {
                 groupId = null,
                 label = q.fee_name ?: "",
                 amount = q.amount_to_be_paid ?: "",
-                feeAmount = q.uom_price,//actual amount
-                discountAmount = q.amount_to_be_paid ?: "",//pending
+                actualAmount = q.uom_price,//actual amount
+                pending = q.amount_to_be_paid ?: "",//pending
                 paidAmount = null
             )
         }
@@ -279,8 +280,14 @@ object FeeItemMapper {
     }
 
     // ---- helper for combining several "₹1,234.00"-style amounts ----
-    // Currency symbol is read from the source strings, never hardcoded.
-
+//
+// SYMBOL: always read from the input itself — NEVER hardcoded. Works for
+// any prefix/suffix currency marker (₹, $, €, Rs., kr, £, etc.) because it
+// is extracted character-by-character from the first non-empty sample.
+//
+// DIGITS: the only hardcoded characters are DecimalFormat pattern symbols
+// (#, 0, comma, dot) — these are universal number-formatting syntax, not
+// tied to any currency, and control digit grouping/decimal places only.
     private fun List<String?>.sumAmounts(): String {
 
         val samples = filterNotNull()
@@ -289,31 +296,43 @@ object FeeItemMapper {
 
         if (samples.isEmpty()) return ""
 
-        // Get currency/prefix from the FIRST amount
-        val currency = samples.first()
-            .takeWhile { !it.isDigit() && it != '-' }
-            .trim()
+        val firstSample = samples.first()
 
-        // Calculate all amounts accurately
+        // Symbol/prefix: everything before the first digit or minus sign.
+        val prefix = firstSample.takeWhile { !it.isDigit() && it != '-' }
+
+        // Symbol/suffix: everything after the last digit (covers "100 ₹", "5.00 kr").
+        val suffix = firstSample.takeLastWhile { !it.isDigit() }
+            .let { if (it == prefix) "" else it } // avoid double-counting when prefix==suffix (e.g. all-symbol string)
+
+        var maxDecimalPlaces = 0
+
         val total = samples.fold(BigDecimal.ZERO) { sum, amount ->
 
             val numericValue = amount
                 .replace(",", "")
                 .filter { it.isDigit() || it == '.' || it == '-' }
 
-            val value = numericValue.toBigDecimalOrNull()
-                ?: BigDecimal.ZERO
+            val value = numericValue.toBigDecimalOrNull() ?: BigDecimal.ZERO
+
+            val decimalDigits = numericValue.substringAfter('.', "").length
+            if (decimalDigits > maxDecimalPlaces) {
+                maxDecimalPlaces = decimalDigits
+            }
 
             sum + value
         }
 
-        // Force English/normal digits
-        val formatter = DecimalFormat(
-            "#,##0.############################",
-            DecimalFormatSymbols(Locale.ENGLISH)
-        )
+        val scale = maxDecimalPlaces.coerceIn(0, 10)
+        val scaledTotal = total.setScale(scale, RoundingMode.HALF_UP)
 
-        return currency + formatter.format(total.stripTrailingZeros())
+        // These pattern characters are NOT currency symbols — they are
+        // DecimalFormat's own control syntax for digit grouping (#, 0) and
+        // decimal placement (.). Identical for every currency in the world.
+        val pattern = if (scale > 0) "#,##0." + "0".repeat(scale) else "#,##0"
+        val formatter = DecimalFormat(pattern, DecimalFormatSymbols(Locale.ENGLISH))
+
+        return prefix + formatter.format(scaledTotal) + suffix
     }
 }
 

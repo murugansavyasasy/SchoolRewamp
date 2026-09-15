@@ -217,42 +217,6 @@ class ViewIndividualFeePaymentProofDetails :
         refreshFeeBreakdownList()
     }
 
-//    private fun setupFeeBreakdownList(details: PaymentProofFeeDetails?) {
-//
-//        feeDetails = details
-//
-//        if (details == null) {
-//            binding.cardLnrFeeBreakDownDetails.visibility = View.GONE
-//            binding.lblFeeBreakDown.visibility = View.GONE
-//            return
-//        }
-//
-//        val hasNoFeeDetails =
-//            details.term.isEmpty() &&
-//                    details.others.isEmpty() &&
-//                    details.carryover.isEmpty() &&
-//                    details.transport.isEmpty() &&
-//                    details.hostel.isEmpty() &&
-//                    details.quantity.isEmpty()
-//
-//        if (hasNoFeeDetails) {
-//            binding.cardLnrFeeBreakDownDetails.visibility = View.GONE
-//            binding.lblFeeBreakDown.visibility = View.GONE
-//            return
-//        }
-//
-//        binding.cardLnrFeeBreakDownDetails.visibility = View.VISIBLE
-//        binding.lblFeeBreakDown.visibility = View.VISIBLE
-//
-//        binding.rcFeesBreakDown.layoutManager = LinearLayoutManager(this)
-//        binding.rcFeesBreakDown.setHasFixedSize(false)
-//        binding.rcFeesBreakDown.itemAnimator = null
-//
-//        binding.rcFeesBreakDown.adapter = feeAdapter
-//
-//        refreshFeeBreakdownList()
-//    }
-
     private fun refreshFeeBreakdownList() {
         val details = feeDetails ?: return
         val newList = FeeItemMapper.buildFlatList(this,details, expandedSectionId)

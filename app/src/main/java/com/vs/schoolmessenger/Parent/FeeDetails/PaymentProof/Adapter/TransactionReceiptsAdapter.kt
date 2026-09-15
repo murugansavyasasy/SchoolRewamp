@@ -112,7 +112,7 @@ class TransactionReceiptsAdapter(
 
     }
     private fun displayValue(value: String?): String {
-        return value?.takeIf { it.isNotBlank() } ?: "-"
+        return value?.uppercase()?.takeIf { it.isNotBlank() } ?: "-"
     }
 
     private fun getStatusColor(context: Context, status: String?): Int {
