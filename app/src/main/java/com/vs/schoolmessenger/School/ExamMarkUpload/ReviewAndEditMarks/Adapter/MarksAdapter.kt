@@ -49,7 +49,6 @@ class MarksAdapter(
     private var academicRemarksList: List<String> = initialAcademicRemarks
     private var behaviouralRemarksList: List<String> = initialBehaviouralRemarks
 
-
     fun updateRemarkSuggestions(academic: List<String>, behavioural: List<String>) {
         academicRemarksList = academic
         behaviouralRemarksList = behavioural
@@ -72,7 +71,6 @@ class MarksAdapter(
             .inflate(R.layout.row_marks, parent, false)
         return MarksViewHolder(view)
     }
-
 
     override fun onBindViewHolder(holder: MarksViewHolder, position: Int) {
 
@@ -257,7 +255,6 @@ class MarksAdapter(
             )
         }
 
-
         val et: EditText = if (column.isRemark) {
             AutoCompleteTextView(context).apply {
                 layoutParams = LinearLayout.LayoutParams(
@@ -290,7 +287,6 @@ class MarksAdapter(
 
                 background = ContextCompat.getDrawable(context, R.drawable.rect_bg_stroke_remark)
 
-
                 val dropDownArrow =
                     ContextCompat.getDrawable(context, android.R.drawable.arrow_down_float)
                 dropDownArrow?.setTint(
@@ -315,7 +311,8 @@ class MarksAdapter(
                 textSize = 14f
                 hint = "--"
                 gravity = Gravity.CENTER
-                inputType = InputType.TYPE_CLASS_TEXT
+                inputType = InputType.TYPE_CLASS_TEXT or
+                        if (column.isCoScholastic) InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS else 0
                 setPadding(10, 10, 10, 4)
 
                 if (isAllowedValue(excelValue, column)) {
@@ -325,7 +322,6 @@ class MarksAdapter(
                 }
             }
         }
-
 
         if (et is AutoCompleteTextView) {
             et.setOnItemClickListener { parent, _, pos, _ ->
@@ -347,7 +343,9 @@ class MarksAdapter(
         et.addTextChangedListener {
             val input = it.toString().trim()
             student.markTexts[columnIndex] = input
-            student.marks[columnIndex] = if (column.isRemark) null else input.toDoubleOrNull()
+
+            student.marks[columnIndex] =
+                if (column.isRemark || column.isCoScholastic) null else input.toDoubleOrNull()
 
             validateMark(
                 et, icon, student, column, input, oldValue, reviewReason
@@ -358,8 +356,12 @@ class MarksAdapter(
         topRow.addView(icon)
         columnLayout.addView(topRow)
 
-
-        if (isAllowedValue(oldValue, column) && isAllowedValue(excelValue, column) && oldValue != excelValue) {
+        if (isAllowedValue(oldValue, column) &&
+            isAllowedValue(excelValue, column) &&
+            oldValue.isNotEmpty() &&
+            excelValue.isNotEmpty() &&
+            oldValue != excelValue
+        ) {
             val prev = TextView(context).apply {
                 text = "prev - $oldValue"
                 textSize = 11f
@@ -368,7 +370,6 @@ class MarksAdapter(
             }
             columnLayout.addView(prev)
         }
-
 
         val isEditable = student.isEditList[columnIndex]
         et.isEnabled = isEditable
@@ -398,11 +399,47 @@ class MarksAdapter(
 
         val trimmed = value.trim()
 
-
         if (column.isRemark) {
-            icon.visibility = View.GONE
-            icon.layoutParams.width = 0
+            val trimmedForInfo = value.trim()
+
+            if (trimmedForInfo.isNotEmpty()) {
+                icon.visibility = View.VISIBLE
+                icon.layoutParams.width = 22.dp
+                icon.setImageResource(R.drawable.info_circle_black)
+                icon.setOnClickListener {
+                    showInfoPopup(icon, et.text?.toString()?.trim().orEmpty())
+                }
+            } else {
+                icon.visibility = View.GONE
+                icon.layoutParams.width = 0
+                icon.setOnClickListener(null)
+            }
+
             et.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_stroke_remark)
+            return
+        }
+
+        if (column.isCoScholastic) {
+            when {
+                !reviewReason.isNullOrEmpty() && trimmed.isNotEmpty() && trimmed == oldValue -> {
+                    showError(et, icon, reviewReason)
+                }
+
+                Constant.isMarkUploadFromAi &&
+                        oldValue.isNotEmpty() &&
+                        trimmed.isNotEmpty() &&
+                        oldValue != trimmed -> {
+                    showGreenInfo(
+                        et,
+                        icon,
+                        context.getString(
+                            R.string.existing_marks_differ_from_the_newly_uploaded_data
+                        )
+                    )
+                }
+
+                else -> clearError(et, icon)
+            }
             return
         }
 
@@ -422,7 +459,6 @@ class MarksAdapter(
             return
         }
 
-
         if (
             !reviewReason.isNullOrEmpty() &&
             trimmed == oldValue &&
@@ -432,7 +468,6 @@ class MarksAdapter(
             showError(et, icon, reviewReason)
             return
         }
-
 
         if (
             isAllowedValue(oldValue, column) &&
@@ -498,6 +533,40 @@ class MarksAdapter(
         }
     }
 
+
+    private fun showInfoPopup(anchorView: View, message: String) {
+
+        val popupView = LayoutInflater.from(anchorView.context)
+            .inflate(R.layout.popup_warning, null)
+
+        val popupRoot = popupView.findViewById<LinearLayout>(R.id.header)
+        val txtWarning = popupView.findViewById<TextView>(R.id.txtWarning)
+        val imgWarning = popupView.findViewById<ImageView>(R.id.imgWarning)
+
+        txtWarning.text = message
+
+        popupRoot.background =
+            ContextCompat.getDrawable(anchorView.context, R.drawable.rect_bg_stroke_blue)
+
+        imgWarning.setImageResource(R.drawable.info_circle)
+        imgWarning.setColorFilter(ContextCompat.getColor(anchorView.context, R.color.black))
+
+        txtWarning.setTextColor(
+            ContextCompat.getColor(anchorView.context, R.color.black)
+        )
+
+        PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        ).apply {
+            isOutsideTouchable = true
+            elevation = 12f
+            showAsDropDown(anchorView, 0, -anchorView.height - 20)
+        }
+    }
+
     private fun showWarningPopup(
         anchorView: View,
         message: String,
@@ -548,8 +617,10 @@ class MarksAdapter(
         }
     }
 
+
     private fun isAllowedValue(value: String, column: MarkColumn? = null): Boolean {
         if (column?.isRemark == true) return true
+        if (column?.isCoScholastic == true) return true
 
         return value.equals("AB", true) ||
                 value.equals("NA", true) ||
