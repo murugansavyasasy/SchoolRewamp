@@ -87,11 +87,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     private var academicRemarksList: List<String> = emptyList()
     private var behaviouralRemarksList: List<String> = emptyList()
 
-    /**
-     * co-scholastic id  ->  column header the user mapped it to on MapActivity.
-     * This is the ONLY source of truth for AI merging, because the API response
-     * does not echo the mapped column back for co-scholastic.
-     */
+
     private val coScholasticColumnMap = mutableMapOf<String, String>()
 
     private val searchHandler = android.os.Handler(android.os.Looper.getMainLooper())
@@ -329,9 +325,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         return value?.trim()?.lowercase()?.replace("[^a-z0-9]".toRegex(), "") ?: ""
     }
 
-    // ---------------------------------------------------------------------
-    // FIX 2 : merge now also handles CO-SCHOLASTIC and REMARKS, not just marks
-    // ---------------------------------------------------------------------
+
     private fun mergeMarksWithExtractedTable(
         apiResponse: MarkResponse, tableData: ParcelTableData?
     ): MarkResponse {
@@ -472,9 +466,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         )
     }
 
-    // ---------------------------------------------------------------------
-    // FIX 1a : de-duplicate columns so the same header can never be built twice
-    // ---------------------------------------------------------------------
     private fun buildHeaderColumns(response: MarkResponse): List<MarkColumn> {
         val columns = mutableListOf<MarkColumn>()
 

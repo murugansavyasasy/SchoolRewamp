@@ -288,7 +288,7 @@ class MarksAdapter(
                 background = ContextCompat.getDrawable(context, R.drawable.rect_bg_stroke_remark)
 
                 val dropDownArrow =
-                    ContextCompat.getDrawable(context, android.R.drawable.arrow_down_float)
+                    ContextCompat.getDrawable(context, R.drawable.ic_drop_down)
                 dropDownArrow?.setTint(
                     ContextCompat.getColor(context, R.color.mild_grey_dark)
                 )
