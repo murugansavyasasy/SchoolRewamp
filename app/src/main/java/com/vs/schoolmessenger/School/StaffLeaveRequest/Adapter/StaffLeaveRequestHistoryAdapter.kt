@@ -116,8 +116,7 @@ class StaffLeaveRequestHistoryAdapter(
         ) {
             textName.text = data.staff_name
             lblLogo.text = Constant.getInitials(data.staff_name?:"")
-
-            lblStartDate.text = Constant.convertDateTimeFormatDateMonth(data.from_date ?: "")
+           lblStartDate.text = Constant.convertDateTimeFormatDateMonth(data.from_date ?: "")
 
             lblEndDate.text = Constant.convertDateTimeFormatDateMonth(data.to_date ?: "")
 

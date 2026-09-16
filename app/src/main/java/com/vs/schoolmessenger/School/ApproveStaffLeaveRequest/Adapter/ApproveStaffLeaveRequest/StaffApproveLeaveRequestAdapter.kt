@@ -101,7 +101,6 @@ class StaffApproveLeaveRequestAdapter(
         private val textNoOfDays: TextView = itemView.findViewById(R.id.lblDays)
         private val btnCancel: TextView = itemView.findViewById(R.id.btnCancel)
         private val lblLogo: TextView = itemView.findViewById(R.id.lblLogo)
-        private val lblRole: TextView = itemView.findViewById(R.id.lblRole)
         private val lblLeaveStatus: TextView = itemView.findViewById(R.id.lblLeaveStatus)
 
         private val btnApprove: TextView = itemView.findViewById(R.id.btnApprove)
@@ -110,6 +109,7 @@ class StaffApproveLeaveRequestAdapter(
         private val lblSeeMoreDetails: TextView = itemView.findViewById(R.id.lblSeeMoreDetails)
         private val rlaHeader: RelativeLayout = itemView.findViewById(R.id.rlaHeader)
         private val cstStatus: ConstraintLayout = itemView.findViewById(R.id.cstStatus)
+        private val lblRole: TextView = itemView.findViewById(R.id.lblRole)
 
 
         @SuppressLint("UseCompatLoadingForDrawables")
@@ -160,6 +160,7 @@ class StaffApproveLeaveRequestAdapter(
                 )
 
             textReason.text = data.reason
+            lblRole.text = data.role?:""
 
             if (data.status == Constant.rejected) {
                 applyTintedBackground(

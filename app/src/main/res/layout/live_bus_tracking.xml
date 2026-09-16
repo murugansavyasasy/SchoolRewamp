@@ -57,9 +57,10 @@
             <LinearLayout
                 android:id="@+id/bottomSheet"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/bottom_sheet_bg_live_bus"
                 android:orientation="vertical"
+                app:behavior_fitToContents="false"
                 app:behavior_hideable="false"
                 app:behavior_peekHeight="@dimen/three_twenty"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -104,7 +105,6 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -118,7 +118,6 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="#1A1A2E"
                                 android:textSize="17sp" />
-
 
                         </LinearLayout>
 
@@ -323,13 +322,23 @@
                     android:textColor="#757575"
                     android:textSize="14sp" />
 
-                <LinearLayout
-                    android:id="@+id/routeStopsContainer"
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:paddingBottom="24dp" />
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fillViewport="false"
+                    android:scrollbars="vertical"
+                    android:overScrollMode="ifContentScrolls">
+
+                    <LinearLayout
+                        android:id="@+id/routeStopsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="20dp"
+                        android:paddingBottom="24dp" />
+
+                </ScrollView>
             </LinearLayout>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
