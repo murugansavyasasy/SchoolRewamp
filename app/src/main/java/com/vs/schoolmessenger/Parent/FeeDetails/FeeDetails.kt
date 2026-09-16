@@ -87,7 +87,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         binding.btnReceipt.setOnClickListener(this)
         binding.btnAllTrance.setOnClickListener(this)
         binding.rytRefresh.setOnClickListener(this)
-        binding.tabPaymentProof.setOnClickListener(this)
+        binding.lblViewPaymentProof.setOnClickListener(this)
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         isChildId = isChildDetails!!.child_id
@@ -391,7 +391,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 //                reloadPaymentPage()
             }
 
-            R.id.tabPaymentProof -> {
+            R.id.lblViewPaymentProof -> {
                 val intent = Intent(this, FeePaymentProof::class.java)
                 startActivity(intent)
             }

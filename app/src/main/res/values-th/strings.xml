@@ -1435,4 +1435,7 @@
     <string name="management">ฝ่ายบริหาร</string>
     <string name="principal">ผู้อำนวยการ</string>
     <string name="class_teacher">ครูประจำชั้น</string>
+    <string name="actual_amount">จำนวนเงินจริง</string>
+    <string name="view_payment_proof"><u>ดูหลักฐานการชำระเงิน</u></string>
+    <string name="refresh">รีเฟรช</string>
 </resources>

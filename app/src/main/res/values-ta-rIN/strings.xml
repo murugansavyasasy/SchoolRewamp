@@ -1435,4 +1435,7 @@
     <string name="management">நிர்வாகம்</string>
     <string name="principal">முதல்வர்</string>
     <string name="class_teacher">வகுப்பு ஆசிரியர்</string>
+    <string name="actual_amount">உண்மையான தொகை</string>
+    <string name="view_payment_proof"><u>கட்டணச் சான்றைக் காண்க</u></string>
+    <string name="refresh">புதுப்பி</string>
 </resources>

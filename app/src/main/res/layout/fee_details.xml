@@ -61,7 +61,7 @@
                     android:id="@+id/lblRef"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Refresh"
+                    android:text="@string/refresh"
                     android:textColor="@color/PrimaryColor"
                     android:textSize="@dimen/fifteen_sp" />
 
@@ -75,12 +75,24 @@
 
             </RelativeLayout>
         </LinearLayout>
+        <TextView
+            android:layout_marginTop="@dimen/five"
+            android:layout_below="@+id/headerview"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/ten"
+            android:textColor="@color/PrimaryColor"
+            android:text="@string/view_payment_proof"
+            android:id="@+id/lblViewPaymentProof"
+            android:layout_height="wrap_content">
+
+        </TextView>
 
         <HorizontalScrollView
             android:id="@+id/hsvTabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/headerview"
+            android:layout_below="@+id/lblViewPaymentProof"
             android:layout_marginTop="@dimen/five"
             android:fillViewport="true"
             android:overScrollMode="never"
@@ -180,35 +192,6 @@
                         android:layout_height="@dimen/three"
                         android:background="@color/athens_gray" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tabPaymentProof"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/btnPaymentProof"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingStart="@dimen/ten"
-                        android:paddingTop="@dimen/five"
-                        android:paddingEnd="@dimen/ten"
-                        android:paddingBottom="@dimen/five"
-                        android:text="@string/payment_proof"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/twele_sp" />
-
-                    <View
-                        android:id="@+id/linePaymentProof"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/three"
-                        android:background="@color/athens_gray" />
-                </LinearLayout>
-
             </LinearLayout>
         </HorizontalScrollView>
 

@@ -1435,4 +1435,7 @@
     <string name="management">الإدارة</string>
     <string name="principal">المدير</string>
     <string name="class_teacher">معلم الفصل</string>
+    <string name="actual_amount">المبلغ الفعلي</string>
+    <string name="view_payment_proof"><u>عرض إثبات الدفع</u></string>
+    <string name="refresh">تحديث</string>
 </resources>

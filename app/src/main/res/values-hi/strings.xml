@@ -1435,4 +1435,7 @@
     <string name="management">प्रबंधन</string>
     <string name="principal">प्रधानाचार्य</string>
     <string name="class_teacher">कक्षा शिक्षक</string>
+    <string name="actual_amount">वास्तविक राशि</string>
+    <string name="view_payment_proof"><u>भुगतान प्रमाण देखें</u></string>
+    <string name="refresh">रीफ़्रेश करें</string>
 </resources>
