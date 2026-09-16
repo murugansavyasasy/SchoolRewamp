@@ -1437,4 +1437,6 @@
     <string name="principal">Principal</string>
     <string name="class_teacher">Class Teacher</string>
     <string name="actual_amount">Actual Amount</string>
+    <string name="view_payment_proof"><u>View Payment Proof</u></string>
+    <string name="refresh">Refresh</string>
 </resources>
