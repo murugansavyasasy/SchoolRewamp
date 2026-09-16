@@ -198,13 +198,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
                     //Hardcode from here
                     //Added the hardcode data
-                    originalMenuList.add(
-                        MenuDetail(
-                            id = 222,
-                            name = "Raise Concern",
-                            description = "Student exam review and marks"
-                        )
-                    )
+//                    originalMenuList.add(
+//                        MenuDetail(
+//                            id = 222,
+//                            name = "Raise Concern",
+//                            description = "Student exam review and marks"
+//                        )
+//                    )
 
 
                     filteredMenuList.clear()
@@ -734,7 +734,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             )
 
 
-            Constant.M_EXAMREVIEW -> Intent(
+            Constant.M_RAISECONCERN -> Intent(
                 requireActivity(),
                 RaiseConcernActivity::class.java
             )

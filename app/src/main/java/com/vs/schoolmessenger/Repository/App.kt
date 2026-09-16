@@ -2408,7 +2408,7 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isRaiseConcernType(
         isToken: String,activity: Activity
     ) {
-        val reporting_url = SharedPreference.getBaseUrl(activity)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
         Log.d("reporting_url",reporting_url.toString())
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.isRaiseConcernType(isToken,activity)
@@ -2416,7 +2416,7 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isParentConcernlist(
         isToken: String,activity: Activity
     ) {
-        val reporting_url = SharedPreference.getBaseUrl(activity)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
         Log.d("reporting_url",reporting_url.toString())
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.isParentConcernlist(isToken,activity)

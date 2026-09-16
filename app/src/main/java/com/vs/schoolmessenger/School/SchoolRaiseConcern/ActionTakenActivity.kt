@@ -108,7 +108,7 @@ class ActionTakenActivity : BaseActivity<ActionTakenCreateBinding>(), View.OnCli
         studentId = intent.getStringExtra("student_id")
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
-        Constant.SELECTED_MENU_ID = Constant.M_EXAMREVIEW
+        Constant.SELECTED_MENU_ID = Constant.M_RAISECONCERN
 
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName

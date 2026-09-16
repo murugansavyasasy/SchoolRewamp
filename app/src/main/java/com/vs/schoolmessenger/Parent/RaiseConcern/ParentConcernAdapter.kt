@@ -219,7 +219,7 @@ class ParentConcernAdapter(
             thumbnail = "",
             isUnread = true,
             isCompleted = true,
-            isMenuType = Constant.M_EXAMREVIEW,
+            isMenuType = Constant.M_RAISECONCERN,
             fileList = convertedList,
         )
 
@@ -247,7 +247,7 @@ class ParentConcernAdapter(
             thumbnail = "",
             isUnread = true,
             isCompleted = true,
-            isMenuType = Constant.M_EXAMREVIEW,
+            isMenuType = Constant.M_RAISECONCERN,
             fileList = convertedList,
         )
 
