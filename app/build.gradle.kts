@@ -33,7 +33,7 @@ android {
         minSdk = 24
         //noinspection EditedTargetSdkVersion
         targetSdk = 37
-        versionCode = 213
+        versionCode = 214
 
         versionName = "8.12"
         // 👇 Add these lines

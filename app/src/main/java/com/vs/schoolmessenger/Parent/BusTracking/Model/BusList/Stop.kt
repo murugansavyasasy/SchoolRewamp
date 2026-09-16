@@ -10,5 +10,6 @@ data class Stop (
     val stop_time: String,
     val latitude: String,
     val longitude: String,
-    val landmark: String
+    val landmark: String,
+    val is_my_stop: Boolean
 ) : Parcelable
