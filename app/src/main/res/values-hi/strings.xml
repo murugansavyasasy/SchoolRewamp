@@ -1438,4 +1438,6 @@
     <string name="actual_amount">वास्तविक राशि</string>
     <string name="view_payment_proof"><u>भुगतान प्रमाण देखें</u></string>
     <string name="refresh">रीफ़्रेश करें</string>
+    <string name="behavioural_remark">व्यवहार संबंधी टिप्पणी</string>
+
 </resources>

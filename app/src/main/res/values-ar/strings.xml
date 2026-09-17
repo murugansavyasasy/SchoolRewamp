@@ -1438,4 +1438,5 @@
     <string name="actual_amount">المبلغ الفعلي</string>
     <string name="view_payment_proof"><u>عرض إثبات الدفع</u></string>
     <string name="refresh">تحديث</string>
+    <string name="behavioural_remark">ملاحظة سلوكية</string>
 </resources>

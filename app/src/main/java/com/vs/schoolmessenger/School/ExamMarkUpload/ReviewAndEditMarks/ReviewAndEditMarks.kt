@@ -441,7 +441,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     val extracted = extractedFor(
                         r.reference_type,
                         if (r.reference_type.equals("BEHAVIOURAL_REMARK", true))
-                            "Behavioural Remark" else "Remark"
+                            getString(R.string.behavioural_remark) else getString(R.string.remark)
                     )
                     if (!extracted.isNullOrBlank()) r.copy(mark = extracted) else r
                 }
@@ -529,9 +529,9 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
         firstStudent.remarks.orEmpty().forEach { r ->
             val label = if (r.reference_type.equals("BEHAVIOURAL_REMARK", true)) {
-                "Behavioural Remark"
+                getString(R.string.behavioural_remark)
             } else {
-                "Remark"
+                getString(R.string.remark)
             }
             columns.add(
                 MarkColumn(
