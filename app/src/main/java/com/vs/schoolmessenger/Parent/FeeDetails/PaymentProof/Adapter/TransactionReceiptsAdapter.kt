@@ -64,13 +64,13 @@ class TransactionReceiptsAdapter(
         bindField(
             holder.rowAmount,
             context.getString(R.string.amount),
-            displayValue(item.paid_amount)
+            displayValue(item.paid_amount?.uppercase())
         )
 
         bindField(
             holder.rowDate,
             context.getString(R.string.date),
-            displayValue(item.receipt_date)
+            displayValue(item.receipt_date?.uppercase())
         )
 
         bindField(
@@ -88,31 +88,31 @@ class TransactionReceiptsAdapter(
         bindField(
             holder.rowPayer,
             context.getString(R.string.payer),
-            displayValue(item.payer_name)
+            displayValue(item.payer_name?.uppercase())
         )
 
         bindField(
             holder.rowPayee,
             context.getString(R.string.payee),
-            displayValue(item.payee_name)
+            displayValue(item.payee_name?.uppercase())
         )
 
         bindField(
             holder.rowTime,
             context.getString(R.string.time),
-            displayValue(item.receipt_time)
+            displayValue(item.receipt_time?.uppercase())
         )
 
         bindField(
             holder.rowStatus,
             context.getString(R.string.payment_status),
-            displayValue(item.payment_status),
-            getStatusColor(context, item.payment_status)
+            displayValue(item.payment_status?.uppercase()),
+            getStatusColor(context, item.payment_status?.uppercase())
         )
 
     }
     private fun displayValue(value: String?): String {
-        return value?.uppercase()?.takeIf { it.isNotBlank() } ?: "-"
+        return value?.takeIf { it.isNotBlank() } ?: "-"
     }
 
     private fun getStatusColor(context: Context, status: String?): Int {
