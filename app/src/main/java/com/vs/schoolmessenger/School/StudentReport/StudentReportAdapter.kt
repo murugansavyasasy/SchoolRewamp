@@ -72,6 +72,7 @@ class StudentReportAdapter(
         private val lnrPhoneNumber: LinearLayout = itemView.findViewById(R.id.lnrMobileNumber)
         private val lnrSms: LinearLayout = itemView.findViewById(R.id.lnrSMS)
         private val lnrMail: LinearLayout = itemView.findViewById(R.id.lnrEmail)
+        private val lnrUpdateProfile: LinearLayout = itemView.findViewById(R.id.lnrUpdateProfile)
 
         fun bind(data: StudentReportData, listener: StudentReportClickListener) {
             // Bind actual data to the views
@@ -119,6 +120,10 @@ class StudentReportAdapter(
             }
 
             cameraicon.setOnClickListener {
+                listener.onCamerClick(data)
+            }
+
+            lnrUpdateProfile.setOnClickListener {
                 listener.onCamerClick(data)
             }
         }

@@ -431,7 +431,8 @@
                         android:layout_marginStart="@dimen/five"
                         android:drawablePadding="@dimen/three"
                         android:text="@string/sms"
-                        android:textColor="@color/navi_blue2"></TextView>
+                        android:textColor="@color/navi_blue2">
+                    </TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -456,6 +457,27 @@
                         android:layout_marginStart="@dimen/five"
                         android:text="@string/mail"
                         android:textColor="@color/navi_blue2">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrUpdateProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_toEndOf="@+id/lnrEmail"
+                    android:padding="3dp"
+                    android:background="@drawable/primary_rect_radius"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
+                        android:text="@string/update_profile"
+                        android:textColor="@color/white">
 
                     </TextView>
                 </LinearLayout>
