@@ -68,6 +68,7 @@ class StudentReportAdapter(
         private val lblStandardAndSection: TextView =
             itemView.findViewById(R.id.lblStandardAndSection)
         private val profileImage: ImageView = itemView.findViewById(R.id.imgStudent)
+        private val cameraicon: ImageView = itemView.findViewById(R.id.imgStudentIcon)
         private val lnrPhoneNumber: LinearLayout = itemView.findViewById(R.id.lnrMobileNumber)
         private val lnrSms: LinearLayout = itemView.findViewById(R.id.lnrSMS)
         private val lnrMail: LinearLayout = itemView.findViewById(R.id.lnrEmail)
@@ -115,6 +116,10 @@ class StudentReportAdapter(
 
             lnrPhoneNumber.setOnClickListener {
                 listener.onPhoneClick(data)
+            }
+
+            cameraicon.setOnClickListener {
+                listener.onCamerClick(data)
             }
         }
 

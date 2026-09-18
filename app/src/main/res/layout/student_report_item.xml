@@ -35,7 +35,21 @@
                     android:id="@+id/imgStudent"
                     android:layout_width="@dimen/hundred"
                     android:layout_height="@dimen/hundred"
-                    android:background="@drawable/rect_shadow_white"></ImageView>
+                    android:background="@drawable/rect_shadow_white"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:id="@+id/imgStudentIcon"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignBottom="@+id/imgStudent"
+                    android:layout_alignEnd="@+id/imgStudent"
+                    android:layout_marginEnd="@dimen/two"
+                    android:layout_marginBottom="@dimen/two"
+                    android:src="@drawable/camerasvgformat"
+                    android:background="@drawable/bg_oval_shape"
+                    android:padding="@dimen/three"
+                    android:elevation="4dp" />
                 <!--                <com.google.android.material.imageview.ShapeableImageView-->
                 <!--                    android:id="@+id/imgStudent"-->
                 <!--                    android:layout_width="@dimen/seventy"-->

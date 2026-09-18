@@ -1,38 +1,71 @@
 package com.vs.schoolmessenger.School.StudentReport
 
+import android.Manifest
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import android.widget.RelativeLayout
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
+import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardDropDownListAdapter
+import com.vs.schoolmessenger.Parent.RaiseConcern.RaiseConcernActivity.Companion.CAMERA_IMAGE_REQUEST
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
+import com.vs.schoolmessenger.Utils.Constant.selectedFiles
+import com.vs.schoolmessenger.Utils.FileItem
+import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.SectionDropDownListAdapter
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.StudentReportBinding
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener,
     StudentReportClickListener {
     private var appViewModel: App? = null
-    private lateinit var mAdapter: StudentReportAdapter
+    private lateinit var studentreportadapter: StudentReportAdapter
     private var isAccessToken: String? = null
     var isSection: List<Section>? = null
     var isValidAcademicYear = false
@@ -55,6 +88,26 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     private var currentSortType: SortType? = null
 
     private lateinit var genderSpinnerAdapter: SpinnerLoadingAdapter
+
+
+    var isTotalSelectedItem = 0
+    val isVideoSelectedArrayList = mutableListOf<FileItem>()
+
+    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
+
+    private var cameraImageFilePath: String? = null
+    private val CAMERA_PERMISSION_REQUEST_CODE = 200
+    private var cameraPermissionDeniedCount = 0
+    private var pickImagesLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
+    private var pickVideoLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
+    private var mAdapter: ImagePickingAdapter? = null
+
+    companion object {
+        private const val PICK_DOCUMENT_REQUEST = 1003
+        private const val PICK_IMAGE_REQUEST = 1001
+        internal const val CAMERA_IMAGE_REQUEST = 1004
+        private const val MAX_FILES = 10
+    }
 
 
     val handler = Handler(Looper.getMainLooper())
@@ -142,7 +195,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                 } else {
                     originalStudentList = emptyList()
                     currentFilteredList = emptyList()
-                    mAdapter.updateData(emptyList())
+                    studentreportadapter.updateData(emptyList())
                     binding.tabLayout.visibility = View.GONE
                     ErrorMessage(response.message)
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -224,9 +277,9 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
     private fun isGetStudentReport() {
         binding.txtSearchMenu.text.clear()
-        mAdapter = StudentReportAdapter(null, this, this, Constant.isShimmerViewShow)
+        studentreportadapter = StudentReportAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
-        binding.rcyStudentReport.adapter = mAdapter
+        binding.rcyStudentReport.adapter = studentreportadapter
 
         if (getString(R.string.all_student) == filterSelectedOption) {
             binding.rlaStandardPicking.visibility = View.GONE
@@ -279,7 +332,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             SortType.NAME_ASC -> currentFilteredList.sortedBy { it.name?.lowercase() }
             SortType.NAME_DESC -> currentFilteredList.sortedByDescending { it.name?.lowercase() }
         }
-        mAdapter.updateData(sortedList)
+        studentreportadapter.updateData(sortedList)
 
         if (binding.txtSearchMenu.text.isNotEmpty()) {
             filter(binding.txtSearchMenu.text.toString())
@@ -303,7 +356,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
         } else {
             ShowData()
-            mAdapter.updateData(currentFilteredList)
+            studentreportadapter.updateData(currentFilteredList)
         }
 
     }
@@ -324,10 +377,10 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             originalStudentList = studentReportData
             currentFilteredList = originalStudentList
 
-            mAdapter =
+            studentreportadapter =
                 StudentReportAdapter(currentFilteredList, this, this, Constant.isShimmerViewDisable)
             binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
-            binding.rcyStudentReport.adapter = mAdapter
+            binding.rcyStudentReport.adapter = studentreportadapter
             //whenever we call the student report we make it as default gender filter all and sort NoAsc
             genderSpinnerAdapter.selectedPosition = 0
             genderSpinnerAdapter.notifyDataSetChanged()
@@ -373,7 +426,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
         if (filteredList.isNotEmpty()) {
             ShowData()
-            mAdapter.updateData(filteredList)
+            studentreportadapter.updateData(filteredList)
         } else {
             ErrorMessage(Constant.NO_DATA_FOUND)
         }
@@ -679,5 +732,170 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
     override fun onMessageClick(data: StudentReportData) {
         Constant.redirectToMessageOnly(this, data.primary_mobile)
+    }
+
+    override fun onCamerClick(data: StudentReportData) {
+        showBottomDialog()
+    }
+
+    private fun showBottomDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.filepick_bottom_sheet)
+
+        val rlaGallery = dialog.findViewById<RelativeLayout>(R.id.rlaGallery)
+        val rlaCamera = dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
+        val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
+        val rlaVoice = dialog.findViewById<RelativeLayout>(R.id.rlaVoice)
+        val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
+
+        rlaGallery.setOnClickListener {
+            Constant.isFileLimit = 10
+            openAlbumSelectActivity(Constant.IMAGE)
+            dialog.dismiss()
+        }
+
+        rlaVoice.setOnClickListener {
+            Constant.isFileLimit = 10
+            openAlbumSelectActivity(Constant.AUDIO)
+            dialog.dismiss()
+        }
+        rlaVideoPick.visibility= View.GONE
+
+        rlaVideoPick.setOnClickListener {
+            val selectedVideoCount = selectedFiles.count { it.type == FileType.VIDEO }
+            if (selectedVideoCount >= 2) {
+                Toast.makeText(
+                    this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Constant.isFileLimit = 10
+                openAlbumSelectActivity(Constant.VIDEO)
+                dialog.dismiss()
+            }
+        }
+
+        rlaDocument.setOnClickListener {
+            Constant.isFileLimit = 10
+            openAlbumSelectActivity(Constant.DOCUMENT)
+            dialog.dismiss()
+        }
+
+        rlaCamera.setOnClickListener {
+            checkCameraPermissionAndOpenCamera()
+            dialog.dismiss()
+        }
+
+        dialog.window?.apply {
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            setGravity(Gravity.BOTTOM)
+            setWindowAnimations(R.style.PopupAnimation)
+        }
+        dialog.show()
+    }
+
+
+    private fun openAlbumSelectActivity(isFileType: String) {
+        Log.d("FileComing", isFileType)
+        if (isFileType == Constant.DOCUMENT) {
+            openSystemDocumentPicker()
+        } else if (isFileType == Constant.VIDEO) {
+            pickVideoLauncher!!.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly)
+            )
+        } else if (isFileType == Constant.IMAGE) {
+            pickImagesLauncher!!.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
+        }
+    }
+
+    private fun checkCameraPermissionAndOpenCamera() {
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            openCameraIntent()
+        } else {
+            if (cameraPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
+                    this, Manifest.permission.CAMERA
+                )
+            ) {
+                showCameraPermissionSettingsDialog()
+            } else {
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE
+                )
+            }
+        }
+    }
+
+    private fun openSystemDocumentPicker() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+            putExtra(Intent.EXTRA_MIME_TYPES, Constant.mimeTypes)
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        }
+        startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
+    }
+
+    private fun openCameraIntent() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        val photoFile = try {
+            createImageFile()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
+
+        if (photoFile == null) {
+            Toast.makeText(
+                this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val photoURI = FileProvider.getUriForFile(
+            this, "${applicationContext.packageName}.fileprovider", photoFile
+        )
+
+        cameraImageFilePath = photoFile.absolutePath
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+        try {
+            startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
+        } catch (e: Exception) {
+            Toast.makeText(this, getString(R.string.camera_not_available_on_this_device), Toast.LENGTH_SHORT).show()
+            Log.e("CameraError", "Camera launch failed", e)
+        }
+    }
+
+
+    private fun showCameraPermissionSettingsDialog() {
+        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.camera_permission_is_permanently_denied_please_enable_it_from_app_settings))
+            .setCancelable(false).setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.parse("package:$packageName")
+                }
+                startActivity(intent)
+            }.setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }.show()
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp: String =
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+
+        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
+        return File.createTempFile("${Constant.IMG_}${timeStamp}_", Constant.jpg, storageDir)
     }
 }
