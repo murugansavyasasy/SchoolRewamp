@@ -276,6 +276,8 @@ object APIMethods {
     const val isRemoveConcern ="admin/api/parent-concern/delete"
     const val isPaymentProof ="fee/api/fee-details/payment-proof"
 
+    const val isupdateporiflestudent = "admin/api/student-profile/update-profile"
+
 }
 
 

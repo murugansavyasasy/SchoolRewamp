@@ -190,6 +190,7 @@ import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffDeleteLeaveReq
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffLeaveListCatorgies.GetStaffLeaveCategoriesData
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffUpdateLeaveRequest.StaffLeaveUpdateRespone
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
+import com.vs.schoolmessenger.School.StudentReport.ProfileUpdateModel.StudentProfileUpdateResponse
 import com.vs.schoolmessenger.Utils.SharedPreference
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -524,6 +525,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isPaymentProof: LiveData<PaymentProofResponse?>? = null
     var getexamanalysis: LiveData<AcademicAnalysisResponse?>? = null
     var getcommonremarks: LiveData<CommonRemarksResponse?>? = null
+    var isupdateporiflestudent: LiveData<StudentProfileUpdateResponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -750,6 +752,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isPaymentProof = apiSchoolRepositoriesTwo.isPaymentProofLiveData
         getexamanalysis = apiSchoolRepositoriesTwo.getexamanalysisLiveData
         getcommonremarks = apiSchoolRepositoriesTwo.getcommonremarksLiveData
+        isupdateporiflestudent = apiSchoolRepositoriesTwo.isupdateporiflestudentLiveData
     }
 
     fun isDashBoardData(
@@ -2481,6 +2484,17 @@ class App(application: Application) : AndroidViewModel(application) {
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.getcommonremarks(isToken,standard_id,activity)
     }
+
+
+    fun isupdateporiflestudent(
+        isToken: String, jsonObject: JsonObject, activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        Log.d("reporting_url",reporting_url.toString())
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.isupdateporiflestudent(isToken,jsonObject,activity)
+    }
+
 
 }
 

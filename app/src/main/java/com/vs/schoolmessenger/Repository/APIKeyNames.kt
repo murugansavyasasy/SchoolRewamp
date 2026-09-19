@@ -161,6 +161,7 @@ object APIKeyNames {
     const val section_name = "section_name"
     const val father_name = "father_name"
     const val class_teacher = "class_teacher"
+    const val is_profile_edit = "is_profile_edit"
     const val upload = "upload"
     const val embed = "embed"
     const val player_embed_url = "player_embed_url"

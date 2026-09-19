@@ -199,6 +199,7 @@ import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffDeleteLeaveReq
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffLeaveListCatorgies.GetStaffLeaveCategoriesData
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffUpdateLeaveRequest.StaffLeaveUpdateRespone
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
+import com.vs.schoolmessenger.School.StudentReport.ProfileUpdateModel.StudentProfileUpdateResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -537,7 +538,11 @@ interface ApiInterfaces {
 
     @GET(APIMethods.giometric_principal_attendance_staff_report)
     fun giometricPrincipalAttendanceStaffReport(
-        @Header(APIKeyNames.Authorization) token: String, @Query("from_date") from_date: String?, @Query("to_date") to_date: String?,@Query("is_all") isAll: Boolean?, @Query(APIKeyNames.staff_id) isStaffId: String?
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("from_date") from_date: String?,
+        @Query("to_date") to_date: String?,
+        @Query("is_all") isAll: Boolean?,
+        @Query(APIKeyNames.staff_id) isStaffId: String?
     ): Call<AttendanceReportFromStaffDataClass?>?
 
 
@@ -1328,7 +1333,7 @@ interface ApiInterfaces {
         @Query(APIKeyNames.class_id) class_id: String,
         @Query(APIKeyNames.section_id) section_id: String,
         @Query(APIKeyNames.date) date: String,
-        @Query(APIKeyNames.academic_year_id)academic_year_id : String,
+        @Query(APIKeyNames.academic_year_id) academic_year_id: String,
         @Query(APIKeyNames.attendance_type) attendance_type: String
     ): Call<GetAttendanceStudentList>
 
@@ -1430,13 +1435,13 @@ interface ApiInterfaces {
     fun getHotelList(
         @Header(APIKeyNames.Authorization) token: String,
 
-    ): Call<getHostelList?>
+        ): Call<getHostelList?>
 
     @GET(APIMethods.gethoteldashboard)
     fun getHostelDasboard(
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.hostel_id) hostel_id: String?,
-        @Query(APIKeyNames.academic_year_id ) academic_year_id : String?
+        @Query(APIKeyNames.academic_year_id) academic_year_id: String?
 
     ): Call<getHostelDashboard?>
 
@@ -1450,9 +1455,9 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.hostel_id) hostel_id: String?,
         @Query(APIKeyNames.room_id) room_id: String?,
-        @Query(APIKeyNames.academic_year_id ) academic_year_id : String?,
-        @Query(APIKeyNames.date ) date : String?,
-        @Query(APIKeyNames.session_type_id ) session_type_id : String?
+        @Query(APIKeyNames.academic_year_id) academic_year_id: String?,
+        @Query(APIKeyNames.date) date: String?,
+        @Query(APIKeyNames.session_type_id) session_type_id: String?
     ): Call<getHostelStudentRoomAttendance?>
 
 
@@ -1465,18 +1470,18 @@ interface ApiInterfaces {
     @GET(APIMethods.gethostelschooloutpassrequst)
     fun getHostelSchoolOutpassList(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.year_id ) year_id : String?,
-        @Query(APIKeyNames.month_id ) month_id : String?,
-        @Query(APIKeyNames.hostel_id  ) hostel_id  : String?,
-        @Query(APIKeyNames.academic_year_id  ) academic_year_id  : String?,
+        @Query(APIKeyNames.year_id) year_id: String?,
+        @Query(APIKeyNames.month_id) month_id: String?,
+        @Query(APIKeyNames.hostel_id) hostel_id: String?,
+        @Query(APIKeyNames.academic_year_id) academic_year_id: String?,
     ): Call<getSchoolHostelOutpassRequest?>
 
     @GET(APIMethods.gethostelschoolattendancereport)
     fun getHostelSchoolAttendanceReport(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.hostel_id) hostel_id  : String?,
-        @Query(APIKeyNames.date) date : String?,
-        @Query(APIKeyNames.academic_year_id) academic_year_id   : String?,
+        @Query(APIKeyNames.hostel_id) hostel_id: String?,
+        @Query(APIKeyNames.date) date: String?,
+        @Query(APIKeyNames.academic_year_id) academic_year_id: String?,
     ): Call<getSchoolHostelAttendanceReport?>
 
 
@@ -1495,10 +1500,10 @@ interface ApiInterfaces {
     @GET(APIMethods.parentHostelDashboard)
     fun parentHostelDashboard(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.hostel_id) hostel_id  : Int?,
-        @Query(APIKeyNames.year_id ) year_id : Int?,
-        @Query(APIKeyNames.month_id ) month_id   : Int?,
-        @Query(APIKeyNames.country_id ) country_id   : String?,
+        @Query(APIKeyNames.hostel_id) hostel_id: Int?,
+        @Query(APIKeyNames.year_id) year_id: Int?,
+        @Query(APIKeyNames.month_id) month_id: Int?,
+        @Query(APIKeyNames.country_id) country_id: String?,
     ): Call<getParentHostelDashboard?>
 
     @Headers("Content-Type: application/json")
@@ -1533,36 +1538,40 @@ interface ApiInterfaces {
 
     fun isLiveBus(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("journey_type") journey_type : String
+        @Query("journey_type") journey_type: String
     ): Call<getLiveBus?>
 
 
     @GET(APIMethods.Getlatestgeolocation)
     fun isgetgeolocation(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("device_id") device_id : String,
-        @Query("vehicle_id") vehicle_id  : String,
-        @Query("route_id") route_id  : String,
+        @Query("device_id") device_id: String,
+        @Query("vehicle_id") vehicle_id: String,
+        @Query("route_id") route_id: String,
     ): Call<GetLatestGeoLocationResponse?>
 
 
     @GET(APIMethods.GetisgetSectionWiseSubjects)
     fun isgetSectionWiseSubjects(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("section_ids") section_ids : String,
+        @Query("section_ids") section_ids: String,
     ): Call<Subjectlistresponse?>
 
 
     @Headers("Content-Type: application/json")
     @GET(APIMethods.isClassTestStudent)
     fun isClassTestStudent(
-        @Header(APIKeyNames.Authorization) token: String): Call<ClassTestResponse?>
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<ClassTestResponse?>
 
 
     @Headers("Content-Type: application/json")
     @GET(APIMethods.isViewClassTestStudent)
     fun isViewClassTestStudent(
-        @Header(APIKeyNames.Authorization) token: String,  @Query("class_test_id") class_test_id  : String,): Call<ClassTestMarkResponse?>
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("class_test_id") class_test_id: String,
+    ): Call<ClassTestMarkResponse?>
+
     @POST(APIMethods.PostCreateClasstest)
     fun ispostCreateClasstest(
         @Header(APIKeyNames.Authorization) token: String,
@@ -1573,9 +1582,9 @@ interface ApiInterfaces {
     @GET(APIMethods.GetExamReportDetails)
     fun isgetExamreportdetails(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("class_test_id") class_test_id  : String,
-        @Query("exam_date") exam_date   : String,
-        @Query("academic_year_id") academic_year_id   : String,
+        @Query("class_test_id") class_test_id: String,
+        @Query("exam_date") exam_date: String,
+        @Query("academic_year_id") academic_year_id: String,
     ): Call<ExamlistModelResponse?>
 
 
@@ -1595,11 +1604,11 @@ interface ApiInterfaces {
     @GET(APIMethods.examdetailsmark)
     fun isexamDetailsMark(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("class_test_id") class_test_id  : String,
-        @Query("section_id") section_id   : String,
-        @Query("class_test_subject_id") class_test_subject_id    : String,
+        @Query("class_test_id") class_test_id: String,
+        @Query("section_id") section_id: String,
+        @Query("class_test_subject_id") class_test_subject_id: String,
 
-    ): Call<ClassEntryMarkResponse?>
+        ): Call<ClassEntryMarkResponse?>
 
 
     @POST(APIMethods.Examdetailsmarkpost)
@@ -1613,28 +1622,32 @@ interface ApiInterfaces {
     @GET(APIMethods.isExamtestAnalysis)
     fun isExamtestAnalysis(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("student_id") student_id   : String,
-        @Query("analysis_set_id") analysis_set_id    : String,)
-    : Call<StudentAnalysisResponse?>
+        @Query("student_id") student_id: String,
+        @Query("analysis_set_id") analysis_set_id: String,
+    )
+            : Call<StudentAnalysisResponse?>
 
     @Headers("Content-Type: application/json")
     @GET(APIMethods.isExamtestAnalysisSets)
     fun isExamtestAnalysisSets(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("class_id") class_id  : String,
-        @Query("section_id") section_id  : String,)
+        @Query("class_id") class_id: String,
+        @Query("section_id") section_id: String,
+    )
             : Call<AnalysisSetsResponse?>
 
     @Headers("Content-Type: application/json")
     @GET(APIMethods.isRaiseConcernType)
     fun isRaiseConcernType(
-        @Header(APIKeyNames.Authorization) token: String): Call<ConcernTypeResponse?>
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<ConcernTypeResponse?>
 
 
     @Headers("Content-Type: application/json")
     @GET(APIMethods.isParentConcernlist)
     fun isParentConcernlist(
-        @Header(APIKeyNames.Authorization) token: String): Call<ParentConcernResponse?>
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<ParentConcernResponse?>
 
 
     @POST(APIMethods.isRaiseParentConcern)
@@ -1660,23 +1673,32 @@ interface ApiInterfaces {
     @GET(APIMethods.isPaymentProof)
     fun isPaymentProof(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("country_id") country_id   : String,)
+        @Query("country_id") country_id: String,
+    )
             : Call<PaymentProofResponse?>
-
 
 
     @Headers("Content-Type: application/json")
     @GET(APIMethods.getexamanalysis)
     fun getexamanalysis(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("exam_id") exam_id : String,)
+        @Query("exam_id") exam_id: String,
+    )
             : Call<AcademicAnalysisResponse?>
 
 
-        @Headers("Content-Type: application/json")
-        @GET(APIMethods.getcommonremarks)
-        fun getcommonremarks(
-            @Header(APIKeyNames.Authorization) token: String,
-            @Query("standard_id") standard_id  : String,)
-                : Call<CommonRemarksResponse?>
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.getcommonremarks)
+    fun getcommonremarks(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("standard_id") standard_id: String,
+    )
+            : Call<CommonRemarksResponse?>
+
+
+    @POST(APIMethods.isupdateporiflestudent)
+    fun isupdateporiflestudent(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<StudentProfileUpdateResponse?>
 }

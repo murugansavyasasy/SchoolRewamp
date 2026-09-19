@@ -38,6 +38,7 @@ import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassUpdateSt
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.getHostelStudentRoomAttendance
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.RoomMarkAttendance.hostelMarkAttendanceRespone
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
+import com.vs.schoolmessenger.School.StudentReport.ProfileUpdateModel.StudentProfileUpdateResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -75,6 +76,7 @@ class SchoolServicesTwo {
     var isPaymentProof: MutableLiveData<PaymentProofResponse?>
     var getexamanalysis: MutableLiveData<AcademicAnalysisResponse?>
     var getcommonremarks: MutableLiveData<CommonRemarksResponse?>
+    var isupdateporiflestudent: MutableLiveData<StudentProfileUpdateResponse?>
 
 
     init {
@@ -110,6 +112,7 @@ class SchoolServicesTwo {
         isPaymentProof = MutableLiveData()
         getexamanalysis = MutableLiveData()
         getcommonremarks = MutableLiveData()
+        isupdateporiflestudent = MutableLiveData()
 
     }
 
@@ -1078,5 +1081,38 @@ class SchoolServicesTwo {
 
     val getcommonremarksLiveData: LiveData<CommonRemarksResponse?>
         get() = getcommonremarks
+
+
+
+
+    fun isupdateporiflestudent(
+        isToken: String,jsonObject: JsonObject,activity: Activity) {
+        RestClient.Companion.apiInterfaces.isupdateporiflestudent(isToken,jsonObject)
+            ?.enqueue(object : Callback<StudentProfileUpdateResponse?> {
+                override fun onResponse(
+                    call: Call<StudentProfileUpdateResponse?>, response: Response<StudentProfileUpdateResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isupdateporiflestudent.postValue(response.body())
+                        }
+                    } else {
+                        isupdateporiflestudent.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StudentProfileUpdateResponse?>, t: Throwable) {
+                    isupdateporiflestudent.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isupdateporiflestudentLiveData: LiveData<StudentProfileUpdateResponse?>
+        get() = isupdateporiflestudent
 
 }

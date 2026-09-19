@@ -24,6 +24,7 @@ data class StudentReportData(
     @SerializedName(APIKeyNames.section_name) val section_name: String,
     @SerializedName(APIKeyNames.father_name) val father_name: String,
     @SerializedName(APIKeyNames.class_teacher) val class_teacher: String,
+    @SerializedName(APIKeyNames.is_profile_edit) val is_profile_edit: Boolean,
 
 
 //existing code

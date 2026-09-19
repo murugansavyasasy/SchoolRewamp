@@ -38,13 +38,12 @@ class StudentReportAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.student_report_item, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+            DataViewHolder(view, context)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
             itemList?.get(position)?.let { data ->
                 holder.bind(data, listener)
             }
@@ -52,7 +51,7 @@ class StudentReportAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
+        return if (isLoading) 20
         else itemList?.size ?: 0
     }
 
@@ -75,7 +74,6 @@ class StudentReportAdapter(
         private val lnrUpdateProfile: LinearLayout = itemView.findViewById(R.id.lnrUpdateProfile)
 
         fun bind(data: StudentReportData, listener: StudentReportClickListener) {
-            // Bind actual data to the views
             lblAdmissionNumber.text = data.admission_no
             lblGender.text = data.gender
             lblDOB.text = Constant.convertDateTimeFormat(data.dob)
@@ -98,11 +96,16 @@ class StudentReportAdapter(
                 lnrMail.visibility = View.GONE
             }
 
+
+            val canEditProfile = data.is_profile_edit == true
+            cameraicon.visibility = if (canEditProfile) View.VISIBLE else View.GONE
+            lnrUpdateProfile.visibility = if (canEditProfile) View.VISIBLE else View.GONE
+
             Glide.with(context)
                 .load(data.profile)
                 .placeholder(R.drawable.image_placeholder)
-                .dontAnimate()  // Skip fade-in for snappier lists
-                .priority(Priority.HIGH)  // Prioritize over other loads
+                .dontAnimate()
+                .priority(Priority.HIGH)
                 .error(R.drawable.default_profile)
                 .into(profileImage)
 
@@ -119,12 +122,17 @@ class StudentReportAdapter(
                 listener.onPhoneClick(data)
             }
 
-            cameraicon.setOnClickListener {
-                listener.onCamerClick(data)
-            }
+            if (canEditProfile) {
+                cameraicon.setOnClickListener {
+                    listener.onCamerClick(data)
+                }
 
-            lnrUpdateProfile.setOnClickListener {
-                listener.onCamerClick(data)
+                lnrUpdateProfile.setOnClickListener {
+                    listener.onCamerClick(data)
+                }
+            } else {
+                cameraicon.setOnClickListener(null)
+                lnrUpdateProfile.setOnClickListener(null)
             }
         }
 
