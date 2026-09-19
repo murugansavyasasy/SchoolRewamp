@@ -256,7 +256,9 @@ class MarksAdapter(
         }
 
         val et: EditText = if (column.isRemark) {
-            AutoCompleteTextView(context).apply {
+            object : AutoCompleteTextView(context) {
+                override fun enoughToFilter(): Boolean = false
+            }.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f
                 )
@@ -277,7 +279,7 @@ class MarksAdapter(
                 }
 
                 setAdapter(
-                    ArrayAdapter(
+                    NoFilterArrayAdapter(
                         context,
                         android.R.layout.simple_dropdown_item_1line,
                         suggestions
@@ -629,4 +631,30 @@ class MarksAdapter(
 
     private fun normalize(value: String?): String =
         value?.lowercase()?.replace("[^a-z0-9]".toRegex(), "") ?: ""
+}
+
+class NoFilterArrayAdapter(
+    context: Context,
+    resource: Int,
+    private val items: List<String>
+) : ArrayAdapter<String>(context, resource, items) {
+
+    private val noOpFilter = object : android.widget.Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val results = FilterResults()
+            results.values = items
+            results.count = items.size
+            return results
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            notifyDataSetChanged()
+        }
+
+        override fun convertResultToString(resultValue: Any?): CharSequence {
+            return resultValue as? String ?: ""
+        }
+    }
+
+    override fun getFilter(): android.widget.Filter = noOpFilter
 }

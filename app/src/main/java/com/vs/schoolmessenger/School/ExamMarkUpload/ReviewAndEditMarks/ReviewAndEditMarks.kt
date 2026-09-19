@@ -151,7 +151,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
 
         appViewModel!!.getcommonremarks?.observe(this) { response ->
-            val items = response?.data?.data.orEmpty()
+            val items = response?.data.orEmpty()
             academicRemarksList = items.map { it.academic_remarks }.distinct()
             behaviouralRemarksList = items.map { it.behavioural_remarks }.distinct()
 
