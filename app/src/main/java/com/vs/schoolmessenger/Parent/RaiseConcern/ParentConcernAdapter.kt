@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -52,7 +53,7 @@ class ParentConcernAdapter(
         holder.binding.apply {
             lblStudentName.text = item.student_name
             lblClassInfo.text =
-                "${context.getString(R.string.Class_)} ${item.class_name}-${item.section_name} \u00b7 ${context.getString(R.string.ID)}: ${item.student_id.take(3)}..."
+                "${context.getString(R.string.Class_)} ${item.class_name}-${item.section_name}"
             lblInitials.text = getInitials(item.student_name)
             lblConcernType.text = item.type_name
 
@@ -80,8 +81,7 @@ class ParentConcernAdapter(
             btnDelete.visibility = if (item.can_delete) View.VISIBLE else View.GONE
             btnDelete.setOnClickListener { onDeleteClick(item) }
 
-            // Parent can only VIEW acknowledgement / action taken - never act on it.
-            // Driven purely by whether the timestamps are populated.
+
             val showAcknowledgeBtn = item.acknowledged_on.isNotBlank()
             val showActionBtn = item.action_taken_on.isNotBlank()
 
@@ -89,34 +89,56 @@ class ParentConcernAdapter(
                 if (showAcknowledgeBtn || showActionBtn) View.VISIBLE else View.GONE
 
             if (showAcknowledgeBtn) {
-                btnAcknowledge.visibility = View.VISIBLE
+                lnrAcknowledge.visibility = View.VISIBLE
                 btnAcknowledge.text = context.getString(R.string.view_acknowledgement)
-                btnAcknowledge.setBackgroundResource(R.drawable.bg_button_acknowledge_outline)
+                lnrAcknowledge.setBackgroundResource(R.drawable.bg_button_acknowledge_outline)
                 btnAcknowledge.setTextColor(
                     ContextCompat.getColor(btnAcknowledge.context, R.color.PrimaryColor)
                 )
-                btnAcknowledge.setOnClickListener { showAcknowledgeDetailsPopup(item) }
+                lnrAcknowledge.setOnClickListener { showAcknowledgeDetailsPopup(item) }
             } else {
-                btnAcknowledge.visibility = View.GONE
+                lnrAcknowledge.visibility = View.GONE
             }
 
             if (showActionBtn) {
-                btnActionTaken.visibility = View.VISIBLE
+                lnrActionTaken.visibility = View.VISIBLE
                 btnActionTaken.text = context.getString(R.string.view_action_taken)
-                btnActionTaken.setBackgroundResource(R.drawable.bg_button_green_action_taken)
+                lnrActionTaken.setBackgroundResource(R.drawable.bg_button_green_action_taken)
                 btnActionTaken.setTextColor(
                     ContextCompat.getColor(btnActionTaken.context, R.color.light_shade_yellow)
                 )
-                btnActionTaken.setOnClickListener { showActionTakenDetailsPopup(item) }
+                lnrActionTaken.setOnClickListener { showActionTakenDetailsPopup(item) }
             } else {
-                btnActionTaken.visibility = View.GONE
+                lnrActionTaken.visibility = View.GONE
             }
+
+
 
             lytParentAttachmentsHeader.setOnClickListener {
                 openFilePreview(item, item.file_path)
             }
+
+            lblDescription.setOnClickListener {
+                openFilePreview(item, item.file_path)
+            }
+
+            lblActionDescription.setOnClickListener {
+                if (item.is_action){
+                    openActionFilePreview(item, item.action_file_path)
+                }
+                else{
+                    Toast.makeText(context,context.getString(R.string.no_action_has_been_taken_for_this_concern), Toast.LENGTH_SHORT).show()
+                }
+            }
+
             lytActionAttachmentsHeader.setOnClickListener {
-                openActionFilePreview(item, item.action_file_path)
+                if (item.is_action){
+                    openActionFilePreview(item, item.action_file_path)
+                }
+                else{
+                    Toast.makeText(context,
+                        context.getString(R.string.no_action_has_been_taken_for_this_concern), Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

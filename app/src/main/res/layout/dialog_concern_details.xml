@@ -18,6 +18,7 @@
             android:layout_height="@dimen/twenty_two"
             android:src="@drawable/file_noticeboard"
             app:tint="@color/PrimaryColor"
+            android:visibility="gone"
             xmlns:app="http://schemas.android.com/apk/res-auto" />
 
         <TextView

@@ -58,7 +58,7 @@ class SchoolRaiseConcernAdapter(
         holder.binding.apply {
             lblStudentName.text = item.student_name
             lblClassInfo.text =
-                "${context.getString(R.string.Class_)} ${item.class_name}-${item.section_name} \u00b7 ${context.getString(R.string.ID)}: ${item.student_id.take(3)}..."
+                "${context.getString(R.string.Class_)} ${item.class_name}-${item.section_name}"
             lblInitials.text = getInitials(item.student_name)
             lblConcernType.text = item.type_name
             if (item.description.isNullOrEmpty()) {
@@ -86,20 +86,20 @@ class SchoolRaiseConcernAdapter(
 
             if (item.is_acknowledged) {
                 btnAcknowledge.text = context.getString(R.string.acknowledge)
-                btnAcknowledge.setBackgroundResource(R.drawable.bg_button_blue)
+                lnrAcknowledge.setBackgroundResource(R.drawable.bg_button_blue1)
                 btnAcknowledge.setTextColor(
                     ContextCompat.getColor(btnAcknowledge.context, R.color.white)
                 )
-                btnAcknowledge.setOnClickListener { showAcknowledgeInputDialog(item) }
+                lnrAcknowledge.setOnClickListener { showAcknowledgeInputDialog(item) }
 
 //                btnActionTaken.visibility = View.GONE
             } else {
                 btnAcknowledge.text = context.getString(R.string.view_acknowledge)
-                btnAcknowledge.setBackgroundResource(R.drawable.bg_button_acknowledge_outline)
+                lnrAcknowledge.setBackgroundResource(R.drawable.bg_button_acknowledge_outline)
                 btnAcknowledge.setTextColor(
                     ContextCompat.getColor(btnAcknowledge.context, R.color.PrimaryColor)
                 )
-                btnAcknowledge.setOnClickListener { showAcknowledgeDetailsPopup(item) }
+                lnrAcknowledge.setOnClickListener { showAcknowledgeDetailsPopup(item) }
 
 //                btnActionTaken.visibility = View.VISIBLE
 
@@ -107,20 +107,20 @@ class SchoolRaiseConcernAdapter(
 
             if (item.is_action) {
                 btnActionTaken.text = context.getString(R.string.action_taken)
-                btnActionTaken.setBackgroundResource(R.drawable.bg_button_green)
+                lnrActionTaken.setBackgroundResource(R.drawable.bg_button_green)
                 btnActionTaken.setTextColor(
                     ContextCompat.getColor(btnActionTaken.context, R.color.white)
                 )
-                btnActionTaken.setOnClickListener { onActionTakenClick(item) }
+                lnrActionTaken.setOnClickListener { onActionTakenClick(item) }
 
 //                    btnAcknowledge.visibility = View.GONE
             } else {
                 btnActionTaken.text = context.getString(R.string.view_action_taken)
-                btnActionTaken.setBackgroundResource(R.drawable.bg_button_green_action_taken)
+                lnrActionTaken.setBackgroundResource(R.drawable.bg_button_green_action_taken)
                 btnActionTaken.setTextColor(
                     ContextCompat.getColor(btnActionTaken.context, R.color.light_shade_yellow)
                 )
-                btnActionTaken.setOnClickListener { showActionTakenDetailsPopup(item) }
+                lnrActionTaken.setOnClickListener { showActionTakenDetailsPopup(item) }
 
 //                    btnAcknowledge.visibility = View.VISIBLE
             }
@@ -128,8 +128,25 @@ class SchoolRaiseConcernAdapter(
             lytParentAttachmentsHeader.setOnClickListener {
                 openFilePreview(item, item.file_path)
             }
+            lblDescription.setOnClickListener {
+                openFilePreview(item, item.file_path)
+            }
+
+            lblActionDescription.setOnClickListener {
+                if (!item.is_action){
+                    openActionFilePreview(item, item.action_file_path)
+                }
+                else{
+                    Toast.makeText(context,context.getString(R.string.no_action_has_been_taken_for_this_concern), Toast.LENGTH_SHORT).show()
+                }
+            }
             lytActionAttachmentsHeader.setOnClickListener {
-                openActionFilePreview(item, item.action_file_path)
+                if (!item.is_action){
+                    openActionFilePreview(item, item.action_file_path)
+                }
+                else{
+                    Toast.makeText(context,context.getString(R.string.no_action_has_been_taken_for_this_concern), Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

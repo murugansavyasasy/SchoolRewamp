@@ -1441,5 +1441,7 @@
     <string name="behavioural_remark">व्यवहार संबंधी टिप्पणी</string>
     <string name="update_profile">प्रोफ़ाइल अपडेट करें</string>
     <string name="proof_detected_amount">प्रमाण में पाई गई राशि</string>
+    <string name="edit_profile">प्रोफ़ाइल संपादित करें</string>
+    <string name="no_action_has_been_taken_for_this_concern">इस चिंता के संबंध में कोई कार्रवाई नहीं की गई है</string>
 
 </resources>

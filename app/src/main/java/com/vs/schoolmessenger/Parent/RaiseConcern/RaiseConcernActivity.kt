@@ -119,6 +119,7 @@ class RaiseConcernActivity :
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         Constant.SELECTED_MENU_ID = Constant.M_RAISECONCERN
+        binding.lblHeaderTitle.text= Constant.isSelectedMenuName
 
 
         binding.toolbarLayout.apply {

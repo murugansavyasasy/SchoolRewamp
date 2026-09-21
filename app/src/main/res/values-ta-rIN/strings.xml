@@ -1441,5 +1441,7 @@
     <string name="behavioural_remark">நடத்தை குறிப்பு</string>
     <string name="update_profile">சுயவிவரத்தைப் புதுப்பிக்கவும்</string>
     <string name="proof_detected_amount">ஆதாரத்தில் கண்டறியப்பட்ட தொகை</string>
+    <string name="edit_profile">சுயவிவரத்தைத் திருத்து</string>
+    <string name="no_action_has_been_taken_for_this_concern">இந்தக் கவலை தொடர்பாக எந்த நடவடிக்கையும் எடுக்கப்படவில்லை</string>
 
 </resources>

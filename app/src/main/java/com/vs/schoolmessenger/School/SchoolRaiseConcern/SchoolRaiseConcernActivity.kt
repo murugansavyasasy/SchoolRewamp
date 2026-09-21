@@ -179,7 +179,7 @@ class SchoolRaiseConcernActivity : BaseActivity<SchoolRaiseConcernBinding>(), Vi
             list = concernList,
             context = this,
             onAcknowledgeClick = { concern, description -> onAcknowledgeClicked(concern, description) },
-            onActionTakenClick = { concern -> onActionTakenClicked(concern) }
+             onActionTakenClick = { concern -> onActionTakenClicked(concern) }
         )
         binding.rvConcernList.layoutManager = LinearLayoutManager(this)
         binding.rvConcernList.adapter = concernAdapter

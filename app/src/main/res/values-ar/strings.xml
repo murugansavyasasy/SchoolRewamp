@@ -1441,5 +1441,7 @@
     <string name="behavioural_remark">ملاحظة سلوكية</string>
     <string name="update_profile">تحديث الملف الشخصي</string>
     <string name="proof_detected_amount">المبلغ المكتشف من الإثبات</string>
+    <string name="edit_profile">تعديل الملف الشخصي</string>
+    <string name="no_action_has_been_taken_for_this_concern">لم يتم اتخاذ أي إجراء بشأن هذا الاستفسار</string>
 
 </resources>

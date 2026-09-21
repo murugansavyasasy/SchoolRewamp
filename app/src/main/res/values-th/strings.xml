@@ -1441,5 +1441,7 @@
     <string name="behavioural_remark">หมายเหตุด้านพฤติกรรม</string>
     <string name="update_profile">อัปเดตโปรไฟล์</string>
     <string name="proof_detected_amount">จำนวนเงินที่ตรวจพบจากหลักฐาน</string>
+    <string name="edit_profile">แก้ไขโปรไฟล์</string>
+    <string name="no_action_has_been_taken_for_this_concern">ยังไม่มีการดำเนินการใด ๆ กับข้อกังวลนี้</string>
 
 </resources>
