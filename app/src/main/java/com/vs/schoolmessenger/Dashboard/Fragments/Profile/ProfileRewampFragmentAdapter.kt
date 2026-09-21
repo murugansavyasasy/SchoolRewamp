@@ -154,7 +154,6 @@ class ProfileRewampFragmentAdapter(
         private val addlabel: TextView = itemView.findViewById(R.id.addlabel)
         private val selectedFilesContainer: FrameLayout =
             itemView.findViewById(R.id.selectedFilesContainer)
-        private val rowDivider: View = itemView.findViewById(R.id.rowDivider)
 
         var isRcyImagesAttached = false
 
@@ -200,7 +199,7 @@ class ProfileRewampFragmentAdapter(
                 }
             )
 
-            rowDivider.visibility = if (last) View.GONE else View.VISIBLE
+//            rowDivider.visibility = if (last) View.GONE else View.VISIBLE
 
             (itemView.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
                 lp.marginStart = dp(16)

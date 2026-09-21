@@ -74,10 +74,7 @@ class SchoolProfileRewampFragmentAdapter(
 
     override fun getItemCount(): Int = itemList.size
 
-    /**
-     * Is [position]'s field the first *visible* field within its section
-     * (i.e. the nearest preceding item, skipping hidden photoPath fields, is a Header)?
-     */
+
     private fun isFirstInSection(position: Int): Boolean {
         var i = position - 1
         while (i >= 0) {
@@ -95,10 +92,6 @@ class SchoolProfileRewampFragmentAdapter(
         return true
     }
 
-    /**
-     * Is [position]'s field the last *visible* field within its section
-     * (i.e. the nearest following item, skipping hidden photoPath fields, is a Header or end of list)?
-     */
     private fun isLastInSection(position: Int): Boolean {
         var i = position + 1
         while (i < itemList.size) {
@@ -162,11 +155,7 @@ class SchoolProfileRewampFragmentAdapter(
         private fun dp(value: Int): Int =
             (value * itemView.resources.displayMetrics.density).toInt()
 
-        /**
-         * Gives the row a rounded "card" look — the group of fields belonging to one
-         * section header is rendered as a single white rounded card (top / middle /
-         * bottom / single piece), with a thin divider between rows inside the same card.
-         */
+
         private fun applyCardGrouping(position: Int) {
             val first = isFirstInSection(position)
             val last = isLastInSection(position)
@@ -224,7 +213,7 @@ class SchoolProfileRewampFragmentAdapter(
                 Constant.text_, Constant.mobile, Constant.number -> {
                     titlelayout.visibility = View.VISIBLE
 
-//                    titlelabel.text = editableLabelText(field)
+                    titlelabel.text = requiredLabel(field)
 
                     titlevalue.hint = field.title
                     titlevalue.setHintTextColor(Color.parseColor(HINT_COLOR))
@@ -327,7 +316,7 @@ class SchoolProfileRewampFragmentAdapter(
                 Constant.address -> {
                     remarkslayout.visibility = View.VISIBLE
 
-//                    remarkslabel.text = editableLabelText(field)
+                    remarkslabel.text = requiredLabel(field)
 
                     remarksvalue.hint = field.title
                     remarksvalue.setHintTextColor(Color.parseColor(HINT_COLOR))
@@ -346,7 +335,7 @@ class SchoolProfileRewampFragmentAdapter(
                 Constant.calendar -> {
                     datelayout.visibility = View.VISIBLE
 
-//                    datelabel.text = editableLabelText(field)
+                    datelabel.text = requiredLabel(field)
 
                     if (field.value.isNullOrBlank()) {
                         datevalue.text = field.title.orEmpty()
@@ -397,7 +386,7 @@ class SchoolProfileRewampFragmentAdapter(
                     val radioFemale: RadioButton = itemView.findViewById(R.id.radioFemale)
                     val radioOthers: RadioButton = itemView.findViewById(R.id.radioOthers)
 
-//                    genderLabel.text = editableLabelText(field)
+                    genderLabel.text = requiredLabel(field)
 
                     when (field.value?.lowercase()) {
                         Constant.male -> radioMale.isChecked = true
@@ -423,7 +412,7 @@ class SchoolProfileRewampFragmentAdapter(
                 Constant.dropdown -> {
                     dropdownlayout.visibility = View.VISIBLE
 
-//                    dropdownlabel.text = editableLabelText(field)
+                    dropdownlabel.text = requiredLabel(field)
 
                     val options = field.options.orEmpty()
 
@@ -452,10 +441,7 @@ class SchoolProfileRewampFragmentAdapter(
 
         private fun requiredLabel(field: ProfileField): CharSequence {
             return if (field.optional == false) {
-                Html.fromHtml(
-                    "${field.title} <font color='#FF0000'>*</font>",
-                    Html.FROM_HTML_MODE_LEGACY
-                )
+                field.title.orEmpty()
             } else {
                 field.title.orEmpty()
             }
@@ -498,27 +484,6 @@ class SchoolProfileRewampFragmentAdapter(
                 }
             }
         }
-
-
-//        private fun editableLabelText(field: ProfileField): CharSequence {
-//            val editStatusText = if (field.is_editable) {
-//                " <font color='#4CAF50'><small>(Editable)</small></font>"
-//            } else {
-//                " <font color='#9E9E9E'><small>(Non-editable)</small></font>"
-//            }
-//
-//            return if (field.optional == false) {
-//                Html.fromHtml(
-//                    "${field.title} <font color='#FF0000'>*</font>$editStatusText",
-//                    Html.FROM_HTML_MODE_LEGACY
-//                )
-//            } else {
-//                Html.fromHtml(
-//                    "${field.title}$editStatusText",
-//                    Html.FROM_HTML_MODE_LEGACY
-//                )
-//            }
-//        }
 
         fun detachRcyImages() {
             if (isRcyImagesAttached) {
