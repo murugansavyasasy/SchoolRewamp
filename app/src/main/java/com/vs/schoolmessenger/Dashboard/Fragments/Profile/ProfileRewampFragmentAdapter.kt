@@ -181,11 +181,7 @@ class ProfileRewampFragmentAdapter(
         private fun dp(value: Int): Int =
             (value * itemView.resources.displayMetrics.density).toInt()
 
-        /**
-         * Gives the row a rounded "card" look (top/middle/bottom/single piece of a
-         * white card grouping all fields belonging to one section header) and shows
-         * or hides the thin divider between consecutive rows in the same card.
-         */
+
         private fun applyCardGrouping(position: Int) {
             val first = isFirstInSection(position)
             val last = isLastInSection(position)
