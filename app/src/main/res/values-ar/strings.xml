@@ -1440,4 +1440,6 @@
     <string name="refresh">تحديث</string>
     <string name="behavioural_remark">ملاحظة سلوكية</string>
     <string name="update_profile">تحديث الملف الشخصي</string>
+    <string name="proof_detected_amount">المبلغ المكتشف من الإثبات</string>
+
 </resources>

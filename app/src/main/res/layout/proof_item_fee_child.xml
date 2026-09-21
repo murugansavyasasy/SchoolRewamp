@@ -49,12 +49,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:weightSum="4">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:orientation="vertical">
 
                 <TextView
@@ -78,8 +78,9 @@
 
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_marginHorizontal="@dimen/three"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:orientation="vertical">
 
                 <TextView

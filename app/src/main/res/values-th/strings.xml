@@ -1440,4 +1440,6 @@
     <string name="refresh">รีเฟรช</string>
     <string name="behavioural_remark">หมายเหตุด้านพฤติกรรม</string>
     <string name="update_profile">อัปเดตโปรไฟล์</string>
+    <string name="proof_detected_amount">จำนวนเงินที่ตรวจพบจากหลักฐาน</string>
+
 </resources>

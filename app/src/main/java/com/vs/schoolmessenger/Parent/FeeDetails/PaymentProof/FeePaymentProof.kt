@@ -290,16 +290,16 @@ class FeePaymentProof :
             paymentAdapter.getStatusCount("rejected")
 
         binding.btnAll.text =
-            "${getString(R.string.all)} $allCount"
+            "${getString(R.string.all)} ( $allCount )"
 
         binding.btnPending.text =
-            "${getString(R.string.pending)} $pendingCount"
+            "${getString(R.string.pending)} ( $pendingCount )"
 
         binding.btnApproved.text =
-            "${getString(R.string.approved)} $approvedCount"
+            "${getString(R.string.approved)} ( $approvedCount )"
 
         binding.btnRejected.text =
-            "${getString(R.string.rejected)} $rejectedCount"
+            "${getString(R.string.rejected)} ( $rejectedCount )"
     }
 
 

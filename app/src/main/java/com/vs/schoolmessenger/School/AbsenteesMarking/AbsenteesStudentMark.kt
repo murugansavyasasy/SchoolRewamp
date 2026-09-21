@@ -779,6 +779,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         var absentCount = 0
         var odCount = 0
 
+
         for (student in currentList) {
             val parts = student.att_status?.split("/") ?: listOf("P", "P")
             val firstHalf = parts.getOrNull(0) ?: "P"

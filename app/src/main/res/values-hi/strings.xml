@@ -1440,5 +1440,6 @@
     <string name="refresh">रीफ़्रेश करें</string>
     <string name="behavioural_remark">व्यवहार संबंधी टिप्पणी</string>
     <string name="update_profile">प्रोफ़ाइल अपडेट करें</string>
+    <string name="proof_detected_amount">प्रमाण में पाई गई राशि</string>
 
 </resources>

@@ -238,13 +238,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     //Hardcode from here
                     //Added the hardcode data
 
-//                                        originalMenuList.add(
-//                        MenuDetail(
-//                            id = 222,
-//                            name = "Raise Concern",
-//                            description = "Student exam review and marks"
-//                        )
-//                    )
+                                        originalMenuList.add(
+                        MenuDetail(
+                            id = Constant.M_RAISECONCERN,
+                            name = "Raise Concern",
+                            description = "Student exam review and marks"
+                        )
+                    )
 
                     //Hardcode till here
                     filteredMenuList.clear()
