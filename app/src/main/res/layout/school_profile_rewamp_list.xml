@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
@@ -52,7 +53,6 @@
                     android:inputType="textCapWords"
                     android:padding="@dimen/zero"
                     android:singleLine="true"
-                    android:text="SARON"
                     android:textAlignment="viewStart"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/thirteen_sp" />
@@ -96,15 +96,13 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:ellipsize="end"
-                    android:inputType="textCapWords"
                     android:padding="@dimen/zero"
                     android:singleLine="true"
-                    android:text="SARON"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/thirteen_sp" />
 
                 <ImageView
-                    android:id="@id/ivCalendarIcon"
+                    android:id="@+id/ivCalendarIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_calendar" />
@@ -114,11 +112,12 @@
         </LinearLayout>
 
 
-        <LinearLayout
+        <!-- GENDER: wraps to the next line on narrow screens -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/genderLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/ten"
             android:visibility="gone">
 
             <TextView
@@ -126,50 +125,61 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/eight"
                 android:text="@string/Gender"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/fourteen_sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <RadioGroup
-                android:id="@+id/radioGenderGroup"
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/genderFlow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/eight"
+                app:constraint_referenced_ids="radioMale,radioFemale,radioOthers"
+                app:flow_horizontalBias="0"
+                app:flow_horizontalGap="@dimen/sixteen"
+                app:flow_horizontalStyle="packed"
+                app:flow_verticalGap="@dimen/eight"
+                app:flow_wrapMode="chain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/genderLabel" />
 
-                <RadioButton
-                    android:id="@+id/radioMale"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="@dimen/ten"
-                    android:paddingVertical="@dimen/five"
-                    android:text="@string/male"
-                    android:textSize="@dimen/thirteen_sp" />
+            <RadioButton
+                android:id="@+id/radioMale"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingHorizontal="@dimen/five"
+                android:paddingVertical="@dimen/five"
+                android:text="@string/male"
+                android:textSize="@dimen/thirteen_sp" />
 
-                <RadioButton
-                    android:id="@+id/radioFemale"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/sixteen"
-                    android:paddingHorizontal="@dimen/ten"
-                    android:paddingVertical="@dimen/five"
-                    android:text="@string/female"
-                    android:textSize="@dimen/thirteen_sp" />
+            <RadioButton
+                android:id="@+id/radioFemale"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingHorizontal="@dimen/five"
+                android:paddingVertical="@dimen/five"
+                android:text="@string/female"
+                android:textSize="@dimen/thirteen_sp" />
 
-                <RadioButton
-                    android:id="@+id/radioOthers"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/sixteen"
-                    android:paddingHorizontal="@dimen/ten"
-                    android:paddingVertical="@dimen/five"
-                    android:text="@string/others"
-                    android:textSize="@dimen/thirteen_sp" />
-            </RadioGroup>
-        </LinearLayout>
+            <RadioButton
+                android:id="@+id/radioOthers"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingHorizontal="@dimen/five"
+                android:paddingVertical="@dimen/five"
+                android:text="@string/others"
+                android:textSize="@dimen/thirteen_sp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <LinearLayout
@@ -186,7 +196,7 @@
                 android:layout_height="wrap_content"
                 android:text="Blood Group"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/fourteen_sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/dropdownValueBox"
@@ -231,7 +241,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Remarks"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/fourteen_sp" />
 
             <EditText
                 android:id="@+id/remarksvalue"
@@ -273,7 +283,7 @@
                     android:layout_weight="0.8"
                     android:text="@string/document_name"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/fourteen_sp" />
 
                 <TextView
                     android:id="@+id/addlabel"
@@ -286,7 +296,7 @@
                     android:padding="5dp"
                     android:text="@string/plus_add"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/fourteen_sp" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

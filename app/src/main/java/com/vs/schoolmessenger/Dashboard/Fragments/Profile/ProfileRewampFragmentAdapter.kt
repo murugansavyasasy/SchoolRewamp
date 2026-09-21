@@ -16,8 +16,8 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -147,7 +147,7 @@ class ProfileRewampFragmentAdapter(
         private val remarkslayout: LinearLayout = itemView.findViewById(R.id.remarks_layout)
         private val dropdownlabel: TextView = itemView.findViewById(R.id.dropdownlabel)
         private val remarkslabel: TextView = itemView.findViewById(R.id.remarkslabel)
-        private val genderLayout: LinearLayout = itemView.findViewById(R.id.genderLayout)
+        private val genderLayout: ConstraintLayout = itemView.findViewById(R.id.genderLayout)
         private val titlelayout: LinearLayout = itemView.findViewById(R.id.titlelayout)
         private val imagelayout: LinearLayout = itemView.findViewById(R.id.imagelayout)
         private val imagelabel: TextView = itemView.findViewById(R.id.imagelabel)
@@ -455,11 +455,10 @@ class ProfileRewampFragmentAdapter(
                     genderLayout.visibility = View.VISIBLE
                     val editStatusText = editStatusSuffix(field)
                     val genderLabel: TextView = itemView.findViewById(R.id.genderLabel)
-                    val radioGroup: RadioGroup = itemView.findViewById(R.id.radioGenderGroup)
                     val radioMale: RadioButton = itemView.findViewById(R.id.radioMale)
                     val radioFemale: RadioButton = itemView.findViewById(R.id.radioFemale)
                     val radioOthers: RadioButton = itemView.findViewById(R.id.radioOthers)
-
+                    val allGenderButtons = listOf(radioMale, radioFemale, radioOthers)
 
                     genderLabel.text = if (field.optional == false) {
                         Html.fromHtml(
@@ -473,26 +472,23 @@ class ProfileRewampFragmentAdapter(
                         )
                     }
 
-                    when (field.value?.lowercase()) {
-                        Constant.male -> radioMale.isChecked = true
-                        Constant.female -> radioFemale.isChecked = true
-                        Constant.others -> radioOthers.isChecked = true
-                        else -> radioGroup.clearCheck()
-                    }
+                    radioMale.isChecked = field.value?.lowercase() == Constant.male
+                    radioFemale.isChecked = field.value?.lowercase() == Constant.female
+                    radioOthers.isChecked = field.value?.lowercase() == Constant.others
 
-                    for (i in 0 until radioGroup.childCount) {
-                        radioGroup.getChildAt(i).isEnabled = canEdit
-                    }
+                    allGenderButtons.forEach { it.isEnabled = canEdit }
 
-                    radioGroup.setOnCheckedChangeListener { _, checkedId ->
-                        if (!canEdit) return@setOnCheckedChangeListener
-                        field.value = when (checkedId) {
+                    val genderClickListener = View.OnClickListener { clicked ->
+                        if (!canEdit) return@OnClickListener
+                        allGenderButtons.forEach { it.isChecked = (it === clicked) }
+                        field.value = when (clicked.id) {
                             R.id.radioMale -> Constant.male
                             R.id.radioFemale -> Constant.female
                             R.id.radioOthers -> Constant.others
                             else -> null
                         }
                     }
+                    allGenderButtons.forEach { it.setOnClickListener(genderClickListener) }
                 }
 
                 Constant.dropdown -> {

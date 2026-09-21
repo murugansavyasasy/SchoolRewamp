@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.graphics.Color
 import android.text.Editable
-import android.text.Html
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +16,8 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,7 +29,6 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Profile.Listener.DocumentClick
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import java.util.Calendar
-import kotlin.collections.orEmpty
 
 class SchoolProfileRewampFragmentAdapter(
     private var itemList: List<ProfileItem>,
@@ -141,7 +139,14 @@ class SchoolProfileRewampFragmentAdapter(
         private val dropdownlayout: LinearLayout = itemView.findViewById(R.id.dropdownlayout)
         private val dropdownlabel: TextView = itemView.findViewById(R.id.dropdownlabel)
 
-        private val genderLayout: LinearLayout = itemView.findViewById(R.id.genderLayout)
+        // Gender is a ConstraintLayout + Flow so the buttons wrap on narrow screens
+        private val genderLayout: ConstraintLayout = itemView.findViewById(R.id.genderLayout)
+        private val genderLabel: TextView = itemView.findViewById(R.id.genderLabel)
+        private val radioMale: RadioButton = itemView.findViewById(R.id.radioMale)
+        private val radioFemale: RadioButton = itemView.findViewById(R.id.radioFemale)
+        private val radioOthers: RadioButton = itemView.findViewById(R.id.radioOthers)
+        private val genderRadios: List<RadioButton> =
+            listOf(radioMale, radioFemale, radioOthers)
 
         private val imagelayout: LinearLayout = itemView.findViewById(R.id.imagelayout)
         private val imagelabel: TextView = itemView.findViewById(R.id.imagelabel)
@@ -252,7 +257,9 @@ class SchoolProfileRewampFragmentAdapter(
                     } ?: emptyList()
 
                     recyclerView.adapter = DocumentImageAdapter(
-                        context = itemView.context, files = files, isSubjectName = field.title ?: ""
+                        context = itemView.context,
+                        files = files,
+                        isSubjectName = field.title ?: ""
                     )
 
                     if (field.isRcyImagesAttached) {
@@ -279,8 +286,7 @@ class SchoolProfileRewampFragmentAdapter(
                         val fileName = doc.documentName
                             ?: doc.documentPath.substringAfterLast("/")
 
-                        val extension = fileName.substringAfterLast(".", "")
-                            .uppercase()
+                        val extension = fileName.substringAfterLast(".", "").uppercase()
 
                         val type = when (extension) {
                             "JPG", "JPEG", "PNG", "GIF" -> "IMG"
@@ -320,7 +326,9 @@ class SchoolProfileRewampFragmentAdapter(
 
                     remarksvalue.hint = field.title
                     remarksvalue.setHintTextColor(Color.parseColor(HINT_COLOR))
-                    remarksvalue.setTextColor(ContextCompat.getColor(itemView.context, R.color.black))
+                    remarksvalue.setTextColor(
+                        ContextCompat.getColor(itemView.context, R.color.black)
+                    )
 
                     if (field.is_editable) {
                         remarksvalue.setSafeTextWatcher(field) { field.value = it }
@@ -342,7 +350,9 @@ class SchoolProfileRewampFragmentAdapter(
                         datevalue.setTextColor(Color.parseColor(HINT_COLOR))
                     } else {
                         datevalue.text = field.value
-                        datevalue.setTextColor(ContextCompat.getColor(itemView.context, R.color.black))
+                        datevalue.setTextColor(
+                            ContextCompat.getColor(itemView.context, R.color.black)
+                        )
                     }
 
                     val openDatePicker: (View) -> Unit = {
@@ -380,32 +390,32 @@ class SchoolProfileRewampFragmentAdapter(
                 Constant.gender -> {
                     genderLayout.visibility = View.VISIBLE
 
-                    val genderLabel: TextView = itemView.findViewById(R.id.genderLabel)
-                    val radioGroup: RadioGroup = itemView.findViewById(R.id.radioGenderGroup)
-                    val radioMale: RadioButton = itemView.findViewById(R.id.radioMale)
-                    val radioFemale: RadioButton = itemView.findViewById(R.id.radioFemale)
-                    val radioOthers: RadioButton = itemView.findViewById(R.id.radioOthers)
-
                     genderLabel.text = requiredLabel(field)
 
-                    when (field.value?.lowercase()) {
-                        Constant.male -> radioMale.isChecked = true
-                        Constant.female -> radioFemale.isChecked = true
-                        Constant.others -> radioOthers.isChecked = true
-                        else -> radioGroup.clearCheck()
+                    val selected = when (field.value?.lowercase()) {
+                        Constant.male -> radioMale
+                        Constant.female -> radioFemale
+                        Constant.others -> radioOthers
+                        else -> null
                     }
+                    applyGenderSelection(selected)
 
-                    for (i in 0 until radioGroup.childCount) {
-                        radioGroup.getChildAt(i).isEnabled = field.is_editable
-                    }
+                    genderRadios.forEach { it.isEnabled = field.is_editable }
 
-                    radioGroup.setOnCheckedChangeListener { _, checkedId ->
-                        field.value = when (checkedId) {
-                            R.id.radioMale -> Constant.male
-                            R.id.radioFemale -> Constant.female
-                            R.id.radioOthers -> Constant.others
-                            else -> null
+                    if (field.is_editable) {
+                        genderRadios.forEach { button ->
+                            button.setOnClickListener {
+                                applyGenderSelection(button)
+                                field.value = when (button.id) {
+                                    R.id.radioMale -> Constant.male
+                                    R.id.radioFemale -> Constant.female
+                                    R.id.radioOthers -> Constant.others
+                                    else -> null
+                                }
+                            }
                         }
+                    } else {
+                        genderRadios.forEach { it.setOnClickListener(null) }
                     }
                 }
 
@@ -425,7 +435,9 @@ class SchoolProfileRewampFragmentAdapter(
                     dropdownvalue.setAdapter(adapterDropdown)
                     dropdownvalue.hint = field.title
                     dropdownvalue.setHintTextColor(Color.parseColor(HINT_COLOR))
-                    dropdownvalue.setTextColor(ContextCompat.getColor(itemView.context, R.color.black))
+                    dropdownvalue.setTextColor(
+                        ContextCompat.getColor(itemView.context, R.color.black)
+                    )
                     dropdownvalue.setText(field.value ?: "", false)
                     dropdownvalue.isEnabled = field.is_editable
 
@@ -438,13 +450,18 @@ class SchoolProfileRewampFragmentAdapter(
             }
         }
 
+        /**
+         * The radio buttons are not inside a RadioGroup (they live in a Flow so they can
+         * wrap onto a second line), so single-selection is enforced here.
+         * Uses click listeners rather than checked-change listeners, so programmatic
+         * updates during recycling can never fire a callback for the wrong field.
+         */
+        private fun applyGenderSelection(selected: RadioButton?) {
+            genderRadios.forEach { it.isChecked = (it === selected) }
+        }
 
         private fun requiredLabel(field: ProfileField): CharSequence {
-            return if (field.optional == false) {
-                field.title.orEmpty()
-            } else {
-                field.title.orEmpty()
-            }
+            return field.title.orEmpty()
         }
 
         private fun clearTextWatcher(editText: EditText) {
