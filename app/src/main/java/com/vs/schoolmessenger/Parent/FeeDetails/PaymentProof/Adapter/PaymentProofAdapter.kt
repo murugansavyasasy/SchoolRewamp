@@ -176,6 +176,10 @@ class PaymentProofAdapter(
             itemView.findViewById(
                 R.id.lblDate
             )
+        private val lblProofCount: TextView =
+            itemView.findViewById(
+                R.id.lblProofCount
+            )
         private val cardPayment: CardView =
             itemView.findViewById(
                 R.id.cardPayment
@@ -233,15 +237,9 @@ class PaymentProofAdapter(
                     )
                 }
 
+            lblDate.text ="${context.getString(R.string.created_on)} : ${createdDate}"
 
-            lblDate.text =
-                if (photoCount > 0) {
-
-                    "${context.getString(R.string.created_on)} : $createdDate · $photoCount $photosLetter"
-
-                } else {
-                    "${context.getString(R.string.created_on)} : ${createdDate}"
-                }
+            lblProofCount.text="$photoCount $photosLetter"
 
 
 //            if (

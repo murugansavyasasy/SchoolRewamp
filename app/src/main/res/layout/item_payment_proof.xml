@@ -65,7 +65,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="02-09 · 2 photos"
+                android:text="02-09"
+                android:textColor="#596579"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/lblProofCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="2 photos"
                 android:textColor="#596579"
                 android:textSize="11sp" />
 
