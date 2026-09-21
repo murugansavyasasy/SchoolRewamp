@@ -281,11 +281,15 @@ class MarksAdapter(
                 setAdapter(
                     NoFilterArrayAdapter(
                         context,
-                        android.R.layout.simple_dropdown_item_1line,
+                        R.layout.item_remark_suggestion,
                         suggestions
                     )
                 )
                 threshold = 1
+
+                setDropDownWidth(
+                    calculateDropdownWidth(context, suggestions, textSizeSp = 14f)
+                )
 
                 background = ContextCompat.getDrawable(context, R.drawable.rect_bg_stroke_remark)
 
@@ -418,30 +422,6 @@ class MarksAdapter(
             }
 
             et.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_stroke_remark)
-            return
-        }
-
-        if (column.isCoScholastic) {
-            when {
-                !reviewReason.isNullOrEmpty() && trimmed.isNotEmpty() && trimmed == oldValue -> {
-                    showError(et, icon, reviewReason)
-                }
-
-                Constant.isMarkUploadFromAi &&
-                        oldValue.isNotEmpty() &&
-                        trimmed.isNotEmpty() &&
-                        oldValue != trimmed -> {
-                    showGreenInfo(
-                        et,
-                        icon,
-                        context.getString(
-                            R.string.existing_marks_differ_from_the_newly_uploaded_data
-                        )
-                    )
-                }
-
-                else -> clearError(et, icon)
-            }
             return
         }
 
@@ -622,7 +602,6 @@ class MarksAdapter(
 
     private fun isAllowedValue(value: String, column: MarkColumn? = null): Boolean {
         if (column?.isRemark == true) return true
-        if (column?.isCoScholastic == true) return true
 
         return value.equals("AB", true) ||
                 value.equals("NA", true) ||
@@ -631,6 +610,20 @@ class MarksAdapter(
 
     private fun normalize(value: String?): String =
         value?.lowercase()?.replace("[^a-z0-9]".toRegex(), "") ?: ""
+
+
+    private fun calculateDropdownWidth(context: Context, suggestions: List<String>, textSizeSp: Float): Int {
+        val paint = android.text.TextPaint().apply {
+            textSize = textSizeSp * context.resources.displayMetrics.scaledDensity
+        }
+        val maxTextWidth = suggestions.maxOfOrNull { paint.measureText(it).toInt() } ?: 0
+        val horizontalPadding = 32.dp
+        val screenWidth = context.resources.displayMetrics.widthPixels
+        val maxAllowed = (screenWidth * 0.85).toInt()
+        val minWidth = 280.dp
+
+        return (maxTextWidth + horizontalPadding).coerceIn(minWidth, maxAllowed)
+    }
 }
 
 class NoFilterArrayAdapter(
