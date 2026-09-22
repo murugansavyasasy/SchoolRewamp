@@ -380,7 +380,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     this
                 )
             binding.recycleStudents.adapter = mAdapter
-            binding.recycleStudents.isNestedScrollingEnabled = false
+//            binding.recycleStudents.isNestedScrollingEnabled = false
 
             //we are checking whether all are marked as present or absent at initial time
             binding.cbSelect.isChecked = studentsList?.all { student ->
@@ -755,8 +755,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         }
 
         studentsList = FilterAttendanceList
-
-
         isCountAttendance()
         Log.d("ActivitySelectedIDs", studentsList.toString())
 
