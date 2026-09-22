@@ -1443,4 +1443,6 @@
     <string name="update_profile">Update Profile</string>
     <string name="proof_detected_amount">Proof Detected Amount</string>
     <string name="no_action_has_been_taken_for_this_concern">No Action has been taken for this concern</string>
+    <string name="request_for_edit">Request For Edit</string>
+    <string name="raised_concern">Raised concern</string>
 </resources>

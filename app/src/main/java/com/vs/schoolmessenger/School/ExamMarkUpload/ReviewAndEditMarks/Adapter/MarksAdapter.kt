@@ -41,7 +41,7 @@ class MarksAdapter(
 
     private val SUBJECT_CELL_WIDTH = 200
     private val SUBJECT_CELL_GAP = 40
-    private val REMARK_CELL_WIDTH = 280
+    private val REMARK_CELL_WIDTH = 340
 
     private val MALE_COLOR = Color.parseColor("#2196F3")
     private val FEMALE_COLOR = Color.parseColor("#E91E63")
@@ -264,13 +264,15 @@ class MarksAdapter(
                 )
                 textSize = 14f
                 hint = "--"
-                gravity = Gravity.TOP or Gravity.START
+                gravity = Gravity.CENTER_VERTICAL or Gravity.START
                 inputType = InputType.TYPE_CLASS_TEXT or
-                        InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or
-                        InputType.TYPE_TEXT_FLAG_MULTI_LINE
-                minLines = 1
-                maxLines = 3
-                setPadding(16, 8, 16, 8)
+                        InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+                isSingleLine = true
+                maxLines = 1
+                ellipsize = android.text.TextUtils.TruncateAt.END
+                setHorizontallyScrolling(true)
+                imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+                setPadding(16, 8, 8, 8)
 
                 val suggestions = if (column.remarkType.equals("BEHAVIOURAL_REMARK", true)) {
                     behaviouralRemarksList
@@ -299,9 +301,15 @@ class MarksAdapter(
                     ContextCompat.getColor(context, R.color.mild_grey_dark)
                 )
                 setCompoundDrawablesWithIntrinsicBounds(null, null, dropDownArrow, null)
-                compoundDrawablePadding = 12.dp
+                compoundDrawablePadding = 6.dp
 
                 setOnClickListener { showDropDown() }
+
+                setOnFocusChangeListener { view, hasFocus ->
+                    if (!hasFocus) {
+                        (view as? EditText)?.setSelection(0)
+                    }
+                }
 
                 if (isAllowedValue(excelValue, column)) {
                     setText(excelValue)
@@ -362,7 +370,8 @@ class MarksAdapter(
         topRow.addView(icon)
         columnLayout.addView(topRow)
 
-        if (isAllowedValue(oldValue, column) &&
+        if (!column.isRemark &&
+            isAllowedValue(oldValue, column) &&
             isAllowedValue(excelValue, column) &&
             oldValue.isNotEmpty() &&
             excelValue.isNotEmpty() &&
@@ -465,8 +474,8 @@ class MarksAdapter(
                         R.string.existing_marks_differ_from_the_newly_uploaded_data
                     )
                 )
+                return
             }
-            return
         }
 
         clearError(et, icon)
@@ -601,7 +610,7 @@ class MarksAdapter(
 
 
     private fun isAllowedValue(value: String, column: MarkColumn? = null): Boolean {
-        if (column?.isRemark == true) return true
+        if (column?.isRemark == true || column?.isCoScholastic == true) return true
 
         return value.equals("AB", true) ||
                 value.equals("NA", true) ||
