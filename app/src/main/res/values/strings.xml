@@ -1444,7 +1444,7 @@
     <string name="proof_detected_amount">Proof Detected Amount</string>
     <string name="no_action_has_been_taken_for_this_concern">No Action has been taken for this concern</string>
     <string name="request_for_edit">Request for edit</string>
-    <string name="raised_concern">Raised concern</string>
+    <string name="raised_concern">Your concern</string>
     <string name="back_to_profile">Back to profile</string>
     <string name="action_take">Action Take</string>
     <string name="take_action">Take Action</string>

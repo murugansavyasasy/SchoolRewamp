@@ -1431,7 +1431,7 @@
     <string name="enter_acknowledgement_description">ஏற்றுக்கொண்டதற்கான விளக்கத்தை உள்ளிடவும்</string>
     <string name="concern_type">புகார் வகை</string>
     <string name="raise_to">யாரிடம் தெரிவிக்க</string>
-    <string name="describe_your_concern">உங்கள் புகாரை விவரிக்கவும்</string>
+    <string name="describe_your_concern">உங்கள் கவலை</string>
     <string name="management">நிர்வாகம்</string>
     <string name="principal">முதல்வர்</string>
     <string name="class_teacher">வகுப்பு ஆசிரியர்</string>

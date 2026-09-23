@@ -3,6 +3,9 @@ package com.vs.schoolmessenger.School.SchoolRaiseConcern
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -16,9 +19,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.RaiseConcern.ParentConcernlistModel.ParentConcern
 import com.vs.schoolmessenger.R
@@ -46,6 +51,17 @@ class SchoolRaiseConcernActivity : BaseActivity<SchoolRaiseConcernBinding>(), Vi
 
     private lateinit var actionTakenLauncher: ActivityResultLauncher<Intent>
 
+
+    private var userDetails: UserDetails? = null
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var instituteId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+
+
+
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryParent(
@@ -54,6 +70,25 @@ class SchoolRaiseConcernActivity : BaseActivity<SchoolRaiseConcernBinding>(), Vi
         )
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
+
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+        if (fromNotification) {
+            Constant.isParentChoose = false
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            instituteId = intent.getStringExtra(Constant.institute_id)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+            val matchedChild = userDetails?.staff_details?.find { it.school_id == instituteId }
+            SharedPreference.putStaffDetails(this, matchedChild!!)
+            Constant.isSelectedMenuName = menu_name!!
+        }
+
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
@@ -101,6 +136,9 @@ class SchoolRaiseConcernActivity : BaseActivity<SchoolRaiseConcernBinding>(), Vi
                     concernList.addAll(data)
                     concernAdapter.updateList(concernList)
                     toggleEmptyState(concernList.isEmpty())
+                    if (fromNotification) {
+                        scrollToMessageId(headerId)
+                    }
                 } else {
                     toggleEmptyState(true)
                 }
@@ -120,6 +158,72 @@ class SchoolRaiseConcernActivity : BaseActivity<SchoolRaiseConcernBinding>(), Vi
         }
     }
 
+
+    private fun scrollToMessageId(headerId: String?) {
+        if (msg_id == -1 || headerId.isNullOrEmpty()) return
+
+        val pos = concernAdapter?.getPositionById(headerId)
+            ?: concernList?.indexOfFirst { it.id == headerId } ?: -1
+
+        if (pos == -1) {
+            Log.d("ScrollDebug", "No item found with headerId: $headerId")
+            return
+        }
+
+        Log.d("ScrollDebug", "Scrolling to index $pos")
+
+        binding.rvConcernList.post {
+            (binding.rvConcernList.layoutManager as? LinearLayoutManager)
+                ?.scrollToPositionWithOffset(pos, 0)
+
+            val listener = object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(rv: RecyclerView, newState: Int) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        rv.removeOnScrollListener(this)
+                        rv.post { highlightItemTemporarily(rv, pos) }
+                    }
+                }
+            }
+
+            binding.rvConcernList.addOnScrollListener(listener)
+            binding.rvConcernList.postDelayed({
+                highlightItemTemporarily(binding.rvConcernList, pos)
+            }, 60)
+        }
+    }
+
+
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        // Try a few times if not yet bound.
+        val maxRetries = 6
+        val retryDelay = 80L
+
+        fun tryHighlight(attempt: Int) {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            if (viewHolder?.itemView != null) {
+                val itemView = viewHolder.itemView
+                val originalBackground = itemView.background
+
+                itemView.setBackgroundColor(resources.getColor(R.color.light_yellow_5, null))
+
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    itemView.background = originalBackground
+                }, Constant.TIME_OUT)
+
+            } else if (attempt < maxRetries) {
+                recyclerView.postDelayed({ tryHighlight(attempt + 1) }, retryDelay)
+            } else {
+                Log.d(
+                    "ScrollDebug",
+                    "Failed to highlight position $position after $maxRetries attempts"
+                )
+            }
+        }
+
+        tryHighlight(0)
+    }
 
     fun showTopAlertPopup(message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)

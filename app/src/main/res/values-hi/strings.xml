@@ -1444,7 +1444,7 @@
     <string name="edit_profile">प्रोफ़ाइल संपादित करें</string>
     <string name="no_action_has_been_taken_for_this_concern">इस चिंता के संबंध में कोई कार्रवाई नहीं की गई है</string>
     <string name="request_for_edit">संपादन के लिए अनुरोध</string>
-    <string name="raised_concern">उठाई गई शिकायत</string>
+    <string name="raised_concern">आपकी चिंता</string>
     <string name="back_to_profile">प्रोफ़ाइल पर वापस जाएँ</string>
     <string name="action_take">की गई कार्रवाई</string>
     <string name="take_action">कार्रवाई करें</string>

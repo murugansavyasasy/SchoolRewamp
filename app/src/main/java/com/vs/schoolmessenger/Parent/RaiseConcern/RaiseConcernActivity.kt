@@ -98,6 +98,14 @@ class RaiseConcernActivity :
     private var pickVideoLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
     private var mAdapter: ImagePickingAdapter? = null
 
+
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+
+
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
@@ -111,6 +119,26 @@ class RaiseConcernActivity :
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+
+            Log.d(
+                "RaiseConcern_EXtras",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this, matchedChild!!)
+            Constant.isSelectedMenuName = menu_name!!
+        }
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()

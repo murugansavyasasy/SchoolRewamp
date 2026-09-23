@@ -69,6 +69,7 @@ import com.vs.schoolmessenger.Parent.LSRW.LSRW
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
 import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.Parent.QuizExam.Quiz
+import com.vs.schoolmessenger.Parent.RaiseConcern.RaiseConcernActivity
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -78,6 +79,7 @@ import com.vs.schoolmessenger.School.Assignment.AssignmentReport
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequests
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
+import com.vs.schoolmessenger.School.SchoolRaiseConcern.SchoolRaiseConcernActivity
 import com.vs.schoolmessenger.Utils.AppSignatureHelper
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
@@ -811,6 +813,31 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     pendingIntent?.send()
                 }
 
+
+                (menu_id == Constant.M_RAISECONCERN && receiverType == Constant.Staff___) -> {
+                    val detailIntent = Intent(this, SchoolRaiseConcernActivity::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.header_id, headerId)
+                        putExtra(Constant.institute_id, instituteId)
+                        putExtra(Constant.receiverid, receiverId)
+                        putExtra(Constant.receiver_type, receiverType)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(SchoolRaiseConcernActivity::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+
+                    pendingIntent?.send()
+                }
+
+
                 // Student Notification Redirection
 
 
@@ -831,6 +858,32 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(BusList::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+
+                    pendingIntent?.send()
+                }
+
+
+                (menu_id == Constant.M_RAISECONCERN && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
+                    val detailIntent = Intent(this, RaiseConcernActivity::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.header_id, headerId)
+                        putExtra(Constant.receiverid, receiverId)
+                        putExtra(Constant.receiver_type, receiverType)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(RaiseConcernActivity::class.java)
                         addNextIntent(detailIntent)
                     }.getPendingIntent(
                         0,

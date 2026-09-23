@@ -182,6 +182,11 @@ class SchoolRaiseConcernAdapter(
 
     }
 
+    fun getPositionById(id: String?): Int {
+        if (id == null) return -1
+        return list.indexOfFirst { it.id == id }
+    }
+
 
     private fun showAcknowledgeInputDialog(item: ParentConcern) {
         val dialog = Dialog(context)

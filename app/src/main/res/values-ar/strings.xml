@@ -1444,7 +1444,7 @@
     <string name="edit_profile">تعديل الملف الشخصي</string>
     <string name="no_action_has_been_taken_for_this_concern">لم يتم اتخاذ أي إجراء بشأن هذا الاستفسار</string>
     <string name="request_for_edit">طلب تعديل</string>
-    <string name="raised_concern">الاستفسار المقدم</string>
+    <string name="raised_concern">استفسارك</string>
     <string name="back_to_profile">العودة إلى الملف الشخصي</string>
     <string name="action_take">الإجراء المتخذ</string>
     <string name="take_action">اتخاذ إجراء</string>
