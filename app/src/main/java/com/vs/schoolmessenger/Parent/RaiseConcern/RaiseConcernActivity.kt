@@ -139,7 +139,7 @@ class RaiseConcernActivity :
         }
 
         binding.tabOneName.text = getString(R.string.raise_concern)
-        binding.tabTwoName.text = getString(R.string.raised_concern_list)
+        binding.tabTwoName.text = getString(R.string.raised_concern)
 
         setupTabClicks()
         setupConcernListRecycler()
@@ -494,9 +494,7 @@ class RaiseConcernActivity :
                     Toast.makeText(this,
                         getString(R.string.please_select_whom_to_raise_the_concern_to), Toast.LENGTH_SHORT).show()
 
-                description.isEmpty() ->
-                    Toast.makeText(this,
-                        getString(R.string.please_enter_a_description), Toast.LENGTH_SHORT).show()
+                description.isEmpty() -> Toast.makeText(this, getString(R.string.please_enter_a_description), Toast.LENGTH_SHORT).show()
 
                 else -> {
                     confirmSubmitConcern(description)

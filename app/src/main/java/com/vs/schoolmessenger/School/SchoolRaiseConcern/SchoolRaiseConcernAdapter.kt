@@ -7,8 +7,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.text.InputType
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -22,6 +24,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Visibility
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventFilePathAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.FilePath
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
@@ -106,7 +110,7 @@ class SchoolRaiseConcernAdapter(
             }
 
             if (item.is_action) {
-                btnActionTaken.text = context.getString(R.string.action_taken)
+                btnActionTaken.text = context.getString(R.string.take_action)
                 lnrActionTaken.setBackgroundResource(R.drawable.bg_button_green)
                 btnActionTaken.setTextColor(
                     ContextCompat.getColor(btnActionTaken.context, R.color.white)
@@ -126,23 +130,29 @@ class SchoolRaiseConcernAdapter(
             }
 
             lytParentAttachmentsHeader.setOnClickListener {
-                openFilePreview(item, item.file_path)
-            }
-            lblDescription.setOnClickListener {
-                openFilePreview(item, item.file_path)
+                if (!item.file_path.isEmpty()){
+                    openFilePreview(item.file_path)
+                }
+
             }
 
-            lblActionDescription.setOnClickListener {
-                if (!item.is_action){
-                    openActionFilePreview(item, item.action_file_path)
-                }
-                else{
-                    Toast.makeText(context,context.getString(R.string.no_action_has_been_taken_for_this_concern), Toast.LENGTH_SHORT).show()
-                }
-            }
+//            lblDescription.setOnClickListener {
+//                openFilePreview(item, item.file_path)
+//            }
+
+//            lblActionDescription.setOnClickListener {
+//                if (!item.is_action){
+//                    openActionFilePreview(item, item.action_file_path)
+//                }
+//                else{
+//                    Toast.makeText(context,context.getString(R.string.no_action_has_been_taken_for_this_concern), Toast.LENGTH_SHORT).show()
+//                }
+//            }
             lytActionAttachmentsHeader.setOnClickListener {
                 if (!item.is_action){
-                    openActionFilePreview(item, item.action_file_path)
+                    if (!item.action_file_path.isEmpty()){
+                        openFilePreview(item.action_file_path)
+                    }
                 }
                 else{
                     Toast.makeText(context,context.getString(R.string.no_action_has_been_taken_for_this_concern), Toast.LENGTH_SHORT).show()
@@ -156,8 +166,10 @@ class SchoolRaiseConcernAdapter(
             recyclerView = holder.binding.rcyParentAttachments,
             totalLabel = holder.binding.totalParentAttachments,
             noAttachmentsLabel = holder.binding.lblNoParentAttachments,
-            onContainerClick = { files -> openFilePreview(item, files) }
+            onContainerClick = { files -> openFilePreview( files) }
         )
+
+
 
         bindAttachments(
             files = item.action_file_path,
@@ -165,7 +177,7 @@ class SchoolRaiseConcernAdapter(
             recyclerView = holder.binding.rcyActionAttachments,
             totalLabel = holder.binding.totalActionAttachments,
             noAttachmentsLabel = holder.binding.lblNoActionAttachments,
-            onContainerClick = { files -> openActionFilePreview(item, files) }
+            onContainerClick = { files -> openFilePreview(files) }
         )
 
     }
@@ -193,14 +205,23 @@ class SchoolRaiseConcernAdapter(
 
         btnSubmit.setOnClickListener {
             val description = edtDescription.text.toString().trim()
-            if (description.isEmpty()) {
-                lblError.visibility = View.VISIBLE
-                edtDescription.requestFocus()
-                return@setOnClickListener
-            }
+
             lblError.visibility = View.GONE
-            onAcknowledgeClick(item, description)
-            dialog.dismiss()
+
+            AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.confirm_acknowledge))
+                .setMessage(context.getString(R.string.are_you_sure_you_want_to_submit))
+                .setNegativeButton(context.getString(R.string.Cancel)) { alertDialog, _ ->
+                    alertDialog.dismiss()
+                }
+                .setPositiveButton(context.getString(R.string.submit)) { alertDialog, _ ->
+                    onAcknowledgeClick(item, description)
+
+                    alertDialog.dismiss()
+
+                    dialog.dismiss()
+                }
+                .show()
         }
 
         dialog.show()
@@ -270,61 +291,53 @@ class SchoolRaiseConcernAdapter(
     }
 
 
-    private fun openFilePreview(item: ParentConcern, files: List<ConcernFile>) {
-        val convertedList = files.map {
-            GetFilePathDetails(
+//    private fun openFilePreview(item: ParentConcern, files: List<ConcernFile>) {
+//        val convertedList = files.map {
+//            GetFilePathDetails(
+//                type = it.type,
+//                url = it.url,
+//            )
+//        }
+//        Constant.isVideoPostedDate = item.raised_on
+//        val isHomeWorkData = FilePreview(
+//            id = "",
+//            title = item.student_name,
+//            description = item.description,
+//            created_date = item.raised_on,
+//            subjectName = "",
+//            sentBy = item.action_taken_by,
+//            thumbnail = "",
+//            isUnread = true,
+//            isCompleted = true,
+//            isMenuType = Constant.M_RAISECONCERN,
+//            fileList = convertedList,
+//        )
+//
+//        val intent = Intent(context, ChildHomeWork::class.java)
+//        intent.putExtra(Constant.isPreViewData, isHomeWorkData)
+//        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//        context.startActivity(intent)
+//    }
+
+
+
+    private fun openFilePreview(
+        files: List<ConcernFile>,
+    ) {
+        Constant.commonFileList.clear()
+
+        val commonList = files.map {
+            CommonFileData(
                 type = it.type,
-                url = it.url,
+                path = it.url
             )
-        }
-        Constant.isVideoPostedDate = item.raised_on
-        val isHomeWorkData = FilePreview(
-            id = "",
-            title = item.student_name,
-            description = item.description,
-            created_date = item.raised_on,
-            subjectName = "",
-            sentBy = item.action_taken_by,
-            thumbnail = "",
-            isUnread = true,
-            isCompleted = true,
-            isMenuType = Constant.M_RAISECONCERN,
-            fileList = convertedList,
-        )
+        }.toMutableList()
 
-        val intent = Intent(context, ChildHomeWork::class.java)
-        intent.putExtra(Constant.isPreViewData, isHomeWorkData)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        context.startActivity(intent)
-    }
+        Constant.commonFileList = commonList
+        Constant.selectedFileIndex = 0
+        Log.d("AAAAAAAAAAAAA",Constant.commonFileList.toString())
 
-
-
-    private fun openActionFilePreview(item: ParentConcern, files: List<ConcernFile>) {
-        val convertedList = files.map {
-            GetFilePathDetails(
-                type = it.type,
-                url = it.url,
-            )
-        }
-        Constant.isVideoPostedDate = item.raised_on
-        val isHomeWorkData = FilePreview(
-            id = item.id,
-            title = item.action_taken_by,
-            description = item.action_taken,
-            created_date = item.action_taken_on,
-            subjectName = "",
-            sentBy = item.student_name,
-            thumbnail = "",
-            isUnread = true,
-            isCompleted = true,
-            isMenuType = Constant.M_RAISECONCERN,
-            fileList = convertedList,
-        )
-
-        val intent = Intent(context, ChildHomeWork::class.java)
-        intent.putExtra(Constant.isPreViewData, isHomeWorkData)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        val intent = Intent(context, FilesViewActivity::class.java)
         context.startActivity(intent)
     }
 
@@ -336,11 +349,24 @@ class SchoolRaiseConcernAdapter(
         noAttachmentsLabel: TextView,
         onContainerClick: (List<ConcernFile>) -> Unit
     ) {
+
         if (files.isNullOrEmpty()) {
             container.visibility = View.GONE
             noAttachmentsLabel.visibility = View.VISIBLE
             container.setOnClickListener(null)
             return
+        }
+
+        if (!files.isEmpty()){
+            recyclerView.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
+                override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                    val child = rv.findChildViewUnder(e.x, e.y)
+                    if (child != null && e.action == MotionEvent.ACTION_UP) {
+                        openFilePreview(files)
+                    }
+                    return false
+                }
+            })
         }
 
         noAttachmentsLabel.visibility = View.GONE

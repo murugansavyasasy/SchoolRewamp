@@ -75,7 +75,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
     private var isAccessToken: String? = null
     private val SUBJECT_CELL_WIDTH = 200
-    private val REMARK_CELL_WIDTH = 280
+    private val REMARK_CELL_WIDTH = 360
     private var markColumns: List<MarkColumn> = emptyList()
     private val SUBJECT_CELL_GAP = 40
     private val reviewFlagMap = mutableMapOf<String, String>()

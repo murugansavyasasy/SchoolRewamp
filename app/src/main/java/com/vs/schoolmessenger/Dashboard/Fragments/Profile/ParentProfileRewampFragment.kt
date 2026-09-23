@@ -367,7 +367,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
     private fun enterEditMode() {
         isEditMode = true
-        binding.btnEditProfile.text = "Back to profile"
+        binding.btnEditProfile.text = getString(R.string.back_to_profile)
         binding.imgEdit.visibility = View.VISIBLE
         binding.btnupdateprofile.visibility = View.VISIBLE
         adapter?.setEditMode(true)
@@ -391,7 +391,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         mAdapter?.notifyDataSetChanged()
 
         isEditMode = false
-        binding.btnEditProfile.text = "Edit Profile"
+        binding.btnEditProfile.text = getString(R.string.request_for_edit)
         binding.imgEdit.visibility = View.GONE
         binding.btnupdateprofile.visibility = View.GONE
 

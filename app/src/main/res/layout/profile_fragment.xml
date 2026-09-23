@@ -81,7 +81,7 @@
                     android:visibility="gone"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="8dp"
-                    android:text="Edit Profile"
+                    android:text="@string/request_for_edit"
                     android:textColor="@color/PrimaryColor"
                     android:textSize="13sp" />
 

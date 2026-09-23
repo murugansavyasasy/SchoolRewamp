@@ -217,10 +217,8 @@
         android:layout_marginTop="@dimen/ten"
         android:textColor="@color/black"
         android:textSize="@dimen/thirteen_sp"
-        android:maxLines="2"
         android:textAlignment="viewStart"
         android:visibility="gone"
-        android:ellipsize="end"
         tools:text="" />
 
 
@@ -249,7 +247,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/six"
-                android:text="@string/action_attachments"
+                android:textAllCaps="true"
+                android:text="@string/action_taken"
                 android:textColor="#1E8E5A"
                 android:textSize="@dimen/eleven_sp" />
         </LinearLayout>
@@ -361,10 +360,6 @@
         </LinearLayout>
 
 
-
-
-
-
         <LinearLayout
             android:id="@+id/lnrActionTaken"
             android:layout_width="0dp"
@@ -393,7 +388,7 @@
                 android:drawableTint="@color/white"
                 android:gravity="center"
                 android:layout_marginStart="@dimen/five"
-                android:text="@string/action_taken"
+                android:text="@string/take_action"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp" />
 

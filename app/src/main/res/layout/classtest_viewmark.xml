@@ -116,6 +116,7 @@
                 android:contentDescription="Add" />
 
             <LinearLayout
+                android:gravity="center"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -124,9 +125,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/five"
-                    android:text="VIEW"
+                    android:text="@string/view"
                     android:textColor="@color/white"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     style="@style/CustomTextStylePoppinsBold" />
 
                 <TextView

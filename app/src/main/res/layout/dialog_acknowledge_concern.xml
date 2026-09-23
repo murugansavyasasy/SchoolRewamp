@@ -12,7 +12,7 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/acknowledge_concern"
+        android:text="@string/acknowledge"
         android:textColor="@color/black"
         android:textSize="@dimen/sixteen_sp" />
 
@@ -21,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/four"
+        android:visibility="gone"
         android:text="@string/add_a_short_note_before_acknowledging_this_concern"
         android:textColor="@color/grey"
         android:textSize="@dimen/twele_sp" />

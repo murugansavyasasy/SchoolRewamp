@@ -80,6 +80,7 @@
             android:layout_below="@+id/headerview"
             android:layout_width="wrap_content"
             android:layout_alignParentEnd="true"
+            android:visibility="gone"
             android:layout_marginEnd="@dimen/ten"
             android:textColor="@color/PrimaryColor"
             android:text="@string/view_payment_proof"
@@ -272,12 +273,71 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvReceipts"
+            android:layout_below="@+id/rytSearch1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/rytSearch1"
             android:layout_marginTop="@dimen/five"
             android:visibility="gone"
+            android:layout_above="@+id/lytViewPaymentProofButton"
             tools:listitem="@layout/fee_receipt_list_items" />
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/ten"
+            android:id="@+id/lytViewPaymentProofButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingVertical="@dimen/five"
+            android:paddingHorizontal="@dimen/ten"
+            android:clickable="true"
+            android:background="@drawable/bg_white_blue_stroke"
+            android:focusable="true"
+            >
+
+            <ImageView
+                android:id="@+id/imgAddButton"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:padding="@dimen/one"
+                android:background="@drawable/bg_fab_circle"
+                android:src="@drawable/collect"
+                android:elevation="6dp"
+                android:tint="@color/white"
+                android:contentDescription="Add" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvAddButtonLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/five"
+                    android:text="@string/view"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    style="@style/CustomTextStylePoppinsBold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/five"
+                    android:text="@string/payment_proof"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    style="@style/CustomTextStylePoppinsBold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
 
     </RelativeLayout>
 
