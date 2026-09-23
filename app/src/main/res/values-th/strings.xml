@@ -1443,5 +1443,14 @@
     <string name="proof_detected_amount">จำนวนเงินที่ตรวจพบจากหลักฐาน</string>
     <string name="edit_profile">แก้ไขโปรไฟล์</string>
     <string name="no_action_has_been_taken_for_this_concern">ยังไม่มีการดำเนินการใด ๆ กับข้อกังวลนี้</string>
+    <string name="request_for_edit">คำขอแก้ไข</string>
+    <string name="raised_concern">ข้อกังวลที่แจ้ง</string>
+    <string name="back_to_profile">กลับไปที่โปรไฟล์</string>
+    <string name="action_take">การดำเนินการที่ทำ</string>
+    <string name="take_action">ดำเนินการ</string>
+    <string name="confirm_acknowledge">ยืนยันการรับทราบ</string>
+    <string name="are_you_sure_you_want_to_submit">คุณแน่ใจหรือไม่ว่าต้องการส่ง?</string>
+    <string name="transation_id">รหัสธุรกรรม</string>
+    <string name="last_updated_on">อัปเดตล่าสุดเมื่อ</string>
 
 </resources>
