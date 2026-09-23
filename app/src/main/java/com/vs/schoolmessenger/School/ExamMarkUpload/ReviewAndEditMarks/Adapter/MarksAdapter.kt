@@ -40,7 +40,6 @@ class MarksAdapter(
 ) : RecyclerView.Adapter<MarksAdapter.MarksViewHolder>() {
 
     private val SUBJECT_CELL_WIDTH = 200
-    private val SUBJECT_CELL_GAP = 40
     private val REMARK_CELL_WIDTH = 340
 
     private val MALE_COLOR = Color.parseColor("#2196F3")
@@ -49,14 +48,34 @@ class MarksAdapter(
     private var academicRemarksList: List<String> = initialAcademicRemarks
     private var behaviouralRemarksList: List<String> = initialBehaviouralRemarks
 
+    init {
+
+        setHasStableIds(true)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return students[position].student_id.hashCode().toLong()
+    }
+
     fun updateRemarkSuggestions(academic: List<String>, behavioural: List<String>) {
         academicRemarksList = academic
         behaviouralRemarksList = behavioural
+
         notifyDataSetChanged()
     }
 
     val Int.dp: Int
         get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+
+    class MarkCellViews(
+        val columnIndex: Int,
+        val column: MarkColumn,
+        val editText: EditText,
+        val icon: ImageView,
+        val prevLabel: TextView,
+        val autoAdapter: NoFilterArrayAdapter?
+    )
 
     class MarksViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtName: TextView = itemView.findViewById(R.id.txtName)
@@ -64,60 +83,41 @@ class MarksAdapter(
         val txtAdmissionNo: TextView = itemView.findViewById(R.id.txtAdmissionNo)
         val subjectContainer: LinearLayout = itemView.findViewById(R.id.subjectContainer)
         val subjectScroll: HorizontalScrollView = itemView.findViewById(R.id.subjectScroll)
+
+        var cells: List<MarkCellViews> = emptyList()
+
+
+        var boundStudent: StudentMarkList? = null
+
+
+        var isBinding: Boolean = false
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarksViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.row_marks, parent, false)
-        return MarksViewHolder(view)
+
+        val holder = MarksViewHolder(view)
+
+
+        holder.txtName.setTextIsSelectable(false)
+        holder.txtName.movementMethod = null
+        holder.txtRoll.setTextIsSelectable(false)
+        holder.txtRoll.movementMethod = null
+        holder.txtAdmissionNo.setTextIsSelectable(false)
+        holder.txtAdmissionNo.movementMethod = null
+
+        buildRowStructure(holder)
+
+        HorizontalScrollSync.bind(holder.subjectScroll)
+
+        return holder
     }
 
-    override fun onBindViewHolder(holder: MarksViewHolder, position: Int) {
 
-        val student = students[position]
-
-        val genderShort = when (student.gender.lowercase()) {
-            "male" -> "M"
-            "female" -> "F"
-            else -> ""
-        }
-
-        val lblText = if (genderShort.isBlank()) {
-            student.name
-        } else {
-            "${student.name} ($genderShort)"
-        }
-
-        val span = SpannableString(lblText)
-
-        if (genderShort.isNotBlank()) {
-            val start = lblText.indexOf("(")
-
-            val genderColor = when (student.gender.lowercase()) {
-                "male" -> MALE_COLOR
-                "female" -> FEMALE_COLOR
-                else -> Color.RED
-            }
-
-            span.setSpan(
-                ForegroundColorSpan(genderColor),
-                start,
-                lblText.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        }
-
-        holder.txtName.text = span
-
-        holder.txtRoll.visibility =
-            if (student.rollNo.isNullOrBlank()) View.GONE else View.VISIBLE
-        holder.txtRoll.text = student.rollNo
-
-        holder.txtAdmissionNo.visibility =
-            if (student.admission_no.isNullOrBlank()) View.GONE else View.VISIBLE
-        holder.txtAdmissionNo.text = student.admission_no
-
+    private fun buildRowStructure(holder: MarksViewHolder) {
         holder.subjectContainer.removeAllViews()
+        val allCells = mutableListOf<MarkCellViews>()
 
         val subjectGroups = columns.groupBy { it.subjectId }
         var globalColumnIndex = 0
@@ -149,8 +149,10 @@ class MarksAdapter(
                     }
 
                     rubricColumns.forEachIndexed { index, column ->
-                        val cell = createMarkCell(student, column, globalColumnIndex)
-                        activityGroup.addView(cell)
+                        val (cellLayout, cellViews) =
+                            createMarkCell(column, globalColumnIndex, holder)
+                        activityGroup.addView(cellLayout)
+                        allCells.add(cellViews)
 
                         if (index != rubricColumns.lastIndex) {
                             activityGroup.addView(View(context).apply {
@@ -167,8 +169,10 @@ class MarksAdapter(
 
                 } else {
                     activityColumns.forEachIndexed { index, column ->
-                        val cell = createMarkCell(student, column, globalColumnIndex)
-                        subjectGroupLayout.addView(cell)
+                        val (cellLayout, cellViews) =
+                            createMarkCell(column, globalColumnIndex, holder)
+                        subjectGroupLayout.addView(cellLayout)
+                        allCells.add(cellViews)
 
                         if (index != activityColumns.lastIndex) {
                             subjectGroupLayout.addView(View(context).apply {
@@ -217,23 +221,132 @@ class MarksAdapter(
             }
         }
 
-        HorizontalScrollSync.bind(holder.subjectScroll)
-
-        holder.setIsRecyclable(false)
-        listener.onMarksChanged()
+        holder.cells = allCells
     }
 
-    private fun createMarkCell(
-        student: StudentMarkList,
-        column: MarkColumn,
-        columnIndex: Int
-    ): LinearLayout {
+    override fun onBindViewHolder(holder: MarksViewHolder, position: Int) {
 
-        val excelValue = student.markTexts[columnIndex].trim()
-        val oldValue = student.mockMarkTexts[columnIndex].trim()
+        val student = students[position]
+        holder.isBinding = true
+        holder.boundStudent = student
+
+        val genderShort = when (student.gender.lowercase()) {
+            "male" -> "M"
+            "female" -> "F"
+            else -> ""
+        }
+
+        val lblText = if (genderShort.isBlank()) {
+            student.name
+        } else {
+            "${student.name} ($genderShort)"
+        }
+
+        val span = SpannableString(lblText)
+
+        if (genderShort.isNotBlank()) {
+            val start = lblText.indexOf("(")
+
+            if (start in 0..lblText.length) {
+                val genderColor = when (student.gender.lowercase()) {
+                    "male" -> MALE_COLOR
+                    "female" -> FEMALE_COLOR
+                    else -> Color.RED
+                }
+
+                span.setSpan(
+                    ForegroundColorSpan(genderColor),
+                    start,
+                    lblText.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
+
+        holder.txtName.text = span
+
+        holder.txtRoll.visibility =
+            if (student.rollNo.isNullOrBlank()) View.GONE else View.VISIBLE
+        holder.txtRoll.text = student.rollNo
+
+        holder.txtAdmissionNo.visibility =
+            if (student.admission_no.isNullOrBlank()) View.GONE else View.VISIBLE
+        holder.txtAdmissionNo.text = student.admission_no
+
+        holder.cells.forEach { cell ->
+            bindCell(cell, student)
+        }
+
+        holder.isBinding = false
+    }
+
+
+    private fun bindCell(cell: MarkCellViews, student: StudentMarkList) {
+        val idx = cell.columnIndex
+        val column = cell.column
+
+        val excelValue = student.markTexts[idx].trim()
+        val oldValue = student.mockMarkTexts[idx].trim()
 
         val reviewKey = "${student.student_id}_${normalize(column.selected_name)}"
         val reviewReason = reviewFlagMap[reviewKey]
+
+        cell.autoAdapter?.let { adapter ->
+            val suggestions = if (column.remarkType.equals("BEHAVIOURAL_REMARK", true)) {
+                behaviouralRemarksList
+            } else {
+                academicRemarksList
+            }
+            adapter.updateItems(suggestions)
+            (cell.editText as? AutoCompleteTextView)?.setDropDownWidth(
+                calculateDropdownWidth(context, suggestions, textSizeSp = 14f)
+            )
+        }
+
+
+        val newText = excelValue
+        if (cell.editText.text?.toString() != newText) {
+            cell.editText.setText(newText)
+        }
+
+        validateMark(
+            cell.editText, cell.icon, column, cell.editText.text?.toString().orEmpty(),
+            oldValue, reviewReason
+        )
+
+        val showPrev = !column.isRemark &&
+                isAllowedValue(oldValue, column) &&
+                isAllowedValue(excelValue, column) &&
+                oldValue.isNotEmpty() &&
+                excelValue.isNotEmpty() &&
+                oldValue != excelValue
+
+        if (showPrev) {
+            cell.prevLabel.text = "prev - $oldValue"
+            cell.prevLabel.visibility = View.VISIBLE
+        } else {
+            cell.prevLabel.visibility = View.GONE
+        }
+
+        val isEditable = student.isEditList[idx]
+        cell.editText.isEnabled = isEditable
+        cell.editText.isFocusable = isEditable
+        cell.editText.isFocusableInTouchMode = isEditable
+        cell.editText.isCursorVisible = isEditable
+
+        if (!isEditable) {
+            cell.editText.setTextColor(ContextCompat.getColor(context, R.color.mild_grey_dark))
+            cell.editText.background = ContextCompat.getDrawable(context, R.drawable.rect_btn_grey)
+        }
+    }
+
+    override fun getItemCount(): Int = students.size
+
+    private fun createMarkCell(
+        column: MarkColumn,
+        columnIndex: Int,
+        holder: MarksViewHolder
+    ): Pair<LinearLayout, MarkCellViews> {
 
         val cellWidth = if (column.isRemark) REMARK_CELL_WIDTH else SUBJECT_CELL_WIDTH
 
@@ -255,6 +368,8 @@ class MarksAdapter(
             )
         }
 
+        var autoAdapter: NoFilterArrayAdapter? = null
+
         val et: EditText = if (column.isRemark) {
             object : AutoCompleteTextView(context) {
                 override fun enoughToFilter(): Boolean = false
@@ -274,23 +389,23 @@ class MarksAdapter(
                 imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_DONE
                 setPadding(16, 8, 8, 8)
 
-                val suggestions = if (column.remarkType.equals("BEHAVIOURAL_REMARK", true)) {
+                val initialSuggestions = if (column.remarkType.equals("BEHAVIOURAL_REMARK", true)) {
                     behaviouralRemarksList
                 } else {
                     academicRemarksList
                 }
 
-                setAdapter(
-                    NoFilterArrayAdapter(
-                        context,
-                        R.layout.item_remark_suggestion,
-                        suggestions
-                    )
+                val adapter = NoFilterArrayAdapter(
+                    context,
+                    R.layout.item_remark_suggestion,
+                    initialSuggestions
                 )
+                autoAdapter = adapter
+                setAdapter(adapter)
                 threshold = 1
 
                 setDropDownWidth(
-                    calculateDropdownWidth(context, suggestions, textSizeSp = 14f)
+                    calculateDropdownWidth(context, initialSuggestions, textSizeSp = 14f)
                 )
 
                 background = ContextCompat.getDrawable(context, R.drawable.rect_bg_stroke_remark)
@@ -310,12 +425,6 @@ class MarksAdapter(
                         (view as? EditText)?.setSelection(0)
                     }
                 }
-
-                if (isAllowedValue(excelValue, column)) {
-                    setText(excelValue)
-                } else {
-                    setText("")
-                }
             }
         } else {
             EditText(context).apply {
@@ -328,12 +437,6 @@ class MarksAdapter(
                 inputType = InputType.TYPE_CLASS_TEXT or
                         if (column.isCoScholastic) InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS else 0
                 setPadding(10, 10, 10, 4)
-
-                if (isAllowedValue(excelValue, column)) {
-                    setText(excelValue)
-                } else {
-                    setText("")
-                }
             }
         }
 
@@ -350,62 +453,45 @@ class MarksAdapter(
             visibility = View.GONE
         }
 
-        validateMark(
-            et, icon, student, column, excelValue, oldValue, reviewReason
-        )
+        val prevLabel = TextView(context).apply {
+            textSize = 11f
+            gravity = Gravity.CENTER
+            visibility = View.GONE
+            setTextColor(ContextCompat.getColor(context, R.color.mild_grey_dark))
+        }
 
         et.addTextChangedListener {
-            val input = it.toString().trim()
-            student.markTexts[columnIndex] = input
 
+            if (holder.isBinding) return@addTextChangedListener
+
+            val student = holder.boundStudent ?: return@addTextChangedListener
+            val input = it.toString().trim()
+
+            student.markTexts[columnIndex] = input
             student.marks[columnIndex] =
                 if (column.isRemark || column.isCoScholastic) null else input.toDoubleOrNull()
 
-            validateMark(
-                et, icon, student, column, input, oldValue, reviewReason
-            )
+            val oldValue = student.mockMarkTexts[columnIndex].trim()
+            val reviewKey = "${student.student_id}_${normalize(column.selected_name)}"
+            val reviewReason = reviewFlagMap[reviewKey]
+
+            validateMark(et, icon, column, input, oldValue, reviewReason)
+
+            // Fires only on real edits now, not on every scroll-driven bind.
+            listener.onMarksChanged()
         }
 
         topRow.addView(et)
         topRow.addView(icon)
         columnLayout.addView(topRow)
+        columnLayout.addView(prevLabel)
 
-        if (!column.isRemark &&
-            isAllowedValue(oldValue, column) &&
-            isAllowedValue(excelValue, column) &&
-            oldValue.isNotEmpty() &&
-            excelValue.isNotEmpty() &&
-            oldValue != excelValue
-        ) {
-            val prev = TextView(context).apply {
-                text = "prev - $oldValue"
-                textSize = 11f
-                gravity = Gravity.CENTER
-                setTextColor(ContextCompat.getColor(context, R.color.mild_grey_dark))
-            }
-            columnLayout.addView(prev)
-        }
-
-        val isEditable = student.isEditList[columnIndex]
-        et.isEnabled = isEditable
-        et.isFocusable = isEditable
-        et.isFocusableInTouchMode = isEditable
-        et.isCursorVisible = isEditable
-
-        if (!isEditable) {
-            et.setTextColor(ContextCompat.getColor(context, R.color.mild_grey_dark))
-            et.background = ContextCompat.getDrawable(context, R.drawable.rect_btn_grey)
-        }
-
-        return columnLayout
+        return columnLayout to MarkCellViews(columnIndex, column, et, icon, prevLabel, autoAdapter)
     }
-
-    override fun getItemCount(): Int = students.size
 
     private fun validateMark(
         et: EditText,
         icon: ImageView,
-        student: StudentMarkList,
         column: MarkColumn,
         value: String,
         oldValue: String,
@@ -524,7 +610,6 @@ class MarksAdapter(
         }
     }
 
-
     private fun showInfoPopup(anchorView: View, message: String) {
 
         val popupView = LayoutInflater.from(anchorView.context)
@@ -608,7 +693,6 @@ class MarksAdapter(
         }
     }
 
-
     private fun isAllowedValue(value: String, column: MarkColumn? = null): Boolean {
         if (column?.isRemark == true || column?.isCoScholastic == true) return true
 
@@ -619,7 +703,6 @@ class MarksAdapter(
 
     private fun normalize(value: String?): String =
         value?.lowercase()?.replace("[^a-z0-9]".toRegex(), "") ?: ""
-
 
     private fun calculateDropdownWidth(context: Context, suggestions: List<String>, textSizeSp: Float): Int {
         val paint = android.text.TextPaint().apply {
@@ -635,17 +718,26 @@ class MarksAdapter(
     }
 }
 
+
 class NoFilterArrayAdapter(
     context: Context,
-    resource: Int,
-    private val items: List<String>
-) : ArrayAdapter<String>(context, resource, items) {
+    private val resource: Int,
+    items: List<String>
+) : ArrayAdapter<String>(context, resource, items.toMutableList()) {
+
+    fun updateItems(newItems: List<String>) {
+        setNotifyOnChange(false)
+        clear()
+        addAll(newItems)
+        notifyDataSetChanged()
+    }
 
     private val noOpFilter = object : android.widget.Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val results = FilterResults()
-            results.values = items
-            results.count = items.size
+            val current = (0 until count).mapNotNull { getItem(it) }
+            results.values = current
+            results.count = current.size
             return results
         }
 
