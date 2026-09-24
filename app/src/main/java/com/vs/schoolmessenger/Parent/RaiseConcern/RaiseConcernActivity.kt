@@ -471,7 +471,7 @@ class RaiseConcernActivity :
             radioButtons.forEach { rb -> rb.isChecked = (rb.id == clicked.id) }
             selectedRaisedTo = when (clicked.id) {
                 R.id.rbManagement -> "management"
-                R.id.rbPrincipal -> "principle"
+                R.id.rbPrincipal -> "principal"
                 R.id.rbClassTeacher -> "class_teacher"
                 else -> ""
             }
