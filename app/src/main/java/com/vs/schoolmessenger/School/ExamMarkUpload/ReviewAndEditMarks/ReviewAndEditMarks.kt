@@ -440,8 +440,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 val updatedRemarks = student.remarks.orEmpty().map { r ->
                     val extracted = extractedFor(
                         r.reference_type,
-                        if (r.reference_type.equals("BEHAVIOURAL_REMARK", true))
-                            getString(R.string.behavioural_remark) else getString(R.string.remark)
+                        prettifyReferenceType(r.reference_type)
                     )
                     if (!extracted.isNullOrBlank()) r.copy(mark = extracted) else r
                 }
@@ -470,15 +469,15 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     }
 
 
-    private fun attendanceLabel(referenceType: String): String {
-        return when (referenceType.trim().uppercase()) {
-            "TOTAL_WORKING_DAYS" -> "Total Working Days"
-            "PRESENT_DAYS" -> "Present Days"
-            else -> referenceType.replace("_", " ")
-                .lowercase()
-                .split(" ")
-                .joinToString(" ") { word -> word.replaceFirstChar { it.uppercase() } }
-        }
+
+    private fun prettifyReferenceType(referenceType: String): String {
+        return referenceType
+//            .trim()
+//            .replace("_", " ")
+//            .lowercase()
+//            .split(" ")
+//            .filter { it.isNotBlank() }
+//            .joinToString(" ") { word -> word.replaceFirstChar { it.uppercase() } }
     }
 
     private fun buildHeaderColumns(response: MarkResponse): List<MarkColumn> {
@@ -530,7 +529,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             columns.add(
                 MarkColumn(
                     subjectId = "CO_SCHOLASTIC",
-                    subjectName = "Co-Scholastic",
+                    subjectName = getString(R.string.co_scholastic),
                     activityId = cs.id,
                     activityName = cs.name,
                     selected_name = cs.name,
@@ -541,15 +540,11 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
 
         firstStudent.remarks.orEmpty().forEach { r ->
-            val label = if (r.reference_type.equals("BEHAVIOURAL_REMARK", true)) {
-                getString(R.string.behavioural_remark)
-            } else {
-                getString(R.string.remark)
-            }
+            val label = prettifyReferenceType(r.reference_type)
             columns.add(
                 MarkColumn(
                     subjectId = "REMARKS",
-                    subjectName = "Remarks",
+                    subjectName = getString(R.string.remark),
                     activityId = r.reference_type,
                     activityName = label,
                     selected_name = label,
@@ -561,11 +556,11 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
 
         firstStudent.attendance_details.orEmpty().forEach { a ->
-            val label = attendanceLabel(a.reference_type)
+            val label = prettifyReferenceType(a.reference_type)
             columns.add(
                 MarkColumn(
                     subjectId = "ATTENDANCE",
-                    subjectName = "Attendance",
+                    subjectName = getString(R.string.attendance),
                     activityId = a.reference_type,
                     activityName = label,
                     selected_name = label,
@@ -1767,6 +1762,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 if (text.equals("AB", true) || text.equals("NA", true)) return@forEachIndexed
 
                 val column = columns.getOrNull(index) ?: return@forEachIndexed
+                // FIX: grades must not be treated as invalid marks
                 if (column.isRemark || column.isCoScholastic || column.isAttendance) return@forEachIndexed
 
                 if (text.toDoubleOrNull() == null) {
