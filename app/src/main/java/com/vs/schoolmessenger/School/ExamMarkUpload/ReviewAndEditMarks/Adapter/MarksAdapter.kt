@@ -434,8 +434,14 @@ class MarksAdapter(
                 textSize = 14f
                 hint = "--"
                 gravity = Gravity.CENTER
-                inputType = InputType.TYPE_CLASS_TEXT or
-                        if (column.isCoScholastic) InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS else 0
+                inputType = when {
+                    column.isCoScholastic -> InputType.TYPE_CLASS_TEXT or
+                            InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+                    // Attendance is a plain day-count field (e.g. Total Working Days,
+                    // Present Days) — numeric keyboard, no cap-characters flag.
+                    column.isAttendance -> InputType.TYPE_CLASS_NUMBER
+                    else -> InputType.TYPE_CLASS_TEXT
+                }
                 setPadding(10, 10, 10, 4)
             }
         }
@@ -469,7 +475,7 @@ class MarksAdapter(
 
             student.markTexts[columnIndex] = input
             student.marks[columnIndex] =
-                if (column.isRemark || column.isCoScholastic) null else input.toDoubleOrNull()
+                if (column.isRemark || column.isCoScholastic || column.isAttendance) null else input.toDoubleOrNull()
 
             val oldValue = student.mockMarkTexts[columnIndex].trim()
             val reviewKey = "${student.student_id}_${normalize(column.selected_name)}"

@@ -8,6 +8,6 @@ data class StudentMarkApi(
     val admission_no: String,
     val marks: List<SubjectMark>,
     val co_scholastic: List<CoScholastic>,
-    val remarks: List<Remark>
+    val remarks: List<Remark>,
+    val attendance_details: List<AttendanceDetail> = emptyList()
 )
-

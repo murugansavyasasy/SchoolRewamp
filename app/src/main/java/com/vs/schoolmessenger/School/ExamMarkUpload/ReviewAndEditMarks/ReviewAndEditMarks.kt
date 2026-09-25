@@ -470,6 +470,17 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     }
 
 
+    private fun attendanceLabel(referenceType: String): String {
+        return when (referenceType.trim().uppercase()) {
+            "TOTAL_WORKING_DAYS" -> "Total Working Days"
+            "PRESENT_DAYS" -> "Present Days"
+            else -> referenceType.replace("_", " ")
+                .lowercase()
+                .split(" ")
+                .joinToString(" ") { word -> word.replaceFirstChar { it.uppercase() } }
+        }
+    }
+
     private fun buildHeaderColumns(response: MarkResponse): List<MarkColumn> {
         val columns = mutableListOf<MarkColumn>()
 
@@ -492,7 +503,9 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                                 isRubric = true,
                                 rubricId = rubric.id,
                                 rubricName = rubric.name?.trim(),
-                                parentActivityName = activity.selected_name?.trim()
+                                parentActivityName = activity.selected_name?.trim(),
+                                parentActivityMark = activity.mark,
+                                parentActivityMaxMark = activity.max_mark
                             )
                         )
                     }
@@ -547,6 +560,22 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             )
         }
 
+        firstStudent.attendance_details.orEmpty().forEach { a ->
+            val label = attendanceLabel(a.reference_type)
+            columns.add(
+                MarkColumn(
+                    subjectId = "ATTENDANCE",
+                    subjectName = "Attendance",
+                    activityId = a.reference_type,
+                    activityName = label,
+                    selected_name = label,
+                    maxMark = 0,
+                    isAttendance = true,
+                    attendanceType = a.reference_type
+                )
+            )
+        }
+
 
         return columns.distinctBy {
             listOf(
@@ -554,6 +583,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 it.activityId,
                 it.rubricId,
                 it.remarkType,
+                it.attendanceType,
                 it.selected_name
             )
         }
@@ -627,6 +657,15 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 }
             }
 
+            apiStudent.attendance_details.orEmpty().forEach { a ->
+                val index = columns.indexOfFirst { it.isAttendance && it.activityId == a.reference_type }
+                if (index != -1) {
+                    markTexts[index] = a.mark
+                    marks[index] = null
+                    isEditList[index] = a.is_edit
+                }
+            }
+
             val baseStudent = baseStudents.firstOrNull {
                 it.student_id == apiStudent.student_id
             }
@@ -670,6 +709,13 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 val index = columns.indexOfFirst { it.isRemark && it.activityId == r.reference_type }
                 if (index != -1) {
                     mockTexts[index] = r.mark
+                }
+            }
+
+            baseStudent?.attendance_details.orEmpty().forEach { a ->
+                val index = columns.indexOfFirst { it.isAttendance && it.activityId == a.reference_type }
+                if (index != -1) {
+                    mockTexts[index] = a.mark
                 }
             }
 
@@ -825,7 +871,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                         rubricLayout.addView(TextView(this).apply {
                             text =
-                                if (col.isRemark || col.isCoScholastic) "" else "Max: ${col.maxMark}"
+                                if (col.isRemark || col.isCoScholastic || col.isAttendance) "" else "Max: ${col.maxMark}"
                             gravity = Gravity.CENTER
                             setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
                             setTextColor(Color.GRAY)
@@ -881,7 +927,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                         layout.addView(TextView(this).apply {
                             text =
-                                if (col.isRemark || col.isCoScholastic) "" else "Max: ${col.maxMark}"
+                                if (col.isRemark || col.isCoScholastic || col.isAttendance) "" else "Max: ${col.maxMark}"
                             gravity = Gravity.CENTER
                             setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
                             setTextColor(Color.GRAY)
@@ -1462,7 +1508,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                 val column = columns.getOrNull(index) ?: return@forEachIndexed
 
-                if (column.isRemark || column.isCoScholastic) return@forEachIndexed
+                if (column.isRemark || column.isCoScholastic || column.isAttendance) return@forEachIndexed
 
                 val trimmed = rawText.trim()
                 val value = trimmed.toIntOrNull()
@@ -1564,7 +1610,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             val marksArray = JsonArray()
 
             val subjectGroups = columns
-                .filterNot { it.isCoScholastic || it.isRemark }
+                .filterNot { it.isCoScholastic || it.isRemark || it.isAttendance }
                 .groupBy { it.subjectId }
 
             subjectGroups.forEach { (subjectId, subjectColumns) ->
@@ -1598,10 +1644,13 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                         val activityObj = JsonObject().apply {
                             addProperty(Constant.id, activityId)
-                            addProperty(Constant.mark, "")
+                            addProperty(
+                                Constant.mark,
+                                activityColumns.firstOrNull()?.parentActivityMark ?: ""
+                            )
                             addProperty(
                                 Constant.max_mark,
-                                activityColumns.firstOrNull()?.maxMark?.toString() ?: "--"
+                                activityColumns.firstOrNull()?.parentActivityMaxMark ?: "--"
                             )
                             add("rubrics", rubricsArray)
                         }
@@ -1652,6 +1701,18 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 })
             }
             studentObj.add("remarks", remarksArray)
+
+            val attendanceArray = JsonArray()
+            columns.filter { it.isAttendance }.forEach { col ->
+                val index = columns.indexOf(col)
+                val rawText = student.markTexts.getOrNull(index)?.trim().orEmpty()
+
+                attendanceArray.add(JsonObject().apply {
+                    addProperty("reference_type", col.attendanceType ?: col.activityId)
+                    addProperty("mark", rawText)
+                })
+            }
+            studentObj.add("attendance_details", attendanceArray)
 
             uploadDetailsArray.add(studentObj)
         }
@@ -1706,8 +1767,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 if (text.equals("AB", true) || text.equals("NA", true)) return@forEachIndexed
 
                 val column = columns.getOrNull(index) ?: return@forEachIndexed
-                // FIX: grades must not be treated as invalid marks
-                if (column.isRemark || column.isCoScholastic) return@forEachIndexed
+                if (column.isRemark || column.isCoScholastic || column.isAttendance) return@forEachIndexed
 
                 if (text.toDoubleOrNull() == null) {
                     issues.add(
@@ -1738,7 +1798,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 val value = rawText.toDoubleOrNull() ?: return@forEachIndexed
                 val column = columns.getOrNull(index) ?: return@forEachIndexed
 
-                if (column.isRemark || column.isCoScholastic || column.maxMark <= 0) {
+                if (column.isRemark || column.isCoScholastic || column.isAttendance || column.maxMark <= 0) {
                     return@forEachIndexed
                 }
 
