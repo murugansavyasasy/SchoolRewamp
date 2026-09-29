@@ -29,6 +29,12 @@
     <!-- Storage -->
     <uses-feature android:name="android.hardware.storage" android:required="false"/>
 
+    <uses-feature
+        android:name="android.hardware.vulkan.version"
+        android:version="0x400003"
+        android:required="false"
+        tools:replace="android:required" />
+
     <queries>
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
