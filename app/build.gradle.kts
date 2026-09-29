@@ -33,7 +33,7 @@ android {
         minSdk = 24
         //noinspection EditedTargetSdkVersion
         targetSdk = 37
-        versionCode = 216
+        versionCode = 217
 
         versionName = "8.12"
         // 👇 Add these lines
@@ -312,7 +312,7 @@ dependencies {
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("androidx.core:core-splashscreen:1.2.0")
 
-    implementation("org.maplibre.gl:android-sdk:12.3.1")
+    implementation("org.maplibre.gl:android-sdk:13.6.1")
     implementation("org.maplibre.gl:android-plugin-annotation-v9:3.0.2")
     implementation("com.google.android.exoplayer:exoplayer:2.19.1")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")

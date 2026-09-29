@@ -75,7 +75,9 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
 
         binding.txtCountry.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                mAdapter.filter(s.toString())
+                if (::mAdapter.isInitialized) {
+                    mAdapter.filter(s.toString())
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -86,12 +88,12 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
     private fun loadCountry(countryList: List<Country>) {
         Constant.hideLoading(this)
         val updatedList = countryList.toMutableList()
-        if (updatedList.isNotEmpty()){
-            binding.rytSearch.visibility= View.VISIBLE
-        }else{
-            binding.rytSearch.visibility= View.GONE
+        binding.rytSearch.visibility = if (updatedList.isNotEmpty()) View.VISIBLE else View.GONE
+
+        if (updatedList.size >= 3) {
+            updatedList.add(3.coerceAtMost(updatedList.size), Country(0, "", 0, 0, "", "", "", ""))
         }
-        updatedList.add(3, Country(0, "", 0, 0, "", "", "", ""))
+
         mAdapter = CountryListAdapter(this, updatedList, this) { selectedCountry ->
             isCountrySelected = true
             Constant.country_details = selectedCountry
@@ -99,7 +101,9 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         binding.recycleCountry.layoutManager = LinearLayoutManager(this)
         binding.recycleCountry.adapter = mAdapter
 
-
+        // re-apply restored/typed search text
+        val query = binding.txtCountry.text?.toString().orEmpty()
+        if (query.isNotEmpty()) mAdapter.filter(query)
     }
 
     private fun isCountry() {
