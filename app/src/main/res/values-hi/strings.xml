@@ -1452,5 +1452,6 @@
     <string name="are_you_sure_you_want_to_submit">क्या आप वाकई सबमिट करना चाहते हैं?</string>
     <string name="transation_id">लेन-देन ID</string>
     <string name="last_updated_on">अंतिम बार अपडेट किया गया</string>
-
+    <string name="happy_birthday">🎂 जन्मदिन की शुभकामनाएँ</string>
+    <string name="may_your_day_be_filled_with_joy_and_your_year_ahead_with_new_learning_wonderful_experiences_and_many_achievements_have_a_wonderful_birthday">आपका दिन खुशियों से भरा रहे और आने वाला वर्ष नई सीख, शानदार अनुभवों और कई उपलब्धियों से भरपूर हो। आपको जन्मदिन की ढेरों शुभकामनाएँ! 🎉</string>
 </resources>

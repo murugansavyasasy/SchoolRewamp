@@ -162,7 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="🎂 Happy Birthday"
+                android:text="@string/happy_birthday"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="20sp" />
 
@@ -184,8 +184,7 @@
                 android:layout_marginHorizontal="12dp"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="May your day be filled with joy and your year ahead with new learning, wonderful experiences and many achievements.
-Have a wonderful birthday! 🎉"
+                android:text="@string/may_your_day_be_filled_with_joy_and_your_year_ahead_with_new_learning_wonderful_experiences_and_many_achievements_have_a_wonderful_birthday"
                 android:textColor="@color/clr_grey_dark"
                 android:textSize="15sp" />
 

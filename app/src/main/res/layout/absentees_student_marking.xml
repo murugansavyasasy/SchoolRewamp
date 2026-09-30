@@ -183,6 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_below="@+id/recycleStudents"
                 android:orientation="vertical"
                 android:visibility="gone">
 

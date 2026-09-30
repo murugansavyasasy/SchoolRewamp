@@ -1452,4 +1452,6 @@
     <string name="are_you_sure_you_want_to_submit">هل أنت متأكد أنك تريد الإرسال؟</string>
     <string name="transation_id">معرّف المعاملة</string>
     <string name="last_updated_on">آخر تحديث في</string>
+    <string name="happy_birthday">🎂 عيد ميلاد سعيد</string>
+    <string name="may_your_day_be_filled_with_joy_and_your_year_ahead_with_new_learning_wonderful_experiences_and_many_achievements_have_a_wonderful_birthday">أتمنى أن يمتلئ يومك بالفرح، وأن تكون سنتك القادمة مليئة بالتعلم الجديد والتجارب الرائعة والعديد من الإنجازات. أتمنى لك عيد ميلاد رائعًا! 🎉</string>
 </resources>

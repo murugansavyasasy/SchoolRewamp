@@ -1452,5 +1452,7 @@
     <string name="are_you_sure_you_want_to_submit">คุณแน่ใจหรือไม่ว่าต้องการส่ง?</string>
     <string name="transation_id">รหัสธุรกรรม</string>
     <string name="last_updated_on">อัปเดตล่าสุดเมื่อ</string>
+    <string name="happy_birthday">🎂 สุขสันต์วันเกิด</string>
+    <string name="may_your_day_be_filled_with_joy_and_your_year_ahead_with_new_learning_wonderful_experiences_and_many_achievements_have_a_wonderful_birthday">ขอให้วันของคุณเต็มไปด้วยความสุข และปีที่กำลังจะมาถึงเต็มไปด้วยการเรียนรู้สิ่งใหม่ ๆ ประสบการณ์ที่ยอดเยี่ยม และความสำเร็จมากมาย ขอให้มีวันเกิดที่แสนวิเศษ! 🎉</string>
 
 </resources>
