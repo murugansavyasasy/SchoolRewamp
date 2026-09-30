@@ -1,9 +1,13 @@
 package com.vs.schoolmessenger.CommonScreens
 
 import android.Manifest
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.IntentFilter
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.util.Log
@@ -48,16 +52,66 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.concurrent.ConcurrentHashMap
 
 class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
     View.OnClickListener {
+
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private lateinit var adapter: FileViewerAdapter
     private var currentPosition = 0
 
+    private var pendingDownloadUrl: String? = null
+
+    private val activeDownloads = ConcurrentHashMap<Long, String>()
+
+    private val downloadCompleteReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1L) ?: -1L
+            val displayPath = activeDownloads.remove(id) ?: return
+
+            val dm = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+            var success = false
+            dm.query(DownloadManager.Query().setFilterById(id))?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val status = cursor.getInt(
+                        cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS)
+                    )
+                    success = status == DownloadManager.STATUS_SUCCESSFUL
+                    Log.d(
+                        "Download",
+                        "status=$status size=${cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))} " +
+                                "type=${cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_MEDIA_TYPE))} " +
+                                "uri=${cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))}"
+                    )
+                }
+            }
+
+            if (activeDownloads.isEmpty()) binding.lnrDownloadStatus.visibility = View.GONE
+            if (isFinishing || isDestroyed) return
+
+            if (success) {
+                Constant.showValidationAlertPopup(
+                    getString(R.string.successfully_downloaded),
+                    "File saved to $displayPath",
+                    this@FilesViewActivity
+                )
+            } else {
+                Toast.makeText(
+                    this@FilesViewActivity,
+                    getString(R.string.Download_failed_2),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
     var isFilesList: MutableList<CommonFileData> = mutableListOf()
 
+    companion object {
+        private const val REQ_STORAGE_PERMISSION = 101
+    }
 
     override fun getViewBinding(): HomeworkViewImageDocumentBinding =
         HomeworkViewImageDocumentBinding.inflate(layoutInflater)
@@ -88,8 +142,6 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
             insets
         }
 
-
-
         ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout) { _, insets ->
             insets
         }
@@ -108,6 +160,13 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
+
+        ContextCompat.registerReceiver(
+            this,
+            downloadCompleteReceiver,
+            IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
+            ContextCompat.RECEIVER_EXPORTED
+        )
 
         binding.imgBack.setOnClickListener(this)
         binding.imgMoreOptions.setOnClickListener(this)
@@ -134,9 +193,10 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         }
 
         for (i in Constant.commonFileList.indices) {
-            if (Constant.commonFileList[i].path.contains("amazonaws.") || Constant.commonFileList[i].path.contains(
-                    "player.vimeo.com"
-                ) || Constant.commonFileList[i].type == Constant.IMAGE || Constant.commonFileList[i].type == Constant.VIDEO
+            if (Constant.commonFileList[i].path.contains("amazonaws.") ||
+                Constant.commonFileList[i].path.contains("player.vimeo.com") ||
+                Constant.commonFileList[i].type == Constant.IMAGE ||
+                Constant.commonFileList[i].type == Constant.VIDEO
             ) {
                 isFilesList.add(
                     CommonFileData(
@@ -185,10 +245,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
             Constant.commonFileList.clear()
             onBackPressed()
         }
-
     }
-
-
 
     fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
         val adapter = recyclerView.adapter ?: return
@@ -235,16 +292,14 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 currentPosition++
                 scrollToPosition(currentPosition)
                 updateNavButtons()
-
             }
 
             R.id.lnrPrevious -> if (currentPosition > 0) {
-                // STOP CURRENT AUDIO FIRST
+
                 adapter.stopAudio()
                 currentPosition--
                 scrollToPosition(currentPosition)
                 updateNavButtons()
-
             }
         }
     }
@@ -253,7 +308,6 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         super.onBackPressed()
         Constant.commonFileList.clear()
         adapter.stopAudio()
-
     }
 
     private fun showFileOptions(url: String) {
@@ -269,9 +323,14 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 }
 
                 R.id.action_download -> {
-                    if (url.contains("vimeo.com/video/")) fetchAndDownloadVimeoVideo(url)
-                    else if (checkStoragePermission()) downloadFile(url)
-                    else requestStoragePermission()
+                    if (url.contains("vimeo.com/video/")) {
+                        fetchAndDownloadVimeoVideo(url)
+                    } else if (checkStoragePermission()) {
+                        downloadFile(url)
+                    } else {
+                        pendingDownloadUrl = url
+                        requestStoragePermission()
+                    }
                     true
                 }
 
@@ -306,6 +365,12 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
             return
         }
 
+        if (!checkStoragePermission()) {
+            pendingDownloadUrl = vimeoUrl
+            requestStoragePermission()
+            return
+        }
+
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val response = RetrofitClient.apiService.getVideoDetails(
@@ -336,7 +401,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                     }
                 }
             } catch (e: Exception) {
-                Log.e("VimeoAPI", "Error: ${e.message}")
+                Log.e("VimeoAPI", "Error: ${e.message}", e)
                 withContext(Dispatchers.Main) {
                     binding.lnrDownloadStatus.visibility = View.GONE
                 }
@@ -355,80 +420,65 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
 
     override fun onDestroy() {
         adapter.stopAudio()
+        try {
+            unregisterReceiver(downloadCompleteReceiver)
+        } catch (e: IllegalArgumentException) {
+            Log.w("Download", "Receiver was not registered")
+        }
         super.onDestroy()
     }
 
 
     private fun downloadFile(url: String) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                withContext(Dispatchers.Main) {
-                    binding.lnrDownloadStatus.visibility = View.VISIBLE
+        try {
+            var fileName = Uri.decode(url.substringAfterLast("/").substringBefore("?"))
+            val ext = fileName.substringAfterLast('.', "").lowercase()
+
+            val subFolder = when (ext) {
+                "mp4", "mov", "mkv", "avi", "flv", "wmv", "webm", "mpeg", "mpg", "3gp", "m4v" -> "Videos"
+                "pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx" -> "Documents"
+                "jpg", "jpeg", "png", "gif", "bmp", "webp" -> "Images"
+                "mp3", "wav", "aac", "ogg", "flac", "m4a" -> "Audio"
+                else -> "Others"
+            }
+
+            if (!fileName.contains(".")) {
+                fileName += when (subFolder) {
+                    "Videos" -> ".mp4"
+                    "Documents" -> ".pdf"
+                    "Images" -> ".jpg"
+                    else -> ".bin"
                 }
+            }
 
-                var fileName = url.substringAfterLast("/").substringBefore("?")
-                val fileExtension = fileName.substringAfterLast('.', "").lowercase()
+            val mime = MimeTypeMap.getSingleton()
+                .getMimeTypeFromExtension(fileName.substringAfterLast('.').lowercase())
 
-                val subFolder = when (fileExtension) {
-                    "mp4", "mov", "mkv", "avi", "flv", "wmv", "webm", "mpeg", "mpg", "3gp", "m4v" -> "Videos"
-                    "pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx" -> "Documents"
-                    "jpg", "jpeg", "png", "gif", "bmp", "webp" -> "Images"
-                    "mp3", "wav", "aac", "ogg", "flac", "m4a" -> "Audio"
-                    else -> "Others"
-                }
+            val request = DownloadManager.Request(Uri.parse(url))
+                .setTitle(fileName)
+                .setMimeType(mime ?: "application/octet-stream")
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(
+                    Environment.DIRECTORY_DOWNLOADS,
+                    "SchoolChimes/Attachments/$subFolder/$fileName"
+                )
+            request.allowScanningByMediaScanner()
 
-                if (!fileName.contains(".")) {
-                    fileName += when (subFolder) {
-                        "Videos" -> ".mp4"
-                        "Documents" -> ".pdf"
-                        "Images" -> ".jpg"
-                        else -> ".bin"
-                    }
-                }
+            val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+            val downloadId = downloadManager.enqueue(request)
+            activeDownloads[downloadId] = "Downloads/SchoolChimes/Attachments/$subFolder/$fileName"
+            Log.d("Download", "Enqueued id=$downloadId file=$fileName")
 
-                val baseFolderName = "SchoolChimes"
-                val subFolderPath = "Attachments/$subFolder"
-
-                val downloadsDir =
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                val targetDir = File(downloadsDir, "$baseFolderName/$subFolderPath")
-                if (!targetDir.exists()) targetDir.mkdirs()
-
-                val file = File(targetDir, fileName)
-
-                if (!file.exists()) {
-                    val connection = URL(url).openConnection()
-                    connection.getInputStream().use { input ->
-                        FileOutputStream(file).use { output -> input.copyTo(output) }
-                    }
-
-                    MediaScannerConnection.scanFile(
-                        this@FilesViewActivity,
-                        arrayOf(file.absolutePath),
-                        null,
-                        null
-                    )
-                }
-
-                withContext(Dispatchers.Main) {
-                    binding.lnrDownloadStatus.visibility = View.GONE
-                    Constant.showValidationAlertPopup(
-                        getString(R.string.successfully_downloaded),
-                        "File saved to Downloads/$baseFolderName/$subFolderPath/$fileName",
-                        this@FilesViewActivity
-                    )
-                }
-
-            } catch (e: Exception) {
-                Log.e("Download", "Download error: ${e.message}")
-                withContext(Dispatchers.Main) {
-                    binding.lnrDownloadStatus.visibility = View.GONE
-                    Toast.makeText(
-                        this@FilesViewActivity,
-                        getString(R.string.Download_failed_2),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+            runOnUiThread {
+                binding.lnrDownloadStatus.visibility = View.VISIBLE
+//                Toast.makeText(this, "Download started", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Log.e("Download", "Download error: ${e.message}", e)
+            runOnUiThread {
+                binding.lnrDownloadStatus.visibility = View.GONE
+                Toast.makeText(this, getString(R.string.Download_failed_2), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -448,9 +498,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 if (!file.exists()) {
                     connection.inputStream.use { input ->
                         FileOutputStream(file).use { output ->
-                            input.copyTo(
-                                output
-                            )
+                            input.copyTo(output)
                         }
                     }
                 }
@@ -479,37 +527,49 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                         getString(R.string.failed_to_share_file),
                         Toast.LENGTH_SHORT
                     ).show()
-                }
-                withContext(Dispatchers.Main) {
                     binding.lnrDownloadStatus.visibility = View.GONE
                 }
             }
         }
     }
 
-    private fun checkStoragePermission(): Boolean {
-        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(
+
+
+    private fun checkStoragePermission(): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ||
+                ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+
+    private fun requestStoragePermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            ActivityCompat.requestPermissions(
                 this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                REQ_STORAGE_PERMISSION
+            )
         }
     }
 
-    private fun requestStoragePermission() {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQ_STORAGE_PERMISSION) {
+            val granted = grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED
+            val url = pendingDownloadUrl
+            pendingDownloadUrl = null
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                101
-            )
+            if (granted && url != null) {
+                if (url.contains("vimeo.com/video/")) fetchAndDownloadVimeoVideo(url)
+                else downloadFile(url)
+            } else if (!granted) {
+                Toast.makeText(this, getString(R.string.Download_failed_2), Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
-
-        // For Android 13+ → No permission needed
     }
 
 
@@ -569,8 +629,6 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                                 getString(R.string.no_downloadable_mp4_found),
                                 Toast.LENGTH_SHORT
                             ).show()
-                        }
-                        withContext(Dispatchers.Main) {
                             binding.lnrDownloadStatus.visibility = View.GONE
                         }
                     }
