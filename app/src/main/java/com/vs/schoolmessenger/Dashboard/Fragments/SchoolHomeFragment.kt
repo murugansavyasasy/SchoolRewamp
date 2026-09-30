@@ -224,6 +224,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     if (isDashboardResponse.isNotEmpty() && isDashboardResponse[0].is_birthday) {
                         showBirthdayPopup()
                     }
+
                     Log.d("DashboardDataMenus", "DashboardData")
                     isSchoolContactDetails = isSchoolDashBoardData!![0].contactDetails
                     val safeActivity = activity ?: return@observe
@@ -392,17 +393,19 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         val txtDate: TextView = view.findViewById(R.id.txtDate)
         val imgProfile: ImageView = view.findViewById(R.id.imgProfile)
         val lottieView: LottieAnimationView = view.findViewById(R.id.lottieBirthday)
-
+        val txtSchoolName: TextView = view.findViewById(R.id.txtSchoolName)
         lottieView.playAnimation()
 
         if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
             txtName.text = staffDetails!!.name
+            txtSchoolName.text = " - " + staffDetails!!.school_name
             Glide.with(this)
                 .load(staffDetails!!.staff_profile)
                 .error(R.drawable.default_profile)
                 .into(imgProfile)
         } else {
             txtName.text = userDetails!!.staff_details[0].name
+            txtSchoolName.text = " - " + userDetails!!.staff_details[0].school_name
             Glide.with(this)
                 .load(userDetails!!.staff_details[0].staff_profile)
                 .error(R.drawable.default_profile)

@@ -162,7 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Happy Birthday!"
+                android:text="🎂 Happy Birthday"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="20sp" />
 
@@ -173,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="Saran Raj Shannumugam"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -184,9 +184,24 @@
                 android:layout_marginHorizontal="12dp"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="May your day be filled with happiness and your year ahead with success"
+                android:text="May your day be filled with joy and your year ahead with new learning, wonderful experiences and many achievements.
+Have a wonderful birthday! 🎉"
                 android:textColor="@color/clr_grey_dark"
                 android:textSize="15sp" />
+
+
+            <TextView
+
+                android:id="@+id/txtSchoolName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/clr_grey_dark"
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/txtDate"
