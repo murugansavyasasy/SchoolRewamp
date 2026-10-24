@@ -1454,4 +1454,27 @@
     <string name="last_updated_on">கடைசியாக புதுப்பிக்கப்பட்டது</string>
     <string name="happy_birthday">🎂 இனிய பிறந்தநாள் வாழ்த்துகள்</string>
     <string name="may_your_day_be_filled_with_joy_and_your_year_ahead_with_new_learning_wonderful_experiences_and_many_achievements_have_a_wonderful_birthday">உங்கள் நாள் மகிழ்ச்சியால் நிறைந்ததாகவும், வரவிருக்கும் ஆண்டு புதிய கற்றல்கள், அற்புதமான அனுபவங்கள் மற்றும் பல சாதனைகளால் நிறைந்ததாகவும் அமையட்டும். இனிய பிறந்தநாள் வாழ்த்துகள்! 🎉</string>
+    <string name="fee_summary">கட்டணச் சுருக்கம்</string>
+    <string name="fee_total">மொத்தக் கட்டணம்</string>
+    <string name="fee_paid">செலுத்தியது</string>
+    <string name="fee_pending">நிலுவை</string>
+    <string name="fee_discount">தள்ளுபடி</string>
+    <string name="fee_paid_progress">%2$s-ல் %1$s செலுத்தப்பட்டுள்ளது (%3$s%%)</string>
+    <string name="fee_term_fees">பருவக் கட்டணம்</string>
+    <string name="fee_other_fees">பிற கட்டணங்கள்</string>
+    <string name="fee_transport_fees">போக்குவரத்துக் கட்டணம்</string>
+    <string name="fee_hostel_fees">விடுதிக் கட்டணம்</string>
+    <string name="fee_carryover_fees">முந்தைய நிலுவைக் கட்டணங்கள்</string>
+    <string name="fee_section_title">%1$s · நிலுவை %2$s</string>
+    <string name="fee_transport">போக்குவரத்து</string>
+    <string name="fee_room_bed">அறை %1$s · படுக்கை %2$s</string>
+    <string name="fee_details_1">கட்டணம் %1$s · செலுத்தியது %2$s · தள்ளுபடி %3$s</string>
+    <string name="fee_breakdown_details">கட்டணம் %1$s · செலுத்தியது %2$s · நிலுவை %3$s</string>
+    <string name="fee_payment_title">பணம் செலுத்துதல் %1$d · %2$s</string>
+    <string name="fee_amount_with_mode">%1$s · %2$s</string>
+    <string name="fee_name_group">%1$s · %2$s</string>
+    <string name="fee_no_value">-</string>
+    <string name="fee_status_paid">செலுத்தப்பட்டது</string>
+    <string name="fee_status_partial">பகுதி செலுத்தப்பட்டது</string>
+    <string name="fee_status_pending">நிலுவையில் உள்ளது</string>
 </resources>

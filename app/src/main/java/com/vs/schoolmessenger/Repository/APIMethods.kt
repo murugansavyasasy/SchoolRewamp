@@ -226,6 +226,9 @@ object APIMethods {
     const val getMarkDetails = "exam/api/new-exam/get-marks-to-upload-details"
     const val getexamanalysis = "exam/api/new-exam/exam-analysis"
     const val getcommonremarks = "exam/api/exam-new/common-remarks"
+    const val getStudentFeeDetails = "fee/api/fee-details/student-fee-details"
+    const val getDiscountType = "fee/api/fee-report/discount-type-list"
+    const val getFeeDiscount = "fee/api/fee-report/discount-report"
 
     const val staff_leave_request_apply = "comm/api/leave-req-for-staff/apply"
     const val isstaffleavecategories = "comm/api/leave-req-for-staff/leave-categories"

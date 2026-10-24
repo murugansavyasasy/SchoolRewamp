@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/bg_fee_card_single"
+    android:clipChildren="true"
+    android:clipToOutline="true"
+    android:orientation="vertical">
+
+    <!-- Header: tag / name / count on the left, total + chevron on the right -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:id="@+id/tvTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="3dp"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCategoryName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/tvCategoryTotal"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTag" />
+
+        <TextView
+            android:id="@+id/tvStudentCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/fee_text_grey"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCategoryName" />
+
+        <TextView
+            android:id="@+id/tvCategoryTotal"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvCategoryName"
+            app:layout_constraintEnd_toStartOf="@id/imgChevron"
+            app:layout_constraintTop_toTopOf="@id/tvCategoryName" />
+
+        <ImageView
+            android:id="@+id/imgChevron"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/ic_sample_arrow_icon"
+            app:layout_constraintBottom_toBottomOf="@id/tvCategoryName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvCategoryName" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/viewDivider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="#dcdfe4" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyStudents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FAFBFD"
+        android:overScrollMode="never" />
+</LinearLayout>

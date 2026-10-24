@@ -114,6 +114,8 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.DailyCollection.FeeDiscount.Model.DiscountReport.DiscountReportResponse
+import com.vs.schoolmessenger.School.DailyCollection.FeeDiscount.Model.DiscountTypeList.DiscountTypeResponse
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardResponse
 import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
@@ -191,6 +193,7 @@ import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffLeaveListCator
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffUpdateLeaveRequest.StaffLeaveUpdateRespone
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.School.StudentReport.ProfileUpdateModel.StudentProfileUpdateResponse
+import com.vs.schoolmessenger.School.StudentReport.StudentFeeDetails.Model.FeeDetailsResponse
 import com.vs.schoolmessenger.Utils.SharedPreference
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -526,6 +529,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var getexamanalysis: LiveData<AcademicAnalysisResponse?>? = null
     var getcommonremarks: LiveData<CommonRemarksResponse?>? = null
     var isupdateporiflestudent: LiveData<StudentProfileUpdateResponse?>? = null
+    var isStudentFeeDetails: LiveData<FeeDetailsResponse?>? = null
+    var isFeeDiscountDetails: LiveData<DiscountReportResponse?>? = null
+    var isDiscountTypeList: LiveData<DiscountTypeResponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -753,6 +759,9 @@ class App(application: Application) : AndroidViewModel(application) {
         getexamanalysis = apiSchoolRepositoriesTwo.getexamanalysisLiveData
         getcommonremarks = apiSchoolRepositoriesTwo.getcommonremarksLiveData
         isupdateporiflestudent = apiSchoolRepositoriesTwo.isupdateporiflestudentLiveData
+        isStudentFeeDetails = apiSchoolRepositoriesTwo.isStudentFeeDetailsLiveData
+        isFeeDiscountDetails = apiSchoolRepositoriesTwo.isFeeDiscountDetailsLiveData
+        isDiscountTypeList = apiSchoolRepositoriesTwo.isDiscountTypeListLiveData
     }
 
     fun isDashBoardData(
@@ -2493,6 +2502,33 @@ class App(application: Application) : AndroidViewModel(application) {
         Log.d("reporting_url",reporting_url.toString())
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.isupdateporiflestudent(isToken,jsonObject,activity)
+    }
+
+    fun isStudentFeeDetails(
+        isToken: String, student_id: Int,academic_year_id : Int,country_id  : Int, activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        Log.d("reporting_url",reporting_url.toString())
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.StudentFeeDetails(isToken,student_id,academic_year_id,country_id,activity)
+    }
+
+    fun isFeeDiscount(
+        isToken: String, academic_year_id : String, country_id  : String?, class_id:String?, type:String?, section_id: String?,discount_type_id: String?,from_date: String?,to_date: String?, activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        Log.d("reporting_url",reporting_url.toString())
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.FeeDiscountDetails(isToken,academic_year_id,country_id,class_id,type,section_id,discount_type_id,from_date,to_date,activity)
+    }
+
+    fun isDiscountType(
+        isToken: String, type : String, activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        Log.d("reporting_url",reporting_url.toString())
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.DiscountType(isToken,type,activity)
     }
 
 

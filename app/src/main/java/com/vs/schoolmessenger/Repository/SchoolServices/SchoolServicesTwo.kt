@@ -24,6 +24,8 @@ import com.vs.schoolmessenger.School.ClassTest.Review.Model.CreateClassTestRespo
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
 import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.ClassEntryMarkResponse
 import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.UploadMarksClassEntryResponse
+import com.vs.schoolmessenger.School.DailyCollection.FeeDiscount.Model.DiscountReport.DiscountReportResponse
+import com.vs.schoolmessenger.School.DailyCollection.FeeDiscount.Model.DiscountTypeList.DiscountTypeResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.CommonRemarksModel.CommonRemarksResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamAnalysis.Model.AcademicAnalysisResponse
 import com.vs.schoolmessenger.School.ExamReview.AnalysisSetResponseModel.AnalysisSetsResponse
@@ -39,6 +41,7 @@ import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAtten
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.RoomMarkAttendance.hostelMarkAttendanceRespone
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.StudentReport.ProfileUpdateModel.StudentProfileUpdateResponse
+import com.vs.schoolmessenger.School.StudentReport.StudentFeeDetails.Model.FeeDetailsResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -77,6 +80,9 @@ class SchoolServicesTwo {
     var getexamanalysis: MutableLiveData<AcademicAnalysisResponse?>
     var getcommonremarks: MutableLiveData<CommonRemarksResponse?>
     var isupdateporiflestudent: MutableLiveData<StudentProfileUpdateResponse?>
+    var isUpdateStudnetFeeDetails: MutableLiveData<FeeDetailsResponse?>
+    var isDiscountFeeDetails: MutableLiveData<DiscountReportResponse?>
+    var isDiscountType: MutableLiveData<DiscountTypeResponse?>
 
 
     init {
@@ -113,6 +119,9 @@ class SchoolServicesTwo {
         getexamanalysis = MutableLiveData()
         getcommonremarks = MutableLiveData()
         isupdateporiflestudent = MutableLiveData()
+        isUpdateStudnetFeeDetails = MutableLiveData()
+        isDiscountFeeDetails = MutableLiveData()
+        isDiscountType = MutableLiveData()
 
     }
 
@@ -1114,5 +1123,103 @@ class SchoolServicesTwo {
 
     val isupdateporiflestudentLiveData: LiveData<StudentProfileUpdateResponse?>
         get() = isupdateporiflestudent
+
+    fun StudentFeeDetails(
+        isToken: String, student_id: Int,academic_year_id : Int,country_id  : Int,activity: Activity) {
+        RestClient.Companion.apiInterfaces.getStudentFeeDetails(isToken,student_id,academic_year_id,country_id)
+            ?.enqueue(object : Callback<FeeDetailsResponse?> {
+                override fun onResponse(
+                    call: Call<FeeDetailsResponse?>, response: Response<FeeDetailsResponse?>
+                ) {
+
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isUpdateStudnetFeeDetails.postValue(response.body())
+                        }
+                    } else {
+                        isUpdateStudnetFeeDetails.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<FeeDetailsResponse?>, t: Throwable) {
+                    isUpdateStudnetFeeDetails.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isStudentFeeDetailsLiveData: LiveData<FeeDetailsResponse?>
+        get() = isUpdateStudnetFeeDetails
+
+    fun FeeDiscountDetails(
+        isToken: String, academic_year_id : String, country_id  : String?, class_id:String?, type:String?, section_id: String?,discount_type_id: String?,from_date: String?,to_date: String?, activity: Activity) {
+
+        RestClient.apiInterfaces.getFeeDiscount(
+            token = isToken,
+            academic_year_id = academic_year_id,
+            country_id = country_id?.takeIf { it.isNotBlank() },
+            type = type?.takeIf { it.isNotBlank() },
+            class_id = class_id?.takeIf { it.isNotBlank() },
+            section_id = section_id?.takeIf { it.isNotBlank() },
+            discount_type_id = discount_type_id?.takeIf { it.isNotBlank() },
+            from_date = from_date?.takeIf { it.isNotBlank() },
+            to_date = to_date?.takeIf { it.isNotBlank() }
+
+        )?.enqueue(object : Callback<DiscountReportResponse?> {
+                override fun onResponse(
+                    call: Call<DiscountReportResponse?>, response: Response<DiscountReportResponse?>
+                ) {
+
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isDiscountFeeDetails.postValue(response.body())
+                        }
+                    } else {
+                        isDiscountFeeDetails.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<DiscountReportResponse?>, t: Throwable) {
+                    isDiscountFeeDetails.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isFeeDiscountDetailsLiveData: LiveData<DiscountReportResponse?>
+        get() = isDiscountFeeDetails
+
+
+
+
+    fun DiscountType(
+        isToken: String, type: String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.getDiscountType(isToken,type)
+            ?.enqueue(object : Callback<DiscountTypeResponse?> {
+                override fun onResponse(
+                    call: Call<DiscountTypeResponse?>, response: Response<DiscountTypeResponse?>
+                ) {
+
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isDiscountType.postValue(response.body())
+                        }
+                    } else {
+                        isDiscountType.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<DiscountTypeResponse?>, t: Throwable) {
+                    isDiscountType.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isDiscountTypeListLiveData: LiveData<DiscountTypeResponse?>
+        get() = isDiscountType
 
 }

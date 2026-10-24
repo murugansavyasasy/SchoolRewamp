@@ -941,6 +941,16 @@
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".School.StudentReport.StudentFeeDetails.StudentFeeDetails"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".School.DailyCollection.FeeDiscount.FeeDiscount"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
 
     </application>
 

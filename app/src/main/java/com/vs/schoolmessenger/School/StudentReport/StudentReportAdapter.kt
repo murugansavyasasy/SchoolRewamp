@@ -1,15 +1,19 @@
 package com.vs.schoolmessenger.School.StudentReport
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -71,6 +75,7 @@ class StudentReportAdapter(
         private val lnrPhoneNumber: LinearLayout = itemView.findViewById(R.id.lnrMobileNumber)
         private val lnrSms: LinearLayout = itemView.findViewById(R.id.lnrSMS)
         private val lnrMail: LinearLayout = itemView.findViewById(R.id.lnrEmail)
+        private val rlaEntireCard: RelativeLayout = itemView.findViewById(R.id.rlaEntireCard)
         private val lnrUpdateProfile: LinearLayout = itemView.findViewById(R.id.lnrUpdateProfile)
 
         fun bind(data: StudentReportData, listener: StudentReportClickListener) {
@@ -114,6 +119,10 @@ class StudentReportAdapter(
                 listener.onMailClick(data)
             }
 
+            rlaEntireCard.setOnClickListener {
+                listener.onClickStudentFee(data)
+            }
+
             lnrSms.setOnClickListener {
                 listener.onMessageClick(data)
             }
@@ -122,7 +131,23 @@ class StudentReportAdapter(
                 listener.onPhoneClick(data)
             }
 
+            rlaEntireCard.setOnClickListener {
+                listener.onClickStudentFee(data)
+            }
+
+            cameraicon.setOnClickListener(null)
+            lnrUpdateProfile.setOnClickListener(null)
+
             if (canEditProfile) {
+                cameraicon.visibility = View.VISIBLE
+                lnrUpdateProfile.visibility = View.VISIBLE
+
+                cameraicon.isClickable = true
+                cameraicon.isFocusable = true
+
+                lnrUpdateProfile.isClickable = true
+                lnrUpdateProfile.isFocusable = true
+
                 cameraicon.setOnClickListener {
                     listener.onCamerClick(data)
                 }
@@ -131,8 +156,8 @@ class StudentReportAdapter(
                     listener.onCamerClick(data)
                 }
             } else {
-                cameraicon.setOnClickListener(null)
-                lnrUpdateProfile.setOnClickListener(null)
+                cameraicon.visibility = View.GONE
+                lnrUpdateProfile.visibility = View.GONE
             }
         }
 

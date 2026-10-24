@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lytFeeCardRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="10dp"
+    android:paddingTop="6dp"
+    android:paddingEnd="10dp"
+    android:paddingBottom="6dp">
+
+    <View
+        android:id="@+id/viewDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/fee_divider"
+        android:visibility="gone" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lytFeeHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="4dp">
+
+        <!-- Title + status badge -->
+        <TextView
+            android:id="@+id/lblFeeTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/fee_text_dark"
+            android:textSize="16sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/lblFeeStatus"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lblFeeStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_fee_status_badge"
+            android:fontFamily="@font/poppins_medium"
+            android:paddingStart="8dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="8dp"
+            android:layout_marginEnd="@dimen/five"
+            android:paddingBottom="2dp"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/lytPendingBlock"
+            app:layout_constraintStart_toEndOf="@id/lblFeeTitle"
+            app:layout_constraintTop_toTopOf="@id/lblFeeTitle" />
+
+        <TextView
+            android:id="@+id/lblFeeSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/fee_text_grey"
+            android:textSize="14sp"
+            android:layout_marginEnd="@dimen/five"
+            app:layout_constraintEnd_toStartOf="@id/lytPendingBlock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblFeeTitle" />
+
+        <TextView
+            android:id="@+id/lblFeeDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/fee_text_grey"
+            android:textSize="12sp"
+            android:layout_marginEnd="@dimen/five"
+            app:layout_constraintEnd_toStartOf="@id/lytPendingBlock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblFeeSubtitle" />
+
+        <!-- Right side: pending amount + arrow -->
+        <LinearLayout
+            android:id="@+id/lytPendingBlock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fee_pending"
+                    android:textColor="@color/fee_text_grey"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/lblFeePending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgArrow"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="6dp"
+                android:src="@drawable/ic_fee_arrow_up"
+                app:tint="@color/fee_text_grey" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Expanded content: rows are added from item_fee_child_row.xml -->
+    <LinearLayout
+        android:id="@+id/lytChildren"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_fee_inner"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:visibility="gone" />
+</LinearLayout>

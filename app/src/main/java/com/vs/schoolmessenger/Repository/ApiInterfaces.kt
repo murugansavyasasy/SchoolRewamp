@@ -123,6 +123,8 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.DailyCollection.FeeDiscount.Model.DiscountReport.DiscountReportResponse
+import com.vs.schoolmessenger.School.DailyCollection.FeeDiscount.Model.DiscountTypeList.DiscountTypeResponse
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardResponse
 import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
@@ -200,6 +202,7 @@ import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffLeaveListCator
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffUpdateLeaveRequest.StaffLeaveUpdateRespone
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.School.StudentReport.ProfileUpdateModel.StudentProfileUpdateResponse
+import com.vs.schoolmessenger.School.StudentReport.StudentFeeDetails.Model.FeeDetailsResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -1701,4 +1704,39 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject,
     ): Call<StudentProfileUpdateResponse?>
+
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.getStudentFeeDetails)
+    fun getStudentFeeDetails(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("student_id") student_id: Int,
+        @Query("academic_year_id") academic_year_id: Int,
+        @Query("country_id") country_id: Int,
+    )
+            : Call<FeeDetailsResponse?>
+
+
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.getFeeDiscount)
+    fun getFeeDiscount(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("academic_year_id") academic_year_id: String,
+        @Query("country_id") country_id: String? = null,
+        @Query("type") type: String? = null,
+        @Query("class_id") class_id: String? = null,
+        @Query("section_id") section_id: String? = null,
+        @Query("discount_type_id") discount_type_id: String? = null,
+        @Query("from_date") from_date: String? = null,
+        @Query("to_date") to_date: String? = null
+    ): Call<DiscountReportResponse?>
+
+
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.getDiscountType)
+    fun getDiscountType(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("type") type: String,
+
+    )
+            : Call<DiscountTypeResponse?>
 }

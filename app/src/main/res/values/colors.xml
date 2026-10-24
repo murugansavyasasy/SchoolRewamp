@@ -369,4 +369,19 @@
     <color name="exam_max_line_red">#F87171</color>
 
 
+
+    <color name="fee_green">#12B76A</color>
+    <color name="fee_blue">#2F6FE4</color>
+    <color name="fee_orange">#F79009</color>
+    <color name="fee_text_dark">#101828</color>
+    <color name="fee_text_grey">#667085</color>
+    <color name="fee_divider">#E4E9F2</color>
+    <color name="fee_inner_bg">#F1F4FA</color>
+    <color name="fee_card_bg">#FFFFFF</color>
+    <color name="fee_badge_bg">#E9EEF8</color>
+    <color name="fee_green_bg">#E6F7EF</color>
+    <color name="fee_blue_bg">#E9EEF8</color>
+    <color name="fee_orange_bg">#FEF3E2</color>
+
+
 </resources>

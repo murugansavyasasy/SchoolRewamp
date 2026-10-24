@@ -8,10 +8,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/five"
         android:layout_marginTop="@dimen/ten"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_marginEnd="@dimen/five"
         android:background="@drawable/rect_shadow_white">
 
         <RelativeLayout
+            android:id="@+id/rlaEntireCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_student_report">
@@ -41,6 +44,8 @@
                 <ImageView
                     android:id="@+id/imgStudentIcon"
                     android:layout_width="@dimen/twenty_five"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:layout_height="@dimen/twenty_five"
                     android:layout_alignBottom="@+id/imgStudent"
                     android:layout_alignEnd="@+id/imgStudent"
@@ -468,6 +473,8 @@
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_toEndOf="@+id/lnrEmail"
                     android:padding="3dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:background="@drawable/primary_rect_radius"
                     android:gravity="center">
 

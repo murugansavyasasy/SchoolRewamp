@@ -1454,4 +1454,27 @@
     <string name="last_updated_on">अंतिम बार अपडेट किया गया</string>
     <string name="happy_birthday">🎂 जन्मदिन की शुभकामनाएँ</string>
     <string name="may_your_day_be_filled_with_joy_and_your_year_ahead_with_new_learning_wonderful_experiences_and_many_achievements_have_a_wonderful_birthday">आपका दिन खुशियों से भरा रहे और आने वाला वर्ष नई सीख, शानदार अनुभवों और कई उपलब्धियों से भरपूर हो। आपको जन्मदिन की ढेरों शुभकामनाएँ! 🎉</string>
+    <string name="fee_summary">शुल्क का सारांश</string>
+    <string name="fee_total">कुल शुल्क</string>
+    <string name="fee_paid">भुगतान किया गया</string>
+    <string name="fee_pending">बकाया</string>
+    <string name="fee_discount">छूट</string>
+    <string name="fee_paid_progress">%2$s में से %1$s का भुगतान हुआ (%3$s%%)</string>
+    <string name="fee_term_fees">टर्म शुल्क</string>
+    <string name="fee_other_fees">अन्य शुल्क</string>
+    <string name="fee_transport_fees">परिवहन शुल्क</string>
+    <string name="fee_hostel_fees">छात्रावास शुल्क</string>
+    <string name="fee_carryover_fees">पिछली अवधि का बकाया शुल्क</string>
+    <string name="fee_section_title">%1$s · बकाया %2$s</string>
+    <string name="fee_transport">परिवहन</string>
+    <string name="fee_room_bed">कमरा %1$s · बिस्तर %2$s</string>
+    <string name="fee_details_1">शुल्क %1$s · भुगतान %2$s · छूट %3$s</string>
+    <string name="fee_breakdown_details">शुल्क %1$s · भुगतान %2$s · बकाया %3$s</string>
+    <string name="fee_payment_title">भुगतान %1$d · %2$s</string>
+    <string name="fee_amount_with_mode">%1$s · %2$s</string>
+    <string name="fee_name_group">%1$s · %2$s</string>
+    <string name="fee_no_value">-</string>
+    <string name="fee_status_paid">भुगतान किया गया</string>
+    <string name="fee_status_partial">आंशिक भुगतान</string>
+    <string name="fee_status_pending">भुगतान बाकी है</string>
 </resources>

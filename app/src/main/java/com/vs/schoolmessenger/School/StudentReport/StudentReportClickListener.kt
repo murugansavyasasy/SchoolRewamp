@@ -5,4 +5,5 @@ interface StudentReportClickListener {
     fun onPhoneClick(data: StudentReportData)
     fun onMessageClick(data: StudentReportData)
     fun onCamerClick(data: StudentReportData)
+    fun onClickStudentFee(data: StudentReportData)
 }

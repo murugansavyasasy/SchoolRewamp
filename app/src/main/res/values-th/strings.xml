@@ -1454,5 +1454,27 @@
     <string name="last_updated_on">อัปเดตล่าสุดเมื่อ</string>
     <string name="happy_birthday">🎂 สุขสันต์วันเกิด</string>
     <string name="may_your_day_be_filled_with_joy_and_your_year_ahead_with_new_learning_wonderful_experiences_and_many_achievements_have_a_wonderful_birthday">ขอให้วันของคุณเต็มไปด้วยความสุข และปีที่กำลังจะมาถึงเต็มไปด้วยการเรียนรู้สิ่งใหม่ ๆ ประสบการณ์ที่ยอดเยี่ยม และความสำเร็จมากมาย ขอให้มีวันเกิดที่แสนวิเศษ! 🎉</string>
-
+    <string name="fee_summary">สรุปค่าธรรมเนียม</string>
+    <string name="fee_total">ค่าธรรมเนียมทั้งหมด</string>
+    <string name="fee_paid">ชำระแล้ว</string>
+    <string name="fee_pending">ค้างชำระ</string>
+    <string name="fee_discount">ส่วนลด</string>
+    <string name="fee_paid_progress">ชำระแล้ว %1$s จาก %2$s (%3$s%%)</string>
+    <string name="fee_term_fees">ค่าธรรมเนียมภาคเรียน</string>
+    <string name="fee_other_fees">ค่าธรรมเนียมอื่น ๆ</string>
+    <string name="fee_transport_fees">ค่าธรรมเนียมการเดินทาง</string>
+    <string name="fee_hostel_fees">ค่าธรรมเนียมหอพัก</string>
+    <string name="fee_carryover_fees">ค่าธรรมเนียมค้างจากงวดก่อน</string>
+    <string name="fee_section_title">%1$s · ค้างชำระ %2$s</string>
+    <string name="fee_transport">การเดินทาง</string>
+    <string name="fee_room_bed">ห้อง %1$s · เตียง %2$s</string>
+    <string name="fee_details_1">ค่าธรรมเนียม %1$s · ชำระแล้ว %2$s · ส่วนลด %3$s</string>
+    <string name="fee_breakdown_details">ค่าธรรมเนียม %1$s · ชำระแล้ว %2$s · ค้างชำระ %3$s</string>
+    <string name="fee_payment_title">การชำระเงิน %1$d · %2$s</string>
+    <string name="fee_amount_with_mode">%1$s · %2$s</string>
+    <string name="fee_name_group">%1$s · %2$s</string>
+    <string name="fee_no_value">-</string>
+    <string name="fee_status_paid">ชำระแล้ว</string>
+    <string name="fee_status_partial">ชำระบางส่วน</string>
+    <string name="fee_status_pending">ค้างชำระ</string>
 </resources>

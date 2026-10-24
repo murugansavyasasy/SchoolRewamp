@@ -77,7 +77,6 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
-        isStaffDetails = SharedPreference.getStaffDetails(this)
 
         if (Constant.isSelectedMenuName.isNullOrEmpty()) {
             binding.toolbarLayout.lblParentToolBar.text = Constant.NoticeBoard

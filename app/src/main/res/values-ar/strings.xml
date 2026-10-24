@@ -1454,4 +1454,27 @@
     <string name="last_updated_on">آخر تحديث في</string>
     <string name="happy_birthday">🎂 عيد ميلاد سعيد</string>
     <string name="may_your_day_be_filled_with_joy_and_your_year_ahead_with_new_learning_wonderful_experiences_and_many_achievements_have_a_wonderful_birthday">أتمنى أن يمتلئ يومك بالفرح، وأن تكون سنتك القادمة مليئة بالتعلم الجديد والتجارب الرائعة والعديد من الإنجازات. أتمنى لك عيد ميلاد رائعًا! 🎉</string>
+    <string name="fee_summary">ملخص الرسوم</string>
+    <string name="fee_total">إجمالي الرسوم</string>
+    <string name="fee_paid">المدفوع</string>
+    <string name="fee_pending">المتبقي</string>
+    <string name="fee_discount">الخصم</string>
+    <string name="fee_paid_progress">تم دفع %1$s من %2$s (%3$s%%)</string>
+    <string name="fee_term_fees">رسوم الفصل الدراسي</string>
+    <string name="fee_other_fees">رسوم أخرى</string>
+    <string name="fee_transport_fees">رسوم النقل</string>
+    <string name="fee_hostel_fees">رسوم السكن</string>
+    <string name="fee_carryover_fees">الرسوم المرحلة</string>
+    <string name="fee_section_title">%1$s · المتبقي %2$s</string>
+    <string name="fee_transport">النقل</string>
+    <string name="fee_room_bed">الغرفة %1$s · السرير %2$s</string>
+    <string name="fee_details_1">الرسوم %1$s · المدفوع %2$s · الخصم %3$s</string>
+    <string name="fee_breakdown_details">الرسوم %1$s · المدفوع %2$s · المتبقي %3$s</string>
+    <string name="fee_payment_title">الدفعة %1$d · %2$s</string>
+    <string name="fee_amount_with_mode">%1$s · %2$s</string>
+    <string name="fee_name_group">%1$s · %2$s</string>
+    <string name="fee_no_value">-</string>
+    <string name="fee_status_paid">مدفوع</string>
+    <string name="fee_status_partial">مدفوع جزئيًا</string>
+    <string name="fee_status_pending">غير مدفوع</string>
 </resources>

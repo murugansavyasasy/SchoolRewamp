@@ -143,197 +143,207 @@
             android:layout_below="@+id/rytStaffSelection"
             android:visibility="visible">
 
-            <RelativeLayout
-                android:id="@+id/rytGPSRedirect"
+            <ScrollView
+                android:id="@+id/scrollMarkAttendance"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/fifteen"
-                android:background="@drawable/bg_rect_location"
-                android:padding="@dimen/twenty"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/imgLocationIllustrate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/one_fifty"
-                    android:src="@drawable/boy_doing_biometric_finger_scanning" />
-
-
-                <TextView
-                    android:id="@+id/lblTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgLocationIllustrate"
-                    android:layout_marginTop="@dimen/ten"
-                    android:text="@string/allow_location_access_to_mark_your_attendance"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/twenty_sp"
-                    android:textStyle="bold" />
+                android:clipToPadding="false"
+                android:fillViewport="true"
+                android:overScrollMode="ifContentScrolls"
+                android:paddingBottom="@dimen/twenty"
+                android:scrollbars="none">
 
                 <RelativeLayout
+                    android:id="@+id/rytMarkAttendanceContent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblTitle"
-                    android:layout_marginTop="@dimen/twenty">
+                    android:layout_height="match_parent">
 
-                    <ImageView
-                        android:id="@+id/imgLocation"
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_location" />
-
-                    <TextView
+                    <RelativeLayout
+                        android:id="@+id/rytGPSRedirect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/twenty"
-                        android:layout_marginTop="@dimen/ten"
-                        android:layout_toEndOf="@+id/imgLocation"
-                        android:text="@string/to_enhance_your_experience_and_provide_accurate_location_based_features_please_enable_gps"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp" />
+                        android:layout_margin="@dimen/fifteen"
+                        android:background="@drawable/bg_rect_location"
+                        android:padding="@dimen/twenty"
+                        android:visibility="gone">
 
+                        <ImageView
+                            android:id="@+id/imgLocationIllustrate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/one_fifty"
+                            android:src="@drawable/boy_doing_biometric_finger_scanning" />
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/lblTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imgLocationIllustrate"
+                            android:layout_marginTop="@dimen/ten"
+                            android:text="@string/allow_location_access_to_mark_your_attendance"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/twenty_sp"
+                            android:textStyle="bold" />
 
+                        <RelativeLayout
+                            android:id="@+id/rytLocationInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lblTitle"
+                            android:layout_marginTop="@dimen/twenty">
 
-                <TextView
-                    android:id="@+id/btnEnableLocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/fifty"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/twenty"
-                    android:background="@drawable/rect_btn_blue"
-                    android:gravity="center"
-                    android:text="@string/enable_location"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/fifteen_sp"
-                    android:textStyle="bold" />
+                            <ImageView
+                                android:id="@+id/imgLocation"
+                                android:layout_width="@dimen/thirty"
+                                android:layout_height="@dimen/thirty"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_location" />
 
-            </RelativeLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/twenty"
+                                android:layout_toEndOf="@+id/imgLocation"
+                                android:text="@string/to_enhance_your_experience_and_provide_accurate_location_based_features_please_enable_gps"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/fifteen_sp" />
+                        </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rytNoLocationList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone">
+                        <TextView
+                            android:id="@+id/btnEnableLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/fifty"
+                            android:layout_below="@+id/rytLocationInfo"
+                            android:layout_marginTop="@dimen/thirty"
+                            android:background="@drawable/rect_btn_blue"
+                            android:gravity="center"
+                            android:text="@string/enable_location"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/fifteen_sp"
+                            android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/imgLocationNeeded"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/two_hundred"
-                    android:paddingHorizontal="@dimen/twenty"
-                    android:src="@drawable/need_location_access" />
+                    </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/lblNoLocation"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgLocationNeeded"
-                    android:gravity="center"
-                    android:padding="@dimen/twenty"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/rytPresentlayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/hundred"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/imgMarkAttendance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/two_hundred"
-                    android:paddingHorizontal="@dimen/twenty"
-                    android:src="@drawable/boy_doing_biometric_finger_scanning" />
-
-                <TextView
-                    android:id="@+id/lblInstruction"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgMarkAttendance"
-                    android:gravity="center"
-                    android:padding="@dimen/twenty"
-                    android:text="@string/mark_attendance_instruction"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
-
-
-                <TextView
-                    android:id="@+id/btnPresent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblInstruction"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginHorizontal="@dimen/hundred"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:background="@drawable/btn_green"
-                    android:padding="@dimen/seven"
-                    android:text="@string/punch"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:visibility="visible" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/btnPresent"
-                    android:layout_marginTop="@dimen/ten"
-                    android:visibility="gone">
-
-
-                    <Switch
+                    <RelativeLayout
+                        android:id="@+id/rytNoLocationList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="@string/fingerprint" />
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/imgLocationNeeded"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/two_hundred"
+                            android:paddingHorizontal="@dimen/twenty"
+                            android:src="@drawable/need_location_access" />
+
+                        <TextView
+                            android:id="@+id/lblNoLocation"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imgLocationNeeded"
+                            android:gravity="center"
+                            android:padding="@dimen/twenty"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fifteen_sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rytPresentlayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/hundred"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/imgMarkAttendance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/two_hundred"
+                            android:layout_centerHorizontal="true"
+                            android:paddingHorizontal="@dimen/twenty"
+                            android:src="@drawable/boy_doing_biometric_finger_scanning" />
+
+                        <TextView
+                            android:id="@+id/lblInstruction"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imgMarkAttendance"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:padding="@dimen/twenty"
+                            android:text="@string/mark_attendance_instruction"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fifteen_sp" />
+
+                        <TextView
+                            android:id="@+id/btnPresent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lblInstruction"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginHorizontal="@dimen/hundred"
+                            android:layout_marginTop="@dimen/twenty"
+                            android:background="@drawable/btn_green"
+                            android:padding="@dimen/seven"
+                            android:text="@string/punch"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:visibility="visible" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/btnPresent"
+                            android:layout_marginTop="@dimen/ten"
+                            android:visibility="gone">
+
+                            <Switch
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="@string/fingerprint" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rytErrorMessage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginHorizontal="@dimen/ten"
+                        android:background="@drawable/rect_btn_red"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/imgNotInDistance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/two_hundred"
+                            android:paddingHorizontal="@dimen/twenty"
+                            android:src="@drawable/need_location_access" />
+
+                        <TextView
+                            android:id="@+id/lblErrorMessage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imgNotInDistance"
+                            android:padding="20dp"
+                            android:text="@string/outside_of_the_location"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/fifteen"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rytErrorMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginHorizontal="@dimen/ten"
-                android:background="@drawable/rect_btn_red"
-                android:visibility="gone">
-
-
-                <ImageView
-                    android:id="@+id/imgNotInDistance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/two_hundred"
-                    android:paddingHorizontal="@dimen/twenty"
-                    android:src="@drawable/need_location_access" />
-
-                <TextView
-                    android:id="@+id/lblErrorMessage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgNotInDistance"
-                    android:padding="20dp"
-                    android:text="@string/outside_of_the_location"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/fifteen"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-
+            </ScrollView>
         </RelativeLayout>
 
         <RelativeLayout
