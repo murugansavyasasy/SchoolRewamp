@@ -600,6 +600,7 @@
     <string name="apply_leave">ขอลา</string>
     <string name="update_leave">อัปเดตการลา</string>
     <string name="Duration">ระยะเวลา</string>
+    <string name="DURATION">ระยะเวลา</string>
     <string name="no_absentee_data_available">ไม่มีข้อมูลผู้ขาดเรียน</string>
     <string name="update_assignment">อัปเดตงาน</string>
     <string name="are_you_sure_want_to_delete">คุณแน่ใจหรือว่าต้องการลบ?</string>

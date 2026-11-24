@@ -600,6 +600,7 @@
     <string name="apply_leave">تقديم إجازة</string>
     <string name="update_leave">تحديث الإجازة</string>
     <string name="Duration">المدة</string>
+    <string name="DURATION">المدة</string>
     <string name="no_absentee_data_available">لا توجد بيانات غياب</string>
     <string name="update_assignment">تحديث الواجب</string>
     <string name="are_you_sure_want_to_delete">هل أنت متأكد أنك تريد الحذف؟</string>

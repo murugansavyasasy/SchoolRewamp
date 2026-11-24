@@ -281,7 +281,16 @@ class FeeDiscount : BaseActivity<FeeDiscountBinding>(), View.OnClickListener,
      * "All" is selected by default, so discount_type_id = 0 unless the user picks another one.
      */
     private fun loadDiscountTypeDropdown(options: List<FilterOption>) {
-        val list = listOf(FilterOption(ALL, getString(R.string.fd_type_all), null)) + options
+        // first value follows the Type: All -> "All Types", Discount -> "All Discount Types",
+        // Subsidy -> "All Subsidy Types"
+        val allLabel = getString(
+            when (selectedTypeId) {
+                TYPE_DISCOUNT -> R.string.fd_all_discount_types
+                TYPE_SUBSIDY -> R.string.fd_all_subsidy_types
+                else -> R.string.fd_all_types
+            }
+        )
+        val list = listOf(FilterOption(ALL, allLabel, null)) + options
 
         // set BEFORE binding so the spinner's automatic first selection is treated as "same value"
         selectedDiscountTypeId = ALL
@@ -342,16 +351,29 @@ class FeeDiscount : BaseActivity<FeeDiscountBinding>(), View.OnClickListener,
 
     private fun loadTypeDropdown() {
         val options = listOf(
-            FilterOption(ALL, getString(R.string.fd_type_all)),
+            FilterOption(ALL, getString(R.string.fd_all_types)),
             FilterOption(TYPE_DISCOUNT, getString(R.string.discount)),
             FilterOption(TYPE_SUBSIDY, getString(R.string.subsidy))
         )
+        updateTotalLabel()
         bindDropdown(binding.isTypeSpinner, options) { picked ->
             if (picked.id == selectedTypeId) return@bindDropdown
             selectedTypeId = picked.id
+            updateTotalLabel()
             // Type changed -> reload discount types; the fee discount call follows from its observer
             isGetDiscountType()
         }
+    }
+
+    /** Total card label follows the Type: All -> "Total Discount and Subsidy", Discount -> "Total Discount", Subsidy -> "Total Subsidy". */
+    private fun updateTotalLabel() {
+        binding.labeltypes.text = getString(
+            when (selectedTypeId) {
+                TYPE_DISCOUNT -> R.string.total_discount
+                TYPE_SUBSIDY -> R.string.fd_total_subsidy
+                else -> R.string.fd_total_discount_and_subsidy
+            }
+        )
     }
 
     private fun loadClassDropdown() {

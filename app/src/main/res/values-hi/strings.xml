@@ -600,6 +600,7 @@
     <string name="apply_leave">अवकाश के लिए आवेदन</string>
     <string name="update_leave">अवकाश अपडेट करें</string>
     <string name="Duration">अवधि</string>
+    <string name="DURATION">अवधि</string>
     <string name="no_absentee_data_available">कोई अनुपस्थित डेटा उपलब्ध नहीं</string>
     <string name="update_assignment">असाइनमेंट अपडेट करें</string>
     <string name="are_you_sure_want_to_delete">क्या आप वाकई इसे हटाना चाहते हैं?</string>

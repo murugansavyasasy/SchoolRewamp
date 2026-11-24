@@ -10,7 +10,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
@@ -54,6 +56,7 @@ import com.vs.schoolmessenger.School.Communication.Interface.TextHistoryClickLis
 import com.vs.schoolmessenger.School.Communication.Interface.VoiceHistoryClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomDatePicker
+import com.vs.schoolmessenger.Utils.CustomSwitch
 import com.vs.schoolmessenger.Utils.FileExtensionFromContentUri
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
@@ -107,6 +110,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var hasRequestedPermissions = false
     private var returnedFromSettings = false
     var isEmergency = false
+    var isAllowAfter10Pm = false   // from the NEXT popup checkbox; to be sent in the voice API later
     var isScheduleCall = false
     private val PICK_AUDIO_REQUEST = 101
     var isAcademicYearId = -1
@@ -871,6 +875,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
         binding.SwitchEmergencyVoice.setChecked(false)
         isEmergency = false
+        isAllowAfter10Pm = false
         MAX_RECORDING_TIME = 180
         binding.lblDurationOfVoice.text = Constant._00_00_03_00
         binding.rlaSeekBarAndTitle.visibility = View.GONE
@@ -1528,7 +1533,61 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
 
+    /**
+     * NEXT button: for voice calls (Instant / Emergency = type 1, Schedule = type 2) ask first
+     * whether the call can be delivered after 10 PM. Text message (type 3) goes straight on.
+     */
     private fun isGoToRecipient() {
+        // 10 PM popup is hidden for now (pending confirmation): allow_10pm_call is sent as false.
+        // To bring the popup back, set SHOW_AFTER_10PM_POPUP = true.
+        if (SHOW_AFTER_10PM_POPUP &&
+            (Constant.isCommunicationType == 1 || Constant.isCommunicationType == 2)
+        ) {
+            showCallAfter10PmPopup()
+        } else {
+            isAllowAfter10Pm = false
+            openRecipientScreen()
+        }
+    }
+
+    private companion object {
+        /** Master switch for the "beyond 10 PM" confirmation popup on NEXT (voice calls). */
+        const val SHOW_AFTER_10PM_POPUP = false
+    }
+
+    private fun showCallAfter10PmPopup() {
+        val dialogView = layoutInflater.inflate(R.layout.popup_call_after_10pm, null)
+        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val toggle = dialogView.findViewById<CustomSwitch>(R.id.switchAllowAfter10Pm)
+        val note = dialogView.findViewById<TextView>(R.id.lblAfter10PmNote)
+        // red note is shown only while the toggle is ON
+        val updateNote = { note.visibility = if (toggle.isChecked()) View.VISIBLE else View.GONE }
+
+        toggle.setChecked(isAllowAfter10Pm)   // keep the last choice when coming back
+        updateNote()
+        // CustomSwitch flips itself on touch, then calls performClick()
+        toggle.setOnClickListener { updateNote() }
+        // tapping the question text also flips the toggle
+        dialogView.findViewById<View>(R.id.lblAllowAfter10Pm).setOnClickListener {
+            toggle.setChecked(!toggle.isChecked())
+            updateNote()
+        }
+
+        dialogView.findViewById<TextView>(R.id.btnAfter10PmCancel).setOnClickListener {
+            alertDialog.dismiss()
+        }
+        dialogView.findViewById<TextView>(R.id.btnAfter10PmProceed).setOnClickListener {
+            isAllowAfter10Pm = toggle.isChecked()
+            Log.d("AllowAfter10Pm", "isAllowAfter10Pm = $isAllowAfter10Pm")
+            alertDialog.dismiss()
+            openRecipientScreen()
+        }
+        alertDialog.show()
+    }
+
+    private fun openRecipientScreen() {
         val isStaffRole = isUserDetails!!.staff_role
         if (isMultipleSchool) {
             if (isStaffRole == Constant.isGroupHeadRole || isStaffRole == Constant.isPrincipalRole || isStaffRole == Constant.isAdminRole) {
@@ -1563,7 +1622,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             isEmergency = isEmergency,
             isScheduleCall = isScheduleCall,
             isAwsUrl = audioFilePath.toString(),
-            isFileName = isFileName.toString()
+            isFileName = isFileName.toString(),
+            isAllowAfter10Pm = isAllowAfter10Pm
         )
         Constant.isVoiceSendingData = voiceData
         Log.d("VoiceData", Constant.isVoiceSendingData.toString())

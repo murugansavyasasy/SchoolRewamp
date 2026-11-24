@@ -46,6 +46,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Splash.Splash
+import com.vs.schoolmessenger.CommonScreens.Ads.MenuAds
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.Dashboard.Fragments.HolidaysFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
@@ -82,7 +83,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = getViewBinding()
-        setContentView(binding.root)
+        // adds the bottom ad slider when the screen was opened from a parent menu (MenuAds.kt)
+        setContentView(MenuAds.wrapContent(this, binding.root))
         setupViews()
 
     }

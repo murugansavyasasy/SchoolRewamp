@@ -119,6 +119,7 @@ object FeeUiMapper {
                     title = orDash(c.feeType), subtitle = c.yearName,
                     fee = c.actualAmount, paid = c.paidAmount,
                     discount = c.discountAmount, pending = c.pendingAmount,
+                    showStatus = false,   // no Paid / Partially paid / Pending badge for carryover fees
                     children = c.breakDown.orEmpty().map { b ->
                         val name = orDash(b.feeName)
                         val group = b.feeGroupTypeName
@@ -154,7 +155,8 @@ object FeeUiMapper {
         private fun row(
             title: String, subtitle: String?,
             fee: String?, paid: String?, discount: String?, pending: String?,
-            children: List<FeeChild>
+            children: List<FeeChild>,
+            showStatus: Boolean = true
         ): Row {
             val paidValue = num(paid)
             val pendingValue = num(pending)
@@ -170,7 +172,8 @@ object FeeUiMapper {
                 },
                 children = children,
                 expanded = EXPAND_BY_DEFAULT && children.isNotEmpty(),
-                position = CardPosition.SINGLE
+                position = CardPosition.SINGLE,
+                showStatus = showStatus
             )
             return Row(card, pendingValue)
         }

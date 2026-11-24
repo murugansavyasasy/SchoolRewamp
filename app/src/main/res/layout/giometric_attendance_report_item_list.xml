@@ -217,7 +217,7 @@
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
+                    android:layout_width="63dp"
                     android:layout_height="wrap_content"
                     android:text="@string/check_out"
                     android:textColor="@color/mild_grey_dark"
@@ -248,7 +248,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/hours"
+                    android:text="@string/DURATION"
                     android:textColor="@color/mild_grey_dark"
                     android:textSize="@dimen/thirteen_sp" />
 

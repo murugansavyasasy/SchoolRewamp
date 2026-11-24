@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Festival popup on the dashboards (is_festival = true). Filled by Utils/FestivalPopup.kt
+     Top: festival image from "url", or the blue sparkle when url is empty.
+     Bottom: festival name + date (+ content when sent). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/festivalRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#80000000"
+    android:clickable="true"
+    android:focusable="true">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardFestival"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- image area with the close button on top -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#E6EFFD">
+
+                <!-- default sparkle (no url) -->
+                <ImageView
+                    android:id="@+id/imgFestivalDefault"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/schoolclosedlandscape" />
+
+                <!-- festival image from url (covers the sparkle once loaded) -->
+                <ImageView
+                    android:id="@+id/imgFestival"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/btnFestivalClose"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_festival_close"
+                    android:contentDescription="@string/Cancel"
+                    android:elevation="2dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_festival_close" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/txtFestivalName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="18sp" />
+
+            <!-- "content"; hidden when empty -->
+            <TextView
+                android:id="@+id/txtFestivalContent"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:textColor="@color/clr_grey_dark"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txtFestivalDate"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:textColor="@color/clr_grey_dark"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

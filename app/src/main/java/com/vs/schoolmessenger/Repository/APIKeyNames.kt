@@ -47,6 +47,7 @@ object APIKeyNames {
     const val content = "content"
     const val subject = "subject"
     const val is_emergency = "is_emergency"
+    const val allow_10pm_call = "allow_10pm_call"
     const val upload_details = "upload_details"
     const val exam_section_id = "exam_section_id"
     const val is_archive = "is_archive"

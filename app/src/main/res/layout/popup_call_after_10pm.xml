@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shown on NEXT for Instant / Emergency / Schedule call (CommunicationSchool.showCallAfter10PmPopup).
+     Toggle ON -> red note becomes visible and allow_10pm_call = true is sent to the API. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/fourty_five"
+    android:layout_marginTop="@dimen/ten"
+    android:layout_marginEnd="@dimen/fourty_five"
+    android:background="@drawable/rect_white_light_radious"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/ten">
+
+    <TextView
+        android:id="@+id/lblAfter10PmTitle"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:text="@string/confirmation"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sixteen_sp" />
+
+    <TextView
+        android:id="@+id/lblAfter10PmMessage"
+        style="@style/CustomTextStylePoppinsRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/eight"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:text="@string/are_you_sure_send_voice_message"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/fourteen_sp" />
+
+    <!-- question + toggle on the right -->
+    <LinearLayout
+        android:id="@+id/lnrAfter10PmToggle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/lblAllowAfter10Pm"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_weight="1"
+            android:text="@string/send_voice_beyond_10_pm"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+
+        <!-- same toggle as the Emergency Call switch -->
+        <com.vs.schoolmessenger.Utils.CustomSwitch
+            android:id="@+id/switchAllowAfter10Pm"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty" />
+    </LinearLayout>
+
+    <!-- red note: visible only while the toggle is ON -->
+    <TextView
+        android:id="@+id/lblAfter10PmNote"
+        style="@style/CustomTextStylePoppinsRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:text="@string/after_10_pm_note"
+        android:textColor="@color/red"
+        android:textSize="@dimen/thirteen_sp"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/point_five"
+        android:layout_marginTop="@dimen/twenty"
+        android:background="@color/mild_grey2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fourty_five"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/ten"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/btnAfter10PmCancel"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/Cancel"
+            android:textColor="@color/navi_blue2" />
+
+        <View
+            android:layout_width="@dimen/one"
+            android:layout_height="match_parent"
+            android:background="@color/mild_grey2" />
+
+        <TextView
+            android:id="@+id/btnAfter10PmProceed"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/proceed"
+            android:textColor="@color/navi_blue2" />
+    </LinearLayout>
+
+</LinearLayout>

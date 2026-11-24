@@ -17,6 +17,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.CouponMenuAdapter
 import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.CouponSummaryAdapter
 import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponMenuClickListener
+import com.vs.schoolmessenger.CommonScreens.Ads.MenuAds
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickListener
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.Category
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
@@ -134,6 +135,9 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        // Rewards ad: below the top bar (back / title / search), handled in MenuAds.kt
+        MenuAds.attachToFragment(this, binding.root, R.id.relative_layout)
         return binding.root
     }
 

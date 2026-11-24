@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Blue sparkles: default festival image when festival_details.url is empty -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    <!-- big star -->
+    <path
+        android:fillColor="@color/PrimaryColor"
+        android:pathData="M60,32 Q60,58 86,58 Q60,58 60,84 Q60,58 34,58 Q60,58 60,32 Z" />
+    <!-- left star -->
+    <path
+        android:fillColor="@color/PrimaryColor"
+        android:pathData="M34,28 Q34,42 48,42 Q34,42 34,56 Q34,42 20,42 Q34,42 34,28 Z" />
+    <!-- small top star -->
+    <path
+        android:fillColor="@color/PrimaryColor"
+        android:pathData="M51,14 Q51,22 59,22 Q51,22 51,30 Q51,22 43,22 Q51,22 51,14 Z" />
+</vector>

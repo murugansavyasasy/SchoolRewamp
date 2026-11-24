@@ -161,10 +161,11 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         setupGenderCaterotyType(filterGenderCaterotyType)
-        binding.toolbarLayout.lblSchoolName.setOnClickListener {
-            val intent = Intent(this, FeeDiscount::class.java)
-            startActivity(intent)
-        }
+
+//        binding.toolbarLayout.lblSchoolName.setOnClickListener {
+//            val intent = Intent(this, FeeDiscount::class.java)
+//            startActivity(intent)
+//        }
 
         isLoadAcademicYear(isAcademicYearList)
         isValidAcademicYear =
@@ -468,13 +469,14 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     }
 
     override fun onClickStudentFee(data: StudentReportData) {
-        val intent = Intent(this, StudentFeeDetails::class.java)
-        intent.putExtra("student_id", data.id)
-        intent.putExtra("acadamic_year_id", isAcademicYearId)
-        intent.putExtra("student_name", data.name)
-        intent.putExtra("student_class", data.class_name)
-        intent.putExtra("student_section", data.section_name)
-        startActivity(intent)
+//        val intent = Intent(this, StudentFeeDetails::class.java)
+//        intent.putExtra("student_id", data.id)
+//        intent.putExtra("acadamic_year_id", isAcademicYearId)
+//        intent.putExtra("student_name", data.name)
+//        intent.putExtra("student_class", data.class_name)
+//        intent.putExtra("student_section", data.section_name)
+//        startActivity(intent)
+        Log.d("StudentFeeDetails","StudentFeeDetails")
     }
 
     private fun showBottomDialog() {

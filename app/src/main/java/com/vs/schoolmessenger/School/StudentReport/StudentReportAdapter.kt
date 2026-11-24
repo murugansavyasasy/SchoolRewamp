@@ -119,9 +119,9 @@ class StudentReportAdapter(
                 listener.onMailClick(data)
             }
 
-            rlaEntireCard.setOnClickListener {
-                listener.onClickStudentFee(data)
-            }
+//            rlaEntireCard.setOnClickListener {
+//                listener.onClickStudentFee(data)
+//            }
 
             lnrSms.setOnClickListener {
                 listener.onMessageClick(data)
@@ -131,9 +131,6 @@ class StudentReportAdapter(
                 listener.onPhoneClick(data)
             }
 
-            rlaEntireCard.setOnClickListener {
-                listener.onClickStudentFee(data)
-            }
 
             cameraicon.setOnClickListener(null)
             lnrUpdateProfile.setOnClickListener(null)

@@ -27,32 +27,84 @@
             android:text="Half Yearly Exam"
             android:textSize="@dimen/seventeen_sp" />
 
-        <TextView
-            android:id="@+id/btnViewMarks"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="@dimen/one_twenty"
+        <!-- View Marks button + NEW tag (tag shown while mark_viewed = false) -->
+        <FrameLayout
+            android:id="@+id/frameViewMarks"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty_five"
-            android:background="@drawable/bg_orange"
-            android:gravity="center"
-            android:paddingTop="@dimen/five"
-            android:paddingBottom="@dimen/five"
-            android:text="@string/view_marks"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twele_sp" />
+            android:layout_marginTop="@dimen/twenty">
 
-        <TextView
-            android:id="@+id/btnViewProgress"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="@dimen/one_twenty"
+            <TextView
+                android:id="@+id/btnViewMarks"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="@dimen/one_twenty"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/six"
+                android:layout_marginEnd="@dimen/eight"
+                android:background="@drawable/bg_orange"
+                android:gravity="center"
+                android:paddingTop="@dimen/five"
+                android:paddingBottom="@dimen/five"
+                android:text="@string/view_marks"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twele_sp" />
+
+            <TextView
+                android:id="@+id/badgeMarksNew"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:background="@drawable/bg_exam_new_badge"
+                android:includeFontPadding="false"
+                android:paddingStart="@dimen/five"
+                android:paddingTop="@dimen/two"
+                android:paddingEnd="@dimen/five"
+                android:paddingBottom="@dimen/two"
+                android:text="@string/exam_new_badge"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <!-- View Progress button + NEW tag (tag shown while report_viewed = false) -->
+        <FrameLayout
+            android:id="@+id/frameViewProgress"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eight"
-            android:background="@drawable/bg_orange"
-            android:gravity="center"
-            android:paddingTop="@dimen/five"
-            android:paddingBottom="@dimen/five"
-            android:text="@string/view_progress"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twele_sp" />
+            android:layout_marginTop="@dimen/two">
+
+            <TextView
+                android:id="@+id/btnViewProgress"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="@dimen/one_twenty"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/six"
+                android:layout_marginEnd="@dimen/eight"
+                android:background="@drawable/bg_orange"
+                android:gravity="center"
+                android:paddingTop="@dimen/five"
+                android:paddingBottom="@dimen/five"
+                android:text="@string/view_progress"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twele_sp" />
+
+            <TextView
+                android:id="@+id/badgeProgressNew"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:background="@drawable/bg_exam_new_badge"
+                android:includeFontPadding="false"
+                android:paddingStart="@dimen/five"
+                android:paddingTop="@dimen/two"
+                android:paddingEnd="@dimen/five"
+                android:paddingBottom="@dimen/two"
+                android:text="@string/exam_new_badge"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                android:visibility="gone" />
+        </FrameLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

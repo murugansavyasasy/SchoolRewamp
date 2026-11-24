@@ -280,6 +280,7 @@ object APIMethods {
     const val isPaymentProof ="fee/api/fee-details/payment-proof"
 
     const val isupdateporiflestudent = "admin/api/student-profile/update-profile"
+    const val isexamreportviewstatus = "exam/api/new-exam/update-report-view-status"
 
 }
 

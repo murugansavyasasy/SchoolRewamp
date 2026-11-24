@@ -52,6 +52,7 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ReadStatusModel.ViewStatusResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.OnlinePaymentResponse
@@ -532,6 +533,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isStudentFeeDetails: LiveData<FeeDetailsResponse?>? = null
     var isFeeDiscountDetails: LiveData<DiscountReportResponse?>? = null
     var isDiscountTypeList: LiveData<DiscountTypeResponse?>? = null
+    var isexamreportviewstatus: LiveData<ViewStatusResponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -762,6 +764,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isStudentFeeDetails = apiSchoolRepositoriesTwo.isStudentFeeDetailsLiveData
         isFeeDiscountDetails = apiSchoolRepositoriesTwo.isFeeDiscountDetailsLiveData
         isDiscountTypeList = apiSchoolRepositoriesTwo.isDiscountTypeListLiveData
+        isexamreportviewstatus = apiParentRepositories.isexamreportviewstatusLiveData
     }
 
     fun isDashBoardData(
@@ -2529,6 +2532,15 @@ class App(application: Application) : AndroidViewModel(application) {
         Log.d("reporting_url",reporting_url.toString())
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.DiscountType(isToken,type,activity)
+    }
+
+
+    fun isexamreportviewstatus(
+        isToken: String, jsonObject: JsonObject, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiParentRepositories.isexamreportviewstatus(isToken, jsonObject, activity)
     }
 
 

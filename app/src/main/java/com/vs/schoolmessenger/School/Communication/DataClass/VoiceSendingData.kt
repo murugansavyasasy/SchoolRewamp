@@ -10,4 +10,5 @@ data class VoiceSendingData(
     val isScheduleCall: Boolean,
     val isAwsUrl: String,
     val isFileName: String,
+    val isAllowAfter10Pm: Boolean = false,   // "Call Timing" popup toggle -> allow_10pm_call
 )

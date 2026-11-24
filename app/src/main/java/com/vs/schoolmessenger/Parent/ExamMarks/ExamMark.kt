@@ -50,6 +50,9 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
     var examTitle = ""
 
+    // View-status requests sent but not yet confirmed: (report_id, view_type)
+    private val pendingViewStatus = mutableSetOf<Pair<Int, String>>()
+
     private var currentTab = TabType.EXAM_TIMETABLE
 
     private enum class TabType {
@@ -414,6 +417,26 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             }
         }
 
+        appViewModel?.isexamreportviewstatus?.observe(this) { response ->
+            Log.d("ExamViewStatus", response.toString())
+            if (response != null && response.status) {
+                // Prefer the report_id/view_type returned by the API; fall back to pending requests
+                val viewed = response.data
+                    ?.map { Pair(it.report_id, it.view_type) }
+                    ?.takeIf { it.isNotEmpty() }
+                    ?: pendingViewStatus.toList()
+                viewed.forEach { (reportId, viewType) ->
+                    if (::exammarkadapter.isInitialized) {
+                        exammarkadapter.markViewed(reportId, viewType)
+                    }
+                    pendingViewStatus.remove(Pair(reportId, viewType))
+                }
+            } else {
+                // Failed: clear pending so the next tap retries the API
+                pendingViewStatus.clear()
+            }
+        }
+
         fetchexamtimetable()
 
         binding.lnrTabOneName.setOnClickListener {
@@ -495,6 +518,16 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
     }
 
     override fun onRubricClick(rubric: ExamTimetableRubric) {
+    }
+
+    override fun onExamViewStatus(reportId: Int, viewType: String) {
+        // Skip if the same request is already in progress (prevents duplicate calls on repeated taps)
+        if (!pendingViewStatus.add(Pair(reportId, viewType))) return
+        val jsonObject = JsonObject().apply {
+            addProperty("report_id", reportId)
+            addProperty("view_type", viewType)
+        }
+        appViewModel?.isexamreportviewstatus(isAccessToken ?: "", jsonObject, this)
     }
 
 

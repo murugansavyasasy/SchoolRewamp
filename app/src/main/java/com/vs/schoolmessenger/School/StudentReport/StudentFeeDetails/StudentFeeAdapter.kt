@@ -79,6 +79,8 @@ class StudentFeeAdapter(
             } else {
                 percent.setScale(1, java.math.RoundingMode.DOWN).stripTrailingZeros().toPlainString()
             }
+
+            
             progressText.text = itemView.context.getString(
                 R.string.fee_paid_progress, d.paid, d.total, shown
             )
@@ -138,6 +140,8 @@ class StudentFeeAdapter(
             status.text = ctx.getString(label)
             status.setTextColor(ContextCompat.getColor(ctx, color))
             status.setBackgroundResource(background)
+            // badge is hidden for carryover fees (showStatus = false); pending amount colour still follows the status
+            status.visibility = if (d.showStatus) View.VISIBLE else View.GONE
             pending.setTextColor(ContextCompat.getColor(ctx, if (d.status == FeeStatus.PAID) R.color.fee_green else R.color.fee_orange))
 
             // expand / collapse

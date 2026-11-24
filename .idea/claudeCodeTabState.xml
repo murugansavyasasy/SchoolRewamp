@@ -11,6 +11,9 @@
               <option name="cwd" value="E:\SchoolRewamp" />
               <option name="model" value="claude-sonnet-5[1m]" />
               <option name="permissionMode" value="default" />
+              <option name="claudeSupplierId" value="__local_settings_json__" />
+              <option name="codexSupplierId" value="__codex_cli_login__" />
+              <option name="ompApprovalMode" value="" />
             </TabSessionState>
           </value>
         </entry>

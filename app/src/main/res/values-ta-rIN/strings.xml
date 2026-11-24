@@ -600,6 +600,7 @@
     <string name="apply_leave">விடுப்பு விண்ணப்பிக்க</string>
     <string name="update_leave">விடுப்பை புதுப்பிக்க</string>
     <string name="Duration">கால அளவு</string>
+    <string name="DURATION">கால அளவு</string>
     <string name="no_absentee_data_available">இல்லாதவர்களின் தகவல் இல்லை</string>
     <string name="update_assignment">பணியை புதுப்பிக்க</string>
     <string name="are_you_sure_want_to_delete">நீங்கள் நிச்சயமாக நீக்க விரும்புகிறீர்களா?</string>

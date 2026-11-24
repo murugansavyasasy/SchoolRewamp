@@ -119,25 +119,22 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
 
 
         appViewModel!!.isStaffLocations?.observe(this) { response ->
+            binding.rytProgressBar.visibility = View.GONE
             if (response != null) {
                 if (response.status) {
-                    binding.rytProgressBar.visibility = View.GONE
-                    binding.rytNoLocationList.visibility = View.GONE
                     val isStaffLocation = response.data
                     if (isStaffLocation.isNotEmpty()) {
-                        binding.rytErrorMessage.visibility = View.GONE
                         punchHiddenShow(isStaffLocation)
                     } else {
-                        binding.rytErrorMessage.visibility = View.VISIBLE
-                        binding.rytNoLocationList.visibility = View.GONE
+                        // no locations configured -> treat as out of range (Punch hidden)
+                        showMarkAttendanceState(MarkState.OUT_OF_RANGE)
                     }
                 } else {
-                    binding.rytNoLocationList.visibility = View.VISIBLE
                     binding.lblNoLocation.text = response.message
+                    showMarkAttendanceState(MarkState.NO_LOCATION)
                 }
             } else {
-                binding.rytNoLocationList.visibility = View.GONE
-                binding.rytErrorMessage.visibility = View.VISIBLE
+                showMarkAttendanceState(MarkState.OUT_OF_RANGE)
             }
         }
 
@@ -387,6 +384,10 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
                     binding.rytErrorMessage.visibility = View.GONE
                 }
             } else {
+                // permission denied: never leave an old Punch button on screen
+                binding.rytPresentlayout.visibility = View.GONE
+                binding.rytErrorMessage.visibility = View.GONE
+                binding.rytProgressBar.visibility = View.GONE
                 if (Constant.isGPSEnabled(this)) {
                     binding.rytGPSRedirect.visibility = View.VISIBLE
                 }
@@ -394,8 +395,27 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
         }
     }
 
+    /** What the Mark Attendance screen shows. Exactly one of these at a time. */
+    private enum class MarkState { LOADING, PUNCH, OUT_OF_RANGE, NO_LOCATION }
+
+    /**
+     * Single place that controls the Punch button and the location messages, so the Punch
+     * button can never stay visible together with the "not in location" error.
+     */
+    private fun showMarkAttendanceState(state: MarkState) {
+        binding.rytPresentlayout.visibility =
+            if (state == MarkState.PUNCH) View.VISIBLE else View.GONE
+        binding.rytErrorMessage.visibility =
+            if (state == MarkState.OUT_OF_RANGE) View.VISIBLE else View.GONE
+        binding.rytNoLocationList.visibility =
+            if (state == MarkState.NO_LOCATION) View.VISIBLE else View.GONE
+        binding.rytProgressBar.visibility =
+            if (state == MarkState.LOADING) View.VISIBLE else View.GONE
+    }
+
     private fun getCurrentLocation(type: String) {
-        binding.rytProgressBar.visibility = View.VISIBLE
+        // hide the old Punch button / messages until the new location is checked
+        showMarkAttendanceState(MarkState.LOADING)
         val locationHelper = LocationHelper(this, this, Constant.current)
         locationHelper.getFreshLocation()
     }
@@ -654,36 +674,35 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
     }
 
     private fun punchHiddenShow(isStaffLocation: List<StaffLocationData>) {
-        var isDistanceCalculation: LocationDistanceCalculator? = null
-        isDistanceCalculation = LocationDistanceCalculator()
-        var isStaffNearByLocation: Boolean? = false
-        try {
-            for (i in isStaffLocation.indices) {
-                if (isStaffLocation[i].latitude != "" && isStaffLocation[i].longitude != "" && isStaffLocation[i].distance != "") {
-                    val isGetDistance: Float = isDistanceCalculation.calculateDistance(
-                        isLatitude!!.toDouble(),
-                        isLongitude!!.toDouble(),
-                        isStaffLocation[i].latitude.toDouble(),
-                        isStaffLocation[i].longitude.toDouble()
-                    )
-                    if (isGetDistance <= isStaffLocation[i].distance.toDouble()) {
-                        isStaffNearByLocation = true
-                        break
-                    }
-                }
-            }
-        } catch (e: NumberFormatException) {
-            e.printStackTrace()
-            Log.e("MarkYourAttendance", "Error parsing number: ${e.message}")
+        val lat = isLatitude
+        val lng = isLongitude
+        // no current location -> can't confirm the staff is inside, so keep Punch hidden
+        if (lat == null || lng == null) {
+            showMarkAttendanceState(MarkState.OUT_OF_RANGE)
+            return
         }
 
-        if (isStaffNearByLocation!!) {
-            binding.rytErrorMessage.visibility = View.GONE
-            binding.rytPresentlayout.visibility = View.VISIBLE
-        } else {
-            binding.rytErrorMessage.visibility = View.VISIBLE
-            binding.rytPresentlayout.visibility = View.GONE
+        val isDistanceCalculation = LocationDistanceCalculator()
+        var isStaffNearByLocation = false
+        for (location in isStaffLocation) {
+            // a bad / missing value in one location must not stop the check for the others
+            // (safe calls: Gson can leave these null at runtime even though they are declared non-null)
+            val locLat = location.latitude?.toDoubleOrNull() ?: continue
+            val locLng = location.longitude?.toDoubleOrNull() ?: continue
+            val allowedDistance = location.distance?.toDoubleOrNull() ?: continue
+
+            val isGetDistance: Float =
+                isDistanceCalculation.calculateDistance(lat, lng, locLat, locLng)
+            Log.d("MarkYourAttendance", "distance=$isGetDistance allowed=$allowedDistance")
+            if (isGetDistance <= allowedDistance) {
+                isStaffNearByLocation = true
+                break
+            }
         }
+
+        showMarkAttendanceState(
+            if (isStaffNearByLocation) MarkState.PUNCH else MarkState.OUT_OF_RANGE
+        )
     }
 
     override fun onItemClick(data: StaffAttendanceReportData) {

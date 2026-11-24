@@ -66,6 +66,18 @@ class ExamMarkAdapter(
     }
 
 
+    // Called after the view-status API succeeds, so the API is not called again for this item
+    fun markViewed(reportId: Int, viewType: String) {
+        val exam = fullList.find { it.report_id == reportId } ?: return
+        when (viewType) {
+            Constant.view_type_mark -> exam.mark_viewed = true
+            Constant.view_type_report -> exam.report_viewed = true
+        }
+        // Refresh the card so the NEW tag disappears
+        val position = filteredList.indexOf(exam)
+        if (position != -1) notifyItemChanged(position)
+    }
+
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -99,6 +111,10 @@ class ExamMarkAdapter(
         private val btnViewMarks: TextView = itemView.findViewById(R.id.btnViewMarks)
         private val btnViewProgress: TextView = itemView.findViewById(R.id.btnViewProgress)
         private val rootHeader: LinearLayout = itemView.findViewById(R.id.rootHeader)
+        private val frameViewMarks: View = itemView.findViewById(R.id.frameViewMarks)
+        private val frameViewProgress: View = itemView.findViewById(R.id.frameViewProgress)
+        private val badgeMarksNew: TextView = itemView.findViewById(R.id.badgeMarksNew)
+        private val badgeProgressNew: TextView = itemView.findViewById(R.id.badgeProgressNew)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
@@ -109,18 +125,18 @@ class ExamMarkAdapter(
             rootHeader.background.alpha = (0.1f * 255).toInt()
             textExamTitle.text = exam.reportName
 
-            if (exam.mark_sent){
-                btnViewMarks.visibility= View.VISIBLE
-            }else{
-                btnViewMarks.visibility= View.GONE
-            }
-            if (exam.report_sent){
-                btnViewProgress.visibility= View.VISIBLE
-            }else{
-                btnViewProgress.visibility= View.GONE
-            }
+            // Toggle the whole frame (button + NEW tag) so no empty space is left when hidden
+            frameViewMarks.visibility = if (exam.mark_sent) View.VISIBLE else View.GONE
+            frameViewProgress.visibility = if (exam.report_sent) View.VISIBLE else View.GONE
+
+            // NEW tag stays until the view-status API confirms it was viewed
+            badgeMarksNew.visibility = if (exam.mark_viewed) View.GONE else View.VISIBLE
+            badgeProgressNew.visibility = if (exam.report_viewed) View.GONE else View.VISIBLE
 
             btnViewMarks.setOnClickListener {
+                if (!exam.mark_viewed) {
+                    listener.onExamViewStatus(exam.report_id, Constant.view_type_mark)
+                }
                 val context = itemView.context
                 val intent = Intent(context, ExamMarkResults::class.java)
                 intent.putExtra(Constant.exam_title, exam.reportName)
@@ -128,6 +144,9 @@ class ExamMarkAdapter(
                 context.startActivity(intent)
             }
             btnViewProgress.setOnClickListener {
+                if (!exam.report_viewed) {
+                    listener.onExamViewStatus(exam.report_id, Constant.view_type_report)
+                }
                 listener.onExamSelected(exam.report_id.toString() ?: "", exam.reportName ?: "",exam.type?:"")
 
             }

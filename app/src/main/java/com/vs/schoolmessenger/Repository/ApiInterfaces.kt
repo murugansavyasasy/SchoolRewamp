@@ -63,6 +63,7 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ReadStatusModel.ViewStatusResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.OnlinePaymentResponse
@@ -1737,6 +1738,13 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query("type") type: String,
 
-    )
+        )
             : Call<DiscountTypeResponse?>
+
+
+    @PUT(APIMethods.isexamreportviewstatus)
+    fun isexamreportviewstatus(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<ViewStatusResponse?>
 }

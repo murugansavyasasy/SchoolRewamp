@@ -863,7 +863,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 schoolId = selectedSchoolIds,
                 targetType = Constant.isSchool,
                 circularType = Constant.school,
-                fileName = isVoiceData.isFileName
+                fileName = isVoiceData.isFileName,
+                allow10pmCall = isVoiceData.isAllowAfter10Pm
             )
 
             appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)

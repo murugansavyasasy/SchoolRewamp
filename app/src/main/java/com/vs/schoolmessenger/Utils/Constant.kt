@@ -599,6 +599,8 @@ object Constant {
     var UPCOMING = "UPCOMING"
     var exam_title = "exam_title"
     var exam_id = "exam_id"
+    const val view_type_mark = "mark"
+    const val view_type_report = "report"
     var google_g_view_embedded = "https://docs.google.com/gview?embedded=true&url="
     var online_fee_payment_link =
         "https://profile.schoolchimes.com/#/online-fee-payment/13601818/6063/app"

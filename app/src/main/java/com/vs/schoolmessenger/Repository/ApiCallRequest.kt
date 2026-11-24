@@ -21,7 +21,8 @@ object ApiCallRequest {
         schoolId: MutableList<String>,
         targetType: Int,
         circularType: String,
-        fileName: String
+        fileName: String,
+        allow10pmCall: Boolean = false
     ): JsonObject {
         Log.d("isFilepath", Constant.isAwsUploadedFiles[0].isFileUrl)
         val jsonObject = JsonObject()
@@ -46,6 +47,7 @@ object ApiCallRequest {
 
         jsonObject.addProperty(APIKeyNames.title, title)
         jsonObject.addProperty(APIKeyNames.is_emergency, isEmergency)
+        jsonObject.addProperty(APIKeyNames.allow_10pm_call, allow10pmCall)
         jsonObject.addProperty(APIKeyNames.is_schedule, isScheduleCall)
         jsonObject.addProperty(APIKeyNames.start_time, startTime)
         jsonObject.addProperty(APIKeyNames.end_time, endTime)

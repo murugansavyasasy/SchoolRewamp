@@ -27,6 +27,7 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksRes
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ReadStatusModel.ViewStatusResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.OnlinePaymentResponse
@@ -116,6 +117,7 @@ class ParentServices {
     var isGetBusList: MutableLiveData<getBusList?>
     var isLiveBusData: MutableLiveData<getLiveBus?>
     var isLatestLiveData: MutableLiveData<GetLatestGeoLocationResponse?>
+    var isexamreportviewstatus: MutableLiveData<ViewStatusResponse?>
 
     init {
         client_auth = RestClient()
@@ -171,6 +173,7 @@ class ParentServices {
         isGetBusList = MutableLiveData()
         isLiveBusData = MutableLiveData()
         isLatestLiveData = MutableLiveData()
+        isexamreportviewstatus = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -2008,5 +2011,40 @@ class ParentServices {
 
     val isgetgeolocationData: LiveData<GetLatestGeoLocationResponse?>
         get() = isLatestLiveData
+
+
+
+    fun isexamreportviewstatus(
+        isToken: String,jsonObject: JsonObject, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isexamreportviewstatus(isToken,jsonObject)
+            ?.enqueue(object : Callback<ViewStatusResponse?> {
+                override fun onResponse(
+                    call: Call<ViewStatusResponse?>,
+                    response: Response<ViewStatusResponse?>
+                ){
+
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isexamreportviewstatus.postValue(response.body())
+                        }
+                    } else {
+                        isexamreportviewstatus.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ViewStatusResponse?>, t: Throwable
+                ) {
+                    isexamreportviewstatus.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isexamreportviewstatusLiveData: LiveData<ViewStatusResponse?>
+        get() = isexamreportviewstatus
+
 
 }

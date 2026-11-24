@@ -110,11 +110,56 @@
             android:layout_below="@+id/lblSchoolName" />
     </RelativeLayout>
 
+    <!-- Banner ads: rounded, swipeable, auto scroll every 5s (AdSlider) -->
+    <!-- paddingBottom offsets the -10dp top margin of autoScrollRecyclerView -->
+    <LinearLayout
+        android:id="@+id/lytAds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerLayout"
+        android:layout_marginTop="@dimen/ten"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/ten"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/adViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="120dp" />
+
+            <!-- X button: hides the ad (AdSlider) -->
+            <ImageView
+                android:id="@+id/imgCloseAd"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_ad_close"
+                android:contentDescription="@string/close_ad"
+                android:padding="5dp"
+                android:src="@drawable/ic_ad_close" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/adDotsIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/five"
+            android:gravity="center"
+            android:orientation="horizontal" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/autoScrollRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/hundred"
-        android:layout_below="@id/headerLayout"
+        android:layout_below="@id/lytAds"
         android:layout_marginTop="-10dp"
         android:background="@color/bpWhite"
         android:orientation="horizontal"

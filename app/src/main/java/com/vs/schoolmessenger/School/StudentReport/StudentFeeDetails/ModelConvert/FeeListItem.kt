@@ -37,6 +37,7 @@ sealed class FeeListItem {
         val status: FeeStatus,
         val children: List<FeeChild>,
         var expanded: Boolean,
-        val position: CardPosition
+        val position: CardPosition,
+        val showStatus: Boolean = true  // false = hide the Paid / Partially paid / Pending badge (carryover fees)
     ) : FeeListItem()
 }

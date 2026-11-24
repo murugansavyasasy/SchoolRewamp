@@ -42,7 +42,8 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
-import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
+import com.vs.schoolmessenger.CommonScreens.Ads.AdSlider
+import com.vs.schoolmessenger.CommonScreens.Ads.MenuAds
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsDisplayOptions
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardCountData
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
@@ -77,6 +78,7 @@ import com.vs.schoolmessenger.Parent.Timetable.TimeTable
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.FestivalPopup
 import com.vs.schoolmessenger.Utils.Constant.FrequentParentlyUsedMenuItems
 import com.vs.schoolmessenger.Utils.Constant.isParentAdItem
 import com.vs.schoolmessenger.Utils.Constant.isParentContactDetails
@@ -113,6 +115,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private var originalMenuList = ArrayList<MenuDetail>()
     private var filteredMenuList = ArrayList<MenuDetail>()
+    private var adSlider: AdSlider? = null
 
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
@@ -184,6 +187,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     val isDashboardResponse = response.data
                     isParentDashBoardData = isDashboardResponse
 
+                    // festival first, so a birthday popup (if any) sits on top of it
+                    if (isDashboardResponse.isNotEmpty() && isDashboardResponse[0].is_festival) {
+                        FestivalPopup.show(requireActivity(), isDashboardResponse[0].festival_details)
+                    }
+
                     if (isDashboardResponse.isNotEmpty() && isDashboardResponse[0].is_birthday) {
                         showBirthdayPopup()
                     }
@@ -249,24 +257,22 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
 
-        appViewModel!!.isGetAds?.observe(requireActivity()) { response ->
-            if (response != null) {
-                val status = response.status
-                response.message
-                if (status) {
-                    isParentAdItem = response.data
-                    val filteredAds = response.data.filter { it.id != null }
-                    isAdsDisplayOptions = isParentAdItem!![0].ads_display_options
-                    val adList: List<AdItem> = filteredAds.map { ad ->
-                        AdItem(
-                            ad.id!!, ad.name ?: "", ad.content_url ?: "", ad.redirect_url ?: ""
-                        )
-                    }
-                    isParentAdItem = adList
-                }
-                isLoadData()
-            }
+        adSlider = AdSlider(
+            binding.lytAds, binding.adViewPager, binding.adDotsIndicator, binding.imgCloseAd
+        )
+
+        appViewModel!!.isGetAds?.observe(viewLifecycleOwner) { response ->
+            // status false / failure -> slider hidden (handled inside AdSlider.bind)
+            isAdsDisplayOptions = response?.data
+                ?.firstOrNull { it.ads_display_options != null }
+                ?.ads_display_options
+            isParentAdItem = if (response?.status == true) {
+                response.data.filter { it.id != null }
+            } else emptyList()
+
+            adSlider?.bind(response)
         }
+        isGetAds()
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -661,7 +667,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isGetAds() {
         activity?.let { safeActivity ->
-            appViewModel?.isGetAds(childDetails!!.access_token, "102", safeActivity)
+            appViewModel?.isGetAds(childDetails!!.access_token, MenuAds.DASHBOARD_MENU_ID, safeActivity)
         }
     }
 
@@ -669,11 +675,19 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         super.onResume()
         Log.d("Loading", "Dashboard Data is Loading")
         isDashBoardData()
+        adSlider?.start()
     }
 
     override fun onPause() {
         super.onPause()
         Log.d("Status", "onPause")
+        adSlider?.stop()
+    }
+
+    override fun onDestroyView() {
+        adSlider?.stop()
+        adSlider = null
+        super.onDestroyView()
     }
 
     override fun onClick(data: MenuDetail) {
@@ -746,6 +760,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             else -> null
         }
-        intent?.let { requireActivity().startActivity(it) }
+        // menu id goes with the Intent -> the menu screen loads its own ads (MenuAds.kt)
+        intent?.let { requireActivity().startActivity(MenuAds.putMenuId(it, data.id)) }
     }
 }
