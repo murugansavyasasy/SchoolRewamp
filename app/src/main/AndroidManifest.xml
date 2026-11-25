@@ -35,6 +35,10 @@
         android:required="false"
         tools:replace="android:required" />
 
+    <uses-feature
+        android:name="android.hardware.screen.portrait"
+        android:required="false" />
+
     <queries>
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
