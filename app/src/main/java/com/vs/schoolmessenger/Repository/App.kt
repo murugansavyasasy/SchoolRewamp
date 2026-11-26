@@ -165,6 +165,11 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEd
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanUpdateModel.LessonPlanUpdateResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryResponse
+import com.vs.schoolmessenger.School.Library.BookStudentsModel.StudentIssuedBooksResponse
+import com.vs.schoolmessenger.School.Library.FineAmountReportModel.LibraryFineAmountResponse
+import com.vs.schoolmessenger.School.Library.Model.IssuedBooksResponse
+import com.vs.schoolmessenger.School.Library.PaymentDetailsModel.PaymentDetailsResponse
+import com.vs.schoolmessenger.School.Library.TransactionhistoryModel.LibraryTransactionResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -534,6 +539,11 @@ class App(application: Application) : AndroidViewModel(application) {
     var isFeeDiscountDetails: LiveData<DiscountReportResponse?>? = null
     var isDiscountTypeList: LiveData<DiscountTypeResponse?>? = null
     var isexamreportviewstatus: LiveData<ViewStatusResponse?>? = null
+    var getissuedbookstaff: LiveData<IssuedBooksResponse?>? = null
+    var getissuedbookstudents: LiveData<StudentIssuedBooksResponse?>? = null
+    var gettransactionhistory: LiveData<LibraryTransactionResponse?>? = null
+    var getfineamountreport: LiveData<LibraryFineAmountResponse?>? = null
+    var libpaymentdetails: LiveData<PaymentDetailsResponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -765,6 +775,11 @@ class App(application: Application) : AndroidViewModel(application) {
         isFeeDiscountDetails = apiSchoolRepositoriesTwo.isFeeDiscountDetailsLiveData
         isDiscountTypeList = apiSchoolRepositoriesTwo.isDiscountTypeListLiveData
         isexamreportviewstatus = apiParentRepositories.isexamreportviewstatusLiveData
+        getissuedbookstaff = apiSchoolRepositoriesTwo.getissuedbookstaffLiveData
+        getissuedbookstudents = apiSchoolRepositoriesTwo.getissuedbookstudentsLiveData
+        gettransactionhistory = apiSchoolRepositoriesTwo.gettransactionhistoryLiveData
+        getfineamountreport = apiSchoolRepositoriesTwo.getfineamountreportLiveData
+        libpaymentdetails = apiSchoolRepositoriesTwo.libpaymentdetailsLiveData
     }
 
     fun isDashBoardData(
@@ -2542,6 +2557,47 @@ class App(application: Application) : AndroidViewModel(application) {
         RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isexamreportviewstatus(isToken, jsonObject, activity)
     }
+
+
+    fun getissuedbookstaff(
+        isToken: String, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.getissuedbookstaff(isToken, activity)
+    }
+
+
+    fun getissuedbookstudents(
+        isToken: String, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.getissuedbookstudents(isToken, activity)
+    }
+    fun gettransactionhistory(
+        isToken: String,date_filter_type: String, from_date: String, to_date: String, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.gettransactionhistory(isToken,date_filter_type,from_date,to_date, activity)
+    }
+    fun getfineamountreport(
+        isToken: String,country_id: String, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.getfineamountreport(isToken,country_id, activity)
+    }
+
+    fun libpaymentdetails(
+        isToken: String,id : Int,receipt_id : Int, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.libpaymentdetails(isToken,id, receipt_id)
+    }
+
 
 
 }

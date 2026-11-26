@@ -174,6 +174,11 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEd
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanUpdateModel.LessonPlanUpdateResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryResponse
+import com.vs.schoolmessenger.School.Library.BookStudentsModel.StudentIssuedBooksResponse
+import com.vs.schoolmessenger.School.Library.FineAmountReportModel.LibraryFineAmountResponse
+import com.vs.schoolmessenger.School.Library.Model.IssuedBooksResponse
+import com.vs.schoolmessenger.School.Library.PaymentDetailsModel.PaymentDetailsResponse
+import com.vs.schoolmessenger.School.Library.TransactionhistoryModel.LibraryTransactionResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -1747,4 +1752,37 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject,
     ): Call<ViewStatusResponse?>
+
+
+    @GET(APIMethods.get_issued_book_staff)
+    fun getissuedbookstaff(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<IssuedBooksResponse?>
+
+    @GET(APIMethods.get_issued_book_students)
+    fun getissuedbookstudents(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<StudentIssuedBooksResponse?>
+
+    @GET(APIMethods.get_transaction_history)
+    fun gettransactionhistory(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("date_filter_type") date_filter_type: String,
+        @Query("from_date") from_date: String,
+        @Query("to_date") to_date: String,
+    ): Call<LibraryTransactionResponse?>
+
+
+    @GET(APIMethods.get_fineamount_report)
+    fun getfineamountreport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("country_id") country_id: String,
+    ): Call<LibraryFineAmountResponse?>
+
+    @GET(APIMethods.lib_payment_details)
+    fun libpaymentdetails(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("id") id : Int,
+        @Query("receipt_id") receipt_id : Int,
+    ): Call<PaymentDetailsResponse?>
 }

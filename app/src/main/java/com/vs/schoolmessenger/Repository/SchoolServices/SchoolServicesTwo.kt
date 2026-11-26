@@ -40,6 +40,11 @@ import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassUpdateSt
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.getHostelStudentRoomAttendance
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.RoomMarkAttendance.hostelMarkAttendanceRespone
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
+import com.vs.schoolmessenger.School.Library.BookStudentsModel.StudentIssuedBooksResponse
+import com.vs.schoolmessenger.School.Library.FineAmountReportModel.LibraryFineAmountResponse
+import com.vs.schoolmessenger.School.Library.Model.IssuedBooksResponse
+import com.vs.schoolmessenger.School.Library.PaymentDetailsModel.PaymentDetailsResponse
+import com.vs.schoolmessenger.School.Library.TransactionhistoryModel.LibraryTransactionResponse
 import com.vs.schoolmessenger.School.StudentReport.ProfileUpdateModel.StudentProfileUpdateResponse
 import com.vs.schoolmessenger.School.StudentReport.StudentFeeDetails.Model.FeeDetailsResponse
 import retrofit2.Call
@@ -83,6 +88,11 @@ class SchoolServicesTwo {
     var isUpdateStudnetFeeDetails: MutableLiveData<FeeDetailsResponse?>
     var isDiscountFeeDetails: MutableLiveData<DiscountReportResponse?>
     var isDiscountType: MutableLiveData<DiscountTypeResponse?>
+    var getissuedbookstaff: MutableLiveData<IssuedBooksResponse?>
+    var getissuedbookstudents: MutableLiveData<StudentIssuedBooksResponse?>
+    var gettransactionhistory: MutableLiveData<LibraryTransactionResponse?>
+    var getfineamountreport: MutableLiveData<LibraryFineAmountResponse?>
+    var libpaymentdetails: MutableLiveData<PaymentDetailsResponse?>
 
 
     init {
@@ -122,6 +132,11 @@ class SchoolServicesTwo {
         isUpdateStudnetFeeDetails = MutableLiveData()
         isDiscountFeeDetails = MutableLiveData()
         isDiscountType = MutableLiveData()
+        getissuedbookstaff = MutableLiveData()
+        getissuedbookstudents = MutableLiveData()
+        gettransactionhistory = MutableLiveData()
+        getfineamountreport = MutableLiveData()
+        libpaymentdetails = MutableLiveData()
 
     }
 
@@ -1221,5 +1236,154 @@ class SchoolServicesTwo {
 
     val isDiscountTypeListLiveData: LiveData<DiscountTypeResponse?>
         get() = isDiscountType
+
+
+
+    fun getissuedbookstaff(
+        isToken: String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.getissuedbookstaff(isToken)
+            ?.enqueue(object : Callback<IssuedBooksResponse?> {
+                override fun onResponse(
+                    call: Call<IssuedBooksResponse?>, response: Response<IssuedBooksResponse?>
+                ) {
+
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            getissuedbookstaff.postValue(response.body())
+                        }
+                    } else {
+                        getissuedbookstaff.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<IssuedBooksResponse?>, t: Throwable) {
+                    getissuedbookstaff.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getissuedbookstaffLiveData: LiveData<IssuedBooksResponse?>
+        get() = getissuedbookstaff
+
+
+    fun getissuedbookstudents(
+        isToken: String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.getissuedbookstudents(isToken)
+            ?.enqueue(object : Callback<StudentIssuedBooksResponse?> {
+                override fun onResponse(
+                    call: Call<StudentIssuedBooksResponse?>, response: Response<StudentIssuedBooksResponse?>
+                ) {
+
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            getissuedbookstudents.postValue(response.body())
+                        }
+                    } else {
+                        getissuedbookstudents.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StudentIssuedBooksResponse?>, t: Throwable) {
+                    getissuedbookstudents.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getissuedbookstudentsLiveData: LiveData<StudentIssuedBooksResponse?>
+        get() = getissuedbookstudents
+
+
+
+    fun gettransactionhistory(
+        isToken: String,date_filter_type: String, from_date: String, to_date: String ,activity: Activity) {
+        RestClient.Companion.apiInterfaces.gettransactionhistory(isToken,date_filter_type,from_date,to_date)
+            ?.enqueue(object : Callback<LibraryTransactionResponse?> {
+                override fun onResponse(
+                    call: Call<LibraryTransactionResponse?>, response: Response<LibraryTransactionResponse?>
+                ) {
+
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            gettransactionhistory.postValue(response.body())
+                        }
+                    } else {
+                        gettransactionhistory.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LibraryTransactionResponse?>, t: Throwable) {
+                    gettransactionhistory.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val gettransactionhistoryLiveData: LiveData<LibraryTransactionResponse?>
+        get() = gettransactionhistory
+
+
+
+    fun getfineamountreport(
+        isToken: String,country_id: String ,activity: Activity) {
+        RestClient.Companion.apiInterfaces.getfineamountreport(isToken,country_id)
+            ?.enqueue(object : Callback<LibraryFineAmountResponse?> {
+                override fun onResponse(
+                    call: Call<LibraryFineAmountResponse?>, response: Response<LibraryFineAmountResponse?>
+                ) {
+
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            getfineamountreport.postValue(response.body())
+                        }
+                    } else {
+                        getfineamountreport.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LibraryFineAmountResponse?>, t: Throwable) {
+                    getfineamountreport.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getfineamountreportLiveData: LiveData<LibraryFineAmountResponse?>
+        get() = getfineamountreport
+
+
+    fun libpaymentdetails(
+        isToken: String,id: Int,receipt_id: Int,activity: Activity) {
+        RestClient.Companion.apiInterfaces.libpaymentdetails(isToken,id,receipt_id)
+            ?.enqueue(object : Callback<PaymentDetailsResponse?> {
+                override fun onResponse(
+                    call: Call<PaymentDetailsResponse?>, response: Response<PaymentDetailsResponse?>
+                ) {
+
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            libpaymentdetails.postValue(response.body())
+                        }
+                    } else {
+                        libpaymentdetails.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<PaymentDetailsResponse?>, t: Throwable) {
+                    libpaymentdetails.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val libpaymentdetailsLiveData: LiveData<PaymentDetailsResponse?>
+        get() = libpaymentdetails
+
 
 }

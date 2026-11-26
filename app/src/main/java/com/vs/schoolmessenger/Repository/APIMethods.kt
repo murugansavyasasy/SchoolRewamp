@@ -282,6 +282,12 @@ object APIMethods {
     const val isupdateporiflestudent = "admin/api/student-profile/update-profile"
     const val isexamreportviewstatus = "exam/api/new-exam/update-report-view-status"
 
+    const val get_issued_book_staff = "lms/api/library/issued-book-list-staff"
+    const val get_issued_book_students = "lms/api/library/issued-book-list-students"
+    const val get_transaction_history = "lms/api/library/booktransactionhistory"
+    const val get_fineamount_report = "lms/api/library/book-reports/fine-amount-report"
+    const val lib_payment_details = "lms/api/library-payment-details"
+
 }
 
 
