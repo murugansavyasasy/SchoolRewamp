@@ -2595,7 +2595,7 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         val base_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(base_url!!)
-        apiSchoolRepositoriesTwo.libpaymentdetails(isToken,id, receipt_id)
+        apiSchoolRepositoriesTwo.libpaymentdetails(isToken,id, receipt_id,activity)
     }
 
 
